@@ -1,0 +1,166 @@
+import React, { useEffect, useState } from 'react';
+import "./Header.scss";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { LiaShoppingBagSolid } from "react-icons/lia";
+import { IoSearchOutline } from "react-icons/io5";
+import { FiUser } from "react-icons/fi";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
+import { actionLogout } from '../../store/authSlice';
+import userIcon from '../../assets/icons/user.svg';
+import { actionSetCart, actionSetCartCount, actionSetWishlist, actionSetWishlistCount } from '../../store/productSlice';
+import { CiLogout } from "react-icons/ci";
+import { FaAngleDown } from "react-icons/fa6";
+import { MdMenu } from "react-icons/md";
+import { LiaAngleRightSolid } from "react-icons/lia";
+import useWindowDimensions from '../../hooks/screenWidth';
+import { addIsShowToCategories } from '../../Helper';
+
+
+const Header = () => {
+  const { categories } = useSelector((state) => state.app);
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
+  const { wishlistCount, cartCount } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [updatedCategories, setUpdatedCategories] = useState([]);
+  const { width } = useWindowDimensions();
+  const [showDrawer, setShowDrawer] = useState(false);
+
+
+  useEffect(() => {
+    if (width > 1200) {
+      const data = addIsShowToCategories(categories, true);
+      setUpdatedCategories(data);
+    } else {
+      const data = addIsShowToCategories(categories, false);
+      setUpdatedCategories(data);
+    }
+  }, [width, categories])
+
+  return (
+    <header>
+      <div className='headerLeft'>
+        <MdMenu onClick={() => setShowDrawer(!showDrawer)} />
+        <Link onClick={() => setShowDrawer(false)} to='/' className='logo'>Ecom<span>World</span></Link>
+      </div>
+
+      {showDrawer && <div className='bg-overlay'></div>}
+      <ul className={showDrawer ? 'menu show' : 'menu'}>
+        <div className='headerLeft mobile'>
+          <MdMenu onClick={() => setShowDrawer(!showDrawer)} />
+          <Link onClick={() => setShowDrawer(false)} to='/' className='logo'>Ecom<span>World</span></Link>
+        </div>
+
+        {
+          updatedCategories.map((category) => (
+            <li key={category._id}>
+              <div className={category.isShow ? 'topMenu down' : 'topMenu'}>
+                <Link onClick={() => setShowDrawer(false)} to={`/products/${category.topLevelCategory}`}>{category.topLevelCategory}</Link>
+                <LiaAngleRightSolid
+                  className=''
+                  onClick={() => {
+                    setUpdatedCategories((prev) =>
+                      prev.map((val) =>
+                        val._id === category._id ? { ...val, isShow: !val.isShow } : val
+                      )
+                    );
+                  }}
+                />
+              </div>
+
+              {category.isShow &&
+                <div className='megaMenu'>
+                  {category.secondLevelCategories.map((subCat) => (
+                    <ul key={subCat._id}>
+
+                      <h6 className={subCat.isShow ? 'topMenu down' : 'topMenu'}>
+                        <Link onClick={() => setShowDrawer(false)} to={`/products/${category.topLevelCategory}/${subCat.secondLevelCategory}`}>{subCat.secondLevelCategory}</Link>
+                        <LiaAngleRightSolid
+                          onClick={() => {
+                            setUpdatedCategories((prev) =>
+                              prev.map((item) =>
+                                item._id === category._id
+                                  ? {
+                                    ...item,
+                                    secondLevelCategories: item.secondLevelCategories.map((subCategory) =>
+                                      subCategory._id === subCat._id
+                                        ? { ...subCategory, isShow: !subCategory.isShow }
+                                        : subCategory
+                                    ),
+                                  }
+                                  : item
+                              )
+                            );
+                          }}
+                        />
+                      </h6>
+
+                      {
+                        subCat.isShow && subCat.thirdLevelCategories.map((item) => (
+                          <li key={item._id}><Link onClick={() => setShowDrawer(false)} to={`/products/${category.topLevelCategory}/${subCat.secondLevelCategory}/${item.thirdLevelCategory}`}>{item.thirdLevelCategory}</Link></li>
+                        ))
+                      }
+                    </ul>
+                  ))}
+                </div>
+              }
+            </li>
+          ))
+        }
+        <li><Link onClick={() => setShowDrawer(false)} to='/products'>Products</Link></li>
+        <li><Link onClick={() => setShowDrawer(false)} to="/contact-us">Contact Us</Link></li>
+      </ul>
+
+      <div className='header_right'>
+        <div className='headerIcon'>
+          <IoSearchOutline />
+          {!isLoggedIn && <Link to='/login'><FiUser /></Link>}
+          {isLoggedIn &&
+            <Link className='wishlistIcon' to='/wishlist'>
+              {wishlistCount > 0 && <div className='counter'>{wishlistCount}</div>}
+              <IoMdHeartEmpty />
+            </Link>
+          }
+          <Link className='cartIcon' to='/cart'>
+            {cartCount > 0 && <div className='counter'>{cartCount}</div>}
+            <LiaShoppingBagSolid />
+          </Link>
+        </div>
+
+        {isLoggedIn &&
+          <div className="dropdown">
+            <div data-bs-toggle="dropdown" aria-expanded="false" className='profile'>
+              <p>{user.name}</p>
+              <img src={userIcon} alt="userIcon" /> <FaAngleDown />
+            </div>
+            <ul class="dropdown-menu">
+              <li>{user.name}</li>
+              <li onClick={() => navigate('/profile/account')}><FiUser /> Profile</li>
+              <li onClick={() => navigate('/profile/orders')}><LiaShoppingBagSolid /> Order</li>
+              <li onClick={() => navigate('/wishlist')}><IoMdHeartEmpty /> Wishlist</li>
+              <li onClick={() => navigate('/cart')}><LiaShoppingBagSolid /> Cart</li>
+              <li
+                onClick={() => {
+                  dispatch(actionLogout());
+                  dispatch(actionSetWishlist([]));
+                  dispatch(actionSetCart([]));
+                  dispatch(actionSetCartCount(0));
+                  dispatch(actionSetWishlistCount(0));
+                  if (pathname === '/wishlist' || pathname === '/cart') {
+                    navigate('/');
+                  }
+                }}
+              >
+                <CiLogout /> Logout
+              </li>
+            </ul>
+          </div>
+        }
+      </div>
+    </header >
+  )
+};
+
+export default Header;

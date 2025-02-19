@@ -1,0 +1,100 @@
+.orderSummary {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 3px 24px 0px #0000001f;
+  position: sticky;
+  top: 90px;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
+
+  .heading {
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #d5d5d5;
+    font-size: 22px;
+    font-weight: 600;
+    color: #1c1c1c;
+
+    span {
+      font-size: 18px;
+      color: #eb3b5a;
+
+      @media (max-width: 768px) {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
+
+  .details {
+    padding: 20px 0;
+
+    .orderSummaryItem {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 15px;
+      color: #1c1c1c;
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+
+      @media (max-width: 768px) {
+        padding-bottom: 10px;
+      }
+
+      h6 {
+        color: #989898;
+        font-size: 14px;
+        font-weight: 500;
+
+        @media (max-width: 768px) {
+          font-size: 12px;
+        }
+      }
+
+      p {
+        font-weight: 500;
+        font-size: 16px;
+
+        @media (max-width: 768px) {
+          font-size: 12px;
+          font-weight: 600;
+        }
+      }
+
+      .discount,
+      .shipping {
+        color: #27ae60;
+      }
+    }
+  }
+
+  .total-amount {
+    border-top: 1px dashed #d5d5d5;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1c1c1c;
+
+      @media (max-width: 768px) {
+        font-size: 18px;
+      }
+    }
+  }
+
+  button {
+    margin-top: 20px;
+    width: 100%;
+  }
+}

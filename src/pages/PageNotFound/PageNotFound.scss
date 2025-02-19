@@ -1,0 +1,50 @@
+.pageNotFound {
+  background-image: url("../../assets/images/pagenotfound/bg.jpg");
+  height: 100vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 90%;
+    color: white;
+    h1 {
+      font-size: 200px;
+      font-weight: 900;
+      color: #00b9c5;
+
+      @media screen and (max-width: 768px) {
+        font-size: 100px;
+      }
+    }
+
+    h2 {
+      @media screen and (max-width: 768px) {
+        font-size: 20px;
+      }
+    }
+    p {
+      padding-top: 10px;
+      padding-bottom: 20px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    a {
+      background-color: #00b9c5;
+      color: #fff;
+      text-transform: capitalize;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      margin-top: 20px;
+      display: inline-block;
+    }
+  }
+}

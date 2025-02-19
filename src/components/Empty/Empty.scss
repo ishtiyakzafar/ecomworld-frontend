@@ -1,0 +1,47 @@
+.empty {
+  text-align: center;
+  padding-bottom: 50px;
+
+  .icon {
+    font-size: 50px;
+    color: #27ae60;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 50%;
+    background: #27ae6010;
+    text-align: center;
+    margin: auto;
+
+    @media(max-width:768px) {
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 25px;
+    }
+  }
+
+
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1c1c1c;
+    padding-top: 10px;
+    padding-bottom: 5px;
+
+    @media(max-width:768px) {
+      font-size: 16px;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1c1c1c;
+    padding-bottom: 50px;
+
+    @media(max-width:768px) {
+      font-size: 12px;
+    }
+  }
+}

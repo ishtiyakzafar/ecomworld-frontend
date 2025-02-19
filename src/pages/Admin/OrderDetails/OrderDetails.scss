@@ -1,0 +1,212 @@
+.orderDetails {
+  .content {
+    height: 100%;
+    background: #fff;
+
+    h5 {
+      color: #2e276f;
+      font-size: 16px;
+      font-weight: 700;
+      padding-bottom: 20px;
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+        padding-bottom: 10px;
+      }
+    }
+
+    .orderDetailTable {
+      .orderDetailInfo {
+        .productImg {
+          img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+          }
+        }
+
+        .orderStatusDropdown,
+        .paymentStatusDropdown {
+          ul {
+            box-shadow: 0px 3px 24px 0px #0000001f;
+            background: #fff;
+            border: none;
+            padding: 5px 0;
+
+            li {
+              font-size: 13px;
+              line-height: 30px;
+              color: #989898;
+              cursor: pointer;
+              padding-left: 10px;
+
+              svg {
+                color: #008000;
+                font-size: 14px;
+              }
+
+              &:hover {
+                background: #f1f1f1;
+              }
+            }
+          }
+        }
+
+        .paymentStatusDropdown {
+          ul {
+            li {
+              color: #1c1c1c;
+            }
+          }
+        }
+
+        .orderStatus,
+        .paymentStatus {
+          background: #ffa50020;
+          color: #ffa500;
+          padding: 2px 5px;
+          border-radius: 3px;
+          font-size: 12px;
+          width: fit-content;
+          cursor: pointer;
+        }
+
+        .orderStatus.CONFIRMED {
+          background: #1e90ff20;
+          color: #1e90ff;
+        }
+
+        .orderStatus.OFD {
+          background: #17a2b820;
+          color: #17a2b8;
+        }
+
+        .orderStatus.DELIVERED,
+        .paymentStatus.PAID {
+          background: #00800020;
+          color: #008000;
+        }
+
+        .orderStatus.RETURNED,
+        .paymentStatus.REFUNDED {
+          background: #ff450020;
+          color: #ff4500;
+        }
+
+        .orderStatus.CANCELLED,
+        .paymentStatus.CANCELLED {
+          background: #ff000020;
+          color: #ff0000;
+        }
+      }
+    }
+
+    .customerDetails {
+      .basicDetail {
+        padding-bottom: 20px;
+
+        h5 {
+          color: #2e276f;
+          font-size: 16px;
+          font-weight: 700;
+          padding-bottom: 20px;
+
+          @media (max-width: 768px) {
+            font-size: 14px;
+            padding-bottom: 10px;
+          }
+        }
+
+        .detail {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-bottom: 10px;
+
+          &:last-child {
+            padding-bottom: 0;
+          }
+
+          p {
+            font-size: 14px;
+            font-weight: 500;
+            color: #989898;
+          }
+
+          span {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1c1c1c;
+          }
+        }
+      }
+
+      .shippingAddress {
+        border-top: 1px dashed #c5c8dd;
+        padding-top: 20px;
+
+        h5 {
+          color: #2e276f;
+          font-size: 16px;
+          font-weight: 700;
+          padding-bottom: 20px;
+
+          @media (max-width: 768px) {
+            font-size: 14px;
+            padding-bottom: 10px;
+          }
+        }
+
+        .detail {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 100px;
+          padding-bottom: 20px;
+
+          h6 {
+            padding-bottom: 5px;
+            color: #1c1c1c;
+
+            @media (max-width: 768px) {
+              font-size: 14px;
+            }
+
+            span {
+              font-weight: 500;
+            }
+          }
+
+          p {
+            color: #1c1c1c;
+
+            @media (max-width: 768px) {
+              font-size: 12px;
+            }
+
+            span {
+              font-weight: 500;
+            }
+          }
+
+          .action {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            svg {
+              font-size: 20px;
+              color: #2e276c;
+              cursor: pointer;
+
+              @media (max-width: 768px) {
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

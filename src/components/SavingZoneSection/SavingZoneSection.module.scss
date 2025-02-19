@@ -1,0 +1,95 @@
+.savingZoneSection {
+  padding-top: 80px;
+  overflow: hidden;
+
+  @media (max-width: 996px) {
+    padding-top: 60px;
+  }
+
+  @media (max-width: 768px) {
+    padding-top: 40px;
+  }
+
+  .slick-list {
+    margin: 0 -15px;
+
+    @media (max-width: 1300px) {
+      margin: 0 -10px;
+    }
+
+    @media (max-width: 576px) {
+      margin: 0;
+    }
+  }
+
+  .savingZoneCard {
+    text-align: center;
+    padding: 0 15px;
+    position: relative;
+    // border: 1px solid red;
+
+    @media (max-width: 1300px) {
+      padding: 0 10px;
+    }
+
+    @media (max-width: 576px) {
+      padding: 0;
+    }
+
+    .cardImage {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+        transition: all 1.5s ease-in-out;
+
+        &:hover {
+          transform: scale(1.07);
+        }
+      }
+    }
+
+    .savingZoneInfo {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translate(-50%, 0);
+      z-index: 10;
+      text-align: center;
+      // border: 1px solid red;
+      width: 100%;
+      color: #1c1c1c;
+
+      h2 {
+        font-weight: 400;
+
+        @media (max-width: 768px) {
+          font-size: 18px;
+        }
+      }
+
+      small {
+        font-size: 16px;
+
+        @media (max-width: 768px) {
+          font-size: 14px;
+        }
+      }
+
+      p {
+        font-weight: 500;
+        padding: 20px 0;
+
+        @media (max-width: 768px) {
+          font-size: 14px;
+          padding: 10px 0;
+        }
+      }
+    }
+  }
+}

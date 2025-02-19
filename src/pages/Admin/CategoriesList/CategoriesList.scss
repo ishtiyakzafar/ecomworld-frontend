@@ -1,0 +1,44 @@
+.addCategory {
+  margin-bottom: 50px;
+  display: flex;
+  gap: 20px;
+}
+
+.categoryList {
+
+  .topLevelCategory,
+  .secondLevelCategory,
+  .subSubCategory {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    p {
+      cursor: pointer;
+      width: fit-content;
+      font-size: 16px;
+      color: #1c1c1c;
+      text-transform: capitalize;
+
+      svg {
+        font-size: 16px;
+        color: #989898;
+      }
+    }
+  }
+
+  .secondLevelCategory {
+    margin-left: 20px;
+  }
+
+  .subSubCategory {
+    margin-left: 50px;
+  }
+
+  svg {
+    font-size: 18px;
+    color: #eb3b5a;
+    cursor: pointer;
+  }
+}

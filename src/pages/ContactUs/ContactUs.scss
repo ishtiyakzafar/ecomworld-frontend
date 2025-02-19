@@ -1,0 +1,65 @@
+.contactUsPage {
+  padding-top: 80px;
+
+  .visit_store {
+    .info {
+      padding-bottom: 20px;
+
+      p {
+        color: #1c1c1c;
+        font-size: 16px;
+        font-weight: 600;
+        padding-bottom: 10px;
+      }
+
+      span {
+        color: #333;
+      }
+    }
+  }
+
+  .contactForm {
+    form {
+      padding-top: 20px;
+
+      .form-control,
+      .form-select {
+        height: 45px;
+        border-radius: 3px;
+        box-shadow: none;
+        border: 1px solid #989898;
+      }
+
+      textarea.form-control {
+        height: 100px;
+      }
+
+      button {
+        margin-top: 10px;
+        width: 100%;
+      }
+    }
+  }
+
+  .google_map {
+    padding-top: 80px;
+  }
+
+  .socialIcon {
+    padding: 50px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    i {
+      font-size: 50px;
+      color: #989898;
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        color: #1c1c1c;
+      }
+    }
+  }
+}

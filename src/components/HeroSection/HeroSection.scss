@@ -1,0 +1,117 @@
+.heroSection {
+  // height: 600px;
+
+  .heroContentBox {
+    height: 100%;
+    background: #fdf3eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .heroContent {
+      padding-left: 50px;
+      padding-right: 50px;
+
+      @media(max-width:768px) {
+        text-align: center;
+        padding: 50px 20px;
+      }
+
+
+      h1 {
+        font-size: 70px;
+        color: #1c1c1c;
+        font-weight: 400;
+        padding-bottom: 20px;
+
+        @media(max-width:1100px) {
+          font-size: 50px;
+        }
+
+        @media(max-width:996px) {
+          font-size: 30px;
+          padding-bottom: 10px;
+        }
+
+        @media(max-width:768px) {
+          font-size: 30px;
+        }
+      }
+
+      p {
+        color: #1c1c1c;
+        font-size: 20px;
+        padding-bottom: 30px;
+
+        @media(max-width:996px) {
+          font-size: 18px;
+          padding-bottom: 20px;
+        }
+
+        @media(max-width:768px) {
+          font-size: 16px;
+        }
+      }
+
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    .heroContent.animate {
+      animation: slideIn 1s ease-out forwards;
+    }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .heroImg {
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+
+      @media(max-width:768px) {
+        height: 300px;
+        object-fit: cover;
+      }
+
+      @media(max-width:576px) {
+        height: 100%;
+      }
+    }
+
+    .slick-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+
+      transform: translate(-50%, 0);
+      width: unset;
+    }
+
+    .slick-dots li.slick-active button:before {
+      color: #eb3b5a;
+      border-radius: 50%;
+      background: #eb3b5a;
+      opacity: 1;
+    }
+
+    .slick-dots li button:before {
+      font-family: "slick";
+      font-size: 6px;
+      line-height: 22px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .slick-arrow {
+      display: none !important;
+    }
+  }
+}

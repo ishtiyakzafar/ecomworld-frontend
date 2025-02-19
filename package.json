@@ -1,0 +1,46 @@
+{
+  "name": "iotas",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
+    "aos": "^2.3.4",
+    "axios": "^1.7.9",
+    "bootstrap": "^5.3.2",
+    "classnames": "^2.5.1",
+    "cloudinary": "^2.5.1",
+    "moment": "^2.30.1",
+    "react": "^18.2.0",
+    "react-countup": "^6.5.3",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.3.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^6.22.1",
+    "react-scrollspy": "^3.4.3",
+    "react-simple-chatbot": "^0.6.1",
+    "react-slick": "^0.30.1",
+    "react-star-ratings": "^2.3.0",
+    "react-toastify": "^11.0.2",
+    "sass": "^1.70.0",
+    "short-unique-id": "^4.4.4",
+    "slick-carousel": "^1.8.1",
+    "swiper": "^11.1.15"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "vite": "^5.1.0"
+  }
+}

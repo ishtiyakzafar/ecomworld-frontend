@@ -1,0 +1,14 @@
+.page_container {
+  height: 100vh;
+  display: flex;
+  background: #fff;
+
+  .page_content {
+    padding: 20px;
+    height: 100vh;
+    overflow: auto;
+    left: 300px;
+    right: 0;
+    position: absolute;
+  }
+}

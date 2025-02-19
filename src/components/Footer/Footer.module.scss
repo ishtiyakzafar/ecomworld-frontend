@@ -1,0 +1,163 @@
+.footerSection {
+  background: #f0f0f0;
+  padding-top: 50px;
+  border-top: 1px solid #ddd;
+
+  footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 50px;
+
+    @media(max-width: 1100px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media(max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .address {
+      h1 {
+        color: #1c1c1c;
+        font-size: 25px;
+        font-weight: 700;
+        padding-bottom: 20px;
+
+        @media(max-width: 768px) {
+          font-size: 20px;
+        }
+
+        span {
+          color: #eb3b5a;
+        }
+      }
+
+      p {
+        color: #1c1c1c;
+        line-height: 30px;
+
+        @media(max-width: 768px) {
+          font-size: 14px;
+        }
+
+        span {
+          color: #444;
+          font-weight: 500;
+        }
+      }
+
+      h6 {
+        color: #1c1c1c;
+        font-size: 18px;
+        padding-bottom: 15px;
+        padding-top: 20px;
+      }
+
+      .socialIcons {
+        display: flex;
+        gap: 20px;
+        font-size: 20px;
+        color: #444;
+
+        i {
+          transition: all 0.3s ease;
+          cursor: pointer;
+
+          &:hover {
+            color: #1c1c1c;
+          }
+        }
+      }
+    }
+
+    .help,
+    .aboutus {
+      h6 {
+        color: #1c1c1c;
+        font-size: 18px;
+        padding-bottom: 20px;
+      }
+
+      li {
+        list-style: none;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        width: fit-content;
+        font-size: 16px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        @media(max-width: 768px) {
+          font-size: 14px;
+        }
+
+        &:hover {
+          color: #eb3b5a;
+        }
+      }
+    }
+
+    .subscribe {
+      h6 {
+        color: #1c1c1c;
+        font-size: 18px;
+        padding-bottom: 20px;
+      }
+
+      p {
+        color: #1c1c1c;
+        line-height: 30px;
+
+        @media(max-width: 768px) {
+          font-size: 14px;
+          line-height: 25px;
+        }
+      }
+
+      .subscribeInput {
+        margin-top: 20px;
+        position: relative;
+
+        input {
+          border-radius: 3px;
+          width: 100%;
+          padding-left: 10px;
+          height: 55px !important;
+          font-size: 16px;
+          border: 1px solid #777;
+          outline: none;
+          padding-right: 130px;
+
+          @media(max-width: 768px) {
+            height: 49px !important;
+          }
+        }
+
+        button {
+          position: absolute;
+          right: 5px;
+          top: 5px;
+        }
+      }
+    }
+  }
+
+  .copywright {
+    margin-top: 50px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    height: 70px;
+    line-height: 70px;
+    padding: 0 20px;
+
+    @media(max-width: 768px) {
+      height: 50px;
+      line-height: 50px;
+      font-size: 14px;
+    }
+  }
+}

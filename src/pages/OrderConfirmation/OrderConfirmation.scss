@@ -1,0 +1,59 @@
+.orderConfirm {
+  padding: 100px 0;
+
+  @media (max-width: 996px) {
+    // padding: 60px 0;
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px 0;
+  }
+
+  .content {
+    margin-bottom: 50px;
+    text-align: center;
+
+    h1 {
+      font-size: 50px;
+      font-weight: 600;
+      color: #1c1c1c;
+      padding: 20px 0;
+    }
+
+    small {
+      font-size: 14px;
+      color: #1c1c1c;
+
+      span {
+        border-left: 1px solid #d4d4d4;
+        margin: 0 15px;
+      }
+
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1c1c1c;
+      padding-top: 10px;
+
+      span {
+        font-weight: 600;
+      }
+    }
+
+    h6 {
+      font-size: 14px;
+      font-weight: 600;
+      padding-bottom: 20px;
+      color: #1c1c1c;
+    }
+
+    .action {
+      padding-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+  }
+}

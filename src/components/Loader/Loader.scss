@@ -1,0 +1,13 @@
+.loader {
+  min-height: calc(100vh - 70px);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .spinner-border {
+    color: #eb3b5a;
+    border-right-color: #ddd;
+    --bs-spinner-border-width: 3px !important;
+  }
+}

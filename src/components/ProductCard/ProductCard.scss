@@ -1,0 +1,132 @@
+.productCard {
+  position: relative;
+
+  .icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #fff;
+    width: 37px;
+    height: 37px;
+    line-height: 37px;
+    text-align: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 10;
+    cursor: pointer;
+
+    &:hover {
+      background: #eb3b5a;
+      color: #fff;
+    }
+
+    svg {
+      font-size: 20px;
+    }
+
+    @media (max-width: 996px) {
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+
+      svg {
+        font-size: 15px;
+      }
+    }
+  }
+
+  .productImg {
+    background: #fff;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #f1f1f1;
+    cursor: pointer;
+
+    @media (max-width: 1200px) {
+      height: 376px;
+    }
+
+    @media (max-width: 996px) {
+      height: 340px;
+    }
+
+    @media (max-width: 576px) {
+      height: 300px;
+    }
+
+    @media (max-width: 480px) {
+      height: 220px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 1s ease;
+    }
+
+    &:hover img {
+      // transform: scale(1.07);
+    }
+  }
+
+  .productInfo {
+    padding-top: 15px;
+
+    @media (max-width: 768px) {
+      padding-top: 5px;
+    }
+
+    span {
+      color: #989898;
+      font-size: 14px;
+
+      @media (max-width: 768px) {
+        font-size: 12px;
+      }
+    }
+
+    h6 {
+      font-size: 16px;
+      font-weight: 400;
+      color: #1c1c1c;
+      padding-bottom: 5px;
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    p {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1c1c1c;
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+      }
+
+      small {
+        color: #989898;
+        font-size: 16px;
+        text-decoration: line-through;
+
+        @media (max-width: 768px) {
+          font-size: 14px;
+        }
+      }
+
+      span {
+        color: #27ae60;
+        font-size: 16px;
+        font-weight: 400;
+
+        @media (max-width: 768px) {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
