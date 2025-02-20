@@ -110,7 +110,7 @@ const Header = () => {
             </li>
           ))
         }
-        <li><Link onClick={() => setShowDrawer(false)} to='/products'>Products</Link></li>
+        {/* <li><Link onClick={() => setShowDrawer(false)} to='/products'>Products</Link></li> */}
         <li><Link onClick={() => setShowDrawer(false)} to="/contact-us">Contact Us</Link></li>
       </ul>
 

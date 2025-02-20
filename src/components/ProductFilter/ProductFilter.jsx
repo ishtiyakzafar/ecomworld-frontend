@@ -3,6 +3,8 @@ import s from "./ProductFilter.module.scss";
 import { MdClose } from "react-icons/md";
 import { CiFilter } from "react-icons/ci";
 import { LiaAngleDownSolid, LiaAngleUpSolid } from 'react-icons/lia';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const categoryData = [
   {
@@ -62,6 +64,7 @@ const availabilityData = [
 ]
 
 const ProductFilter = ({ showDrawer, setShowDrawer }) => {
+  const { categories } = useSelector((state) => state.app);
   const [showCategoryMenu, setShowCategoryMenu] = useState(false);
   const [showPriceMenu, setShowPriceMenu] = useState(false);
   const [priceRange, setPriceRange] = useState(0);
@@ -95,6 +98,9 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
       color: "orange",
     },
   ]);
+  const { slug1, slug2, slug3 } = useParams();
+
+  console.log(slug1, slug2, slug3);
 
 
   const handleSelect = (item) => {
