@@ -14,7 +14,7 @@ import Loader from '../../components/Loader/Loader';
 
 
 const CartPage = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { cart } = useSelector((state) => state.product);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const CartPage = () => {
   useEffect(() => {
     const fetchUserCart = async () => {
       try {
+        setLoading(true);
         const res = await cartService.getCart();
         const data = res.map((item) => ({ product: item.productId, _id: item._id, quantity: item.quantity, size: item.size }));
         dispatch(actionSetCart(data));
