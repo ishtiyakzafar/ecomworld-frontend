@@ -3,12 +3,14 @@ import "./LoginPage.scss";
 import Register from "./Register";
 import ResetPassword from "./ResetPassword";
 import Login from "./Login";
+import Toast from "../../components/Toast/Toast";
 
 const LoginPage = () => {
   const [step, setStep] = useState(1);
 
   return (
     <div className="loginpage">
+      <Toast />
       <div className="login_popup">
         <h1>
           {step === 1

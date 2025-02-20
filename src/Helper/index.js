@@ -200,7 +200,7 @@ export const validateSignup = (name, value, newErrors, user) => {
     if (!value.trim()) {
       newErrors.email = "Please enter your email address";
     } else if (!emailRegex.test(value)) {
-      newErrors.email = "Please enter a valid email address";
+      newErrors.email = "Please enter your valid email address";
     } else {
       newErrors.email = "";
     }

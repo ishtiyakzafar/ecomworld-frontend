@@ -5,7 +5,6 @@ import authService from "../../services/auth";
 import { toast } from "react-toastify";
 import { getCartItems } from "../../utils";
 import { emailRegex } from "../../Helper";
-import Toast from "../../components/Toast/Toast";
 
 const Login = ({ setStep }) => {
   const [email, setEmail] = useState("");
@@ -14,8 +13,16 @@ const Login = ({ setStep }) => {
   const [errorMsg, setErrorMsg] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
+
+    if (!email) {
+      setErrorMsg((prev) => ({ ...prev, email: "Please enter your email address" }))
+    } else if (!emailRegex.test(email)) {
+      setErrorMsg((prev) => ({ ...prev, email: "Please enter your valid email address" }));
+    }
+    if (!password) setErrorMsg((prev) => ({ ...prev, password: "Please enter your password" }));
+    if (!email || !emailRegex.test(email) || !password) return false;
+
     setLoading(true);
 
     const data = { email, password };
@@ -25,6 +32,7 @@ const Login = ({ setStep }) => {
     try {
       const res = await authService.signin(data);
       dispatch(actionLogin(res.userDetails));
+
       if (getCartItems()) localStorage.removeItem('cart');
     } catch (error) {
       toast.error(error);
@@ -34,8 +42,7 @@ const Login = ({ setStep }) => {
   };
 
   return (
-    <form onSubmit={handleLogin} className="row g-3">
-      <Toast />
+    <form className="row g-2 g-md-3">
       <div className="col-md-12">
         <label htmlFor="email" className="form-label">
           Email
@@ -50,13 +57,7 @@ const Login = ({ setStep }) => {
           onChange={(e) => {
             const value = e.target.value;
             setEmail(value);
-            if (!value) {
-              setErrorMsg((prev) => ({ ...prev, email: "Please enter your email address" }));
-            } else if (!emailRegex.test(value)) {
-              setErrorMsg((prev) => ({ ...prev, email: "Please enter your valid email address" }));
-            } else {
-              setErrorMsg((prev) => ({ ...prev, email: "" }));
-            }
+            setErrorMsg((prev) => ({ ...prev, email: !value ? "Please enter your email address" : !emailRegex.test(value) ? "Please enter your valid email address" : "" }));
           }}
         />
         {errorMsg.email && <small>{errorMsg.email}</small>}
@@ -75,11 +76,7 @@ const Login = ({ setStep }) => {
           onChange={(e) => {
             const value = e.target.value;
             setPassword(value);
-            if (!value) {
-              setErrorMsg((prev) => ({ ...prev, password: "Please enter your password" }));
-            } else {
-              setErrorMsg((prev) => ({ ...prev, password: "" }));
-            }
+            setErrorMsg((prev) => ({ ...prev, password: !value ? "Please enter your password" : "" }));
           }}
         />
         {errorMsg.password && <small>{errorMsg.password}</small>}
@@ -92,11 +89,11 @@ const Login = ({ setStep }) => {
           New customer? Create your account
         </span>
       </div>
-      <div className="col-md-6 mt-5">
-
+      <div className="col-md-6 mt-4 mt-md-5">
         <button
-          disabled={!email || !password || errorMsg.email || errorMsg.password || loading}
-          type="submit"
+          onClick={handleLogin}
+          disabled={loading}
+          type="button"
         >
           {
             loading ?

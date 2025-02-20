@@ -6,16 +6,25 @@ import { toast } from "react-toastify";
 import './AdminLogin.scss';
 import { getCartItems } from "../../../utils";
 import Toast from "../../../components/Toast/Toast";
+import { emailRegex } from "../../../Helper";
 
 const AdminLogin = () => {
-  const [email, setEmail] = useState("admin@gmail.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState({ email: "", password: "" });
 
+  const handleLogin = async () => {
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+    if (!email) {
+      setErrorMsg((prev) => ({ ...prev, email: "Please enter your email address" }))
+    } else if (!emailRegex.test(email)) {
+      setErrorMsg((prev) => ({ ...prev, email: "Please enter your valid email address" }));
+    }
+    if (!password) setErrorMsg((prev) => ({ ...prev, password: "Please enter your password" }));
+    if (!email || !emailRegex.test(email) || !password) return false;
+
     setLoading(true);
     const data = { email, password };
 
@@ -34,20 +43,26 @@ const AdminLogin = () => {
     <div className="adminLoginPage">
       <Toast />
       <div className="box">
-        <form onSubmit={handleLogin} className="row g-3">
+        <h1>Admin Login</h1>
+        <form className="row g-2 g-md-3">
           <div className="col-md-12">
             <label htmlFor="email" className="form-label">
               Email
             </label>
             <input
               autoComplete="off"
-              required
+              style={{ borderColor: errorMsg.password ? "#FF6666" : "" }}
               type="email"
               className="form-control"
               id="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                setEmail(value);
+                setErrorMsg((prev) => ({ ...prev, email: !value ? "Please enter your email address" : !emailRegex.test(value) ? "Please enter your valid email address" : "" }));
+              }}
             />
+            {errorMsg.email && <small>{errorMsg.email}</small>}
           </div>
           <div className="col-md-12">
             <label htmlFor="password" className="form-label">
@@ -55,18 +70,25 @@ const AdminLogin = () => {
             </label>
             <input
               autoComplete="off"
-              required
+              style={{ borderColor: errorMsg.password ? "#FF6666" : "" }}
               type="password"
               className="form-control"
               id="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                setPassword(value);
+                setErrorMsg((prev) => ({ ...prev, password: !value ? "Please enter your password" : "" }));
+              }}
             />
+            {errorMsg.password && <small>{errorMsg.password}</small>}
           </div>
-          <div className="col-md-6 mt-4">
+          <div className="col-md-6 mt-4 mt-md-5">
             <button
+              onClick={handleLogin}
               disabled={loading}
-              type="submit">
+              type="button"
+            >
               {
                 loading ?
                   <div class="spinner-border d-flex mx-auto" role="status">

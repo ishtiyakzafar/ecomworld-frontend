@@ -3,7 +3,7 @@ import authService from "../../services/auth";
 import { useDispatch } from "react-redux";
 import { actionLogin } from "../../store/authSlice";
 import { getCartItems } from "../../utils";
-import { validateSignup } from "../../Helper";
+import { emailRegex, passwordRegex, validateSignup } from "../../Helper";
 import { toast } from "react-toastify";
 
 const Register = ({ setStep }) => {
@@ -35,28 +35,53 @@ const Register = ({ setStep }) => {
 
 
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+  const handleRegister = async () => {
+
+    if (!user.name) setErrorMsg((prev) => ({ ...prev, name: "Please enter your name" }));
+
+    if (!user.email) {
+      setErrorMsg((prev) => ({ ...prev, email: "Please enter your email address" }));
+    } else if (!emailRegex.test(user.email)) {
+      setErrorMsg((prev) => ({ ...prev, email: "Please enter your valid email address" }));
+    }
+
+    if (!user.password) {
+      setErrorMsg((prev) => ({ ...prev, password: "Please create your password" }));
+    } else if (!passwordRegex.test(user.password)) {
+      setErrorMsg((prev) => ({ ...prev, password: "Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character." }));
+    } else if (user.cpassword && user.cpassword !== user.password) {
+      setErrorMsg((prev) => ({ ...prev, cpassword: "Passwords do not match" }));
+    }
+
+    if (!user.cpassword) {
+      setErrorMsg((prev) => ({ ...prev, cpassword: "Please confirm your password" }));
+    } else if (user.cpassword !== user.password) {
+      setErrorMsg((prev) => ({ ...prev, cpassword: "Passwords do not match" }));
+    }
+
+    if (!user.name || !user.email || !emailRegex.test(user.email) || !user.password ||
+      !passwordRegex.test(user.password) || !user.cpassword || user.cpassword !== user.password
+    ) return false;
+
     setLoading(true);
     const { name, email, password } = user;
 
-    if (getCartItems()) {
-      data.cartItems = getCartItems();
-    }
+    if (getCartItems()) data.cartItems = getCartItems();
 
     try {
       const res = await authService.signup({ name, email, password });
       dispatch(actionLogin(res.userDetails));
       if (getCartItems()) localStorage.removeItem('cart');
     } catch (error) {
-      toast.log(error);
+      toast.error(error);
     } finally {
       setLoading(false);
     }
+
   };
 
   return (
-    <form onSubmit={handleRegister} className="row g-3">
+    <form className="row g-2 g-md-3">
       <div className="col-md-12">
         <label htmlFor="name" className="form-label">
           Name
@@ -128,12 +153,9 @@ const Register = ({ setStep }) => {
       </div>
       <div className="col-md-6 mt-4">
         <button
-          disabled={
-            Object.values(user).some(value => value.trim() === "") ||
-            Object.values(errorMsg).some(value => value.trim() !== "") ||
-            loading
-          }
-          type="submit"
+          onClick={handleRegister}
+          disabled={loading}
+          type="button"
         >
           {
             loading ?

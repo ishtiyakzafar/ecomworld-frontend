@@ -15,6 +15,7 @@ import { MdMenu } from "react-icons/md";
 import { LiaAngleRightSolid } from "react-icons/lia";
 import useWindowDimensions from '../../hooks/screenWidth';
 import { addIsShowToCategories } from '../../Helper';
+import { MdClose } from "react-icons/md";
 
 
 const Header = () => {
@@ -42,15 +43,15 @@ const Header = () => {
   return (
     <header>
       <div className='headerLeft'>
-        <MdMenu onClick={() => setShowDrawer(!showDrawer)} />
+        <MdMenu onClick={() => setShowDrawer(true)} />
         <Link onClick={() => setShowDrawer(false)} to='/' className='logo'>Ecom<span>World</span></Link>
       </div>
 
       {showDrawer && <div className='bg-overlay'></div>}
       <ul className={showDrawer ? 'menu show' : 'menu'}>
         <div className='headerLeft mobile'>
-          <MdMenu onClick={() => setShowDrawer(!showDrawer)} />
           <Link onClick={() => setShowDrawer(false)} to='/' className='logo'>Ecom<span>World</span></Link>
+          <MdClose onClick={() => setShowDrawer(false)} />
         </div>
 
         {
