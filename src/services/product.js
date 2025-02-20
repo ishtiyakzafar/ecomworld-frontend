@@ -1,17 +1,15 @@
 import http from "./http";
 
 
-const getAllProducts = () => {
-  return http.get('products');
-}
+const getProducts = (query) => {
 
-const getProductsByCategory = (slug1, slug2, slug3) => {
+  const { categoryLevel, categoryParams } = query;
 
-  let url = "products/categories";
+  let url = "products";
 
-  if (slug1) url += `/${slug1}`;
-  if (slug2) url += `/${slug2}`;
-  if (slug3) url += `/${slug3}`;
+  if (categoryLevel) url += `?level=${categoryLevel}`;
+  if (categoryParams) url += `&category=${categoryParams}`;
+
 
   return http.get(url);
 }
@@ -47,8 +45,7 @@ const updateProduct = (data, id) => {
 }
 
 const productService = {
-  getAllProducts,
-  getProductsByCategory,
+  getProducts,
   getNewArrivalProduct,
   getOnSaleProduct,
   getBestSellerProduct,

@@ -20,7 +20,7 @@ const CustomerRoutes = () => {
 
   // Redirect admins to the admin page
   if (isLoggedIn && user.role === ADMIN_ROLE) {
-    return <Navigate to="/admin/dashboard" />;
+    return <Navigate to="/admin/products" />;
   }
 
   return <Outlet />;

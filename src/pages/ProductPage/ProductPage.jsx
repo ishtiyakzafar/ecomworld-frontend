@@ -5,38 +5,55 @@ import { CiFilter } from "react-icons/ci";
 import { LiaAngleDownSolid } from "react-icons/lia";
 import ProductFilter from "../../components/ProductFilter/ProductFilter";
 import productService from "../../services/product";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
+import DataLoader from "../../components/DataLoader/DataLoader";
+
+
 
 const ProductPage = () => {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const { slug1, slug2, slug3 } = useParams();
+  const { topLevel, secondLevel, thirdLevel } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParams = searchParams.get("category");
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const fetchAllProducts = async () => {
-    setLoading(true);
     try {
-      let res;
-
-      if (slug1 || slug2 || slug3) {
-        res = await productService.getProductsByCategory(slug1, slug2, slug3);
-      } else {
-        res = await productService.getAllProducts();
+      if (!loading) {
+        setIsLoading(true);
       }
+
+      const categoryLevel = [topLevel, secondLevel, thirdLevel].filter(Boolean).join();
+
+      const query = {
+        categoryLevel,
+        categoryParams
+      }
+
+      const res = await productService.getProducts(query);
 
       setProducts(res.products);
     } catch (error) {
       toast.error(error);
     } finally {
       setLoading(false);
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     fetchAllProducts();
-  }, [slug1, slug2, slug3]);
+  }, [
+    topLevel,
+    secondLevel,
+    thirdLevel,
+    categoryParams
+  ]);
 
 
   return (
@@ -50,37 +67,44 @@ const ProductPage = () => {
           </div>
 
           <div className={s.productList}>
-            <div className={s.filterSorting}>
-              <div onClick={() => setShowDrawer(true)} className={s.filter}>
-                <CiFilter />
-                <span>FILTER</span>
-              </div>
-              <div className={s.sorting}>
-                <div className="dropdown">
-                  <div
-                    className={s.selectDropdown}
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <span>Sort</span> <LiaAngleDownSolid />
-                  </div>
-                  <ul className="dropdown-menu">
-                    <li className="dropdown-item">Alphabetically A-Z</li>
-                    <li className="dropdown-item">Alphabetically Z-A</li>
-                    <li className="dropdown-item">Price, low to high</li>
-                    <li className="dropdown-item">Price, high to low</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            {
+              isLoading &&
+              <DataLoader />}
 
-            <div className="row g-3 g-md-4">
-              {products.map((item) => (
-                <div key={item._id} className="col-6 col-md-4 col-lg-3 col-xl-4 col-xxl-3">
-                  <ProductCard item={item} />
+            <>
+              <div className={s.filterSorting}>
+                <div onClick={() => setShowDrawer(true)} className={s.filter}>
+                  <CiFilter />
+                  <span>FILTER</span>
                 </div>
-              ))}
-            </div>
+                <div className={s.sorting}>
+                  <div className="dropdown">
+                    <div
+                      className={s.selectDropdown}
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <span>Sort</span> <LiaAngleDownSolid />
+                    </div>
+                    <ul className="dropdown-menu">
+                      <li className="dropdown-item">Alphabetically A-Z</li>
+                      <li className="dropdown-item">Alphabetically Z-A</li>
+                      <li className="dropdown-item">Price, low to high</li>
+                      <li className="dropdown-item">Price, high to low</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row g-3 g-md-4">
+                {products.map((item) => (
+                  <div key={item._id} className="col-6 col-md-4 col-lg-3 col-xl-4 col-xxl-3">
+                    <ProductCard item={item} />
+                  </div>
+                ))}
+              </div>
+            </>
+
           </div>
         </div>
       }

@@ -12,8 +12,6 @@ import wishlistService from "./services/wishlist.js";
 import { CUSTOMER_ROLE } from "./Helper/constant.js";
 import categoryService from "./services/categories.js";
 import { actionSetCategories } from "./store/appSlice.js";
-import Toast from "./components/Toast/Toast.jsx";
-import OrderDetails from "./pages/Admin/OrderDetails/OrderDetails.jsx";
 
 const ProfilePage = lazy(() => import("./pages/ProfilePage/ProfilePage.jsx"));
 const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation/OrderConfirmation.jsx"));
@@ -22,7 +20,8 @@ const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 const Layout = lazy(() => import("./components/Layout/Layout"));
 const PageNotFound = lazy(() => import("./pages/PageNotFound/PageNotFound.jsx"));
 const ProductDetailPage = lazy(() => import("./pages/ProductDetailPage/ProductDetailPage.jsx"));
-const Dashboard = lazy(() => import("./pages/Admin/Dashboard/Dashboard.jsx"));
+const ProductList = lazy(() => import("./pages/Admin/ProductList/ProductList.jsx"));
+const OrderDetails = lazy(() => import("./pages/Admin/OrderDetails/OrderDetails.jsx"));
 const AddUpdateProduct = lazy(() => import("./pages/Admin/AddUpdateProduct/AddUpdateProduct.jsx"));
 const CustomerList = lazy(() => import("./pages/Admin/CustomerList/CustomerList.jsx"));
 const OrderList = lazy(() => import("./pages/Admin/OrderList/OrderList.jsx"));
@@ -34,7 +33,6 @@ const CheckoutPage = lazy(() => import("./pages/CheckoutPage/CheckoutPage.jsx"))
 const AboutUs = lazy(() => import("./pages/AboutUs/AboutUs.jsx"));
 const ContactUs = lazy(() => import("./pages/ContactUs/ContactUs.jsx"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage.jsx"));
-
 
 
 const App = () => {
@@ -80,7 +78,7 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/admin" element={<AdminLogin />} />
-            <Route path="/products/:slug1?/:slug2?/:slug3?" element={<ProductPage />} />
+            <Route path="/:topLevel?/:secondLevel?/:thirdLevel?" element={<ProductPage />} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/about-us" element={<AboutUs />} />
@@ -100,7 +98,7 @@ const App = () => {
         {/* ADMIN ROUTES */}
         <Route element={<AdminPrivateRoutes />}>
           <Route element={<AdminLayout />}>
-            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/products" element={<ProductList />} />
             <Route path="/admin/products/add" element={<AddUpdateProduct />} />
             <Route path="/admin/products/:id/update" element={<AddUpdateProduct />} />
             <Route path="/admin/customers" element={<CustomerList />} />

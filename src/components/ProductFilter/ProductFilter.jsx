@@ -4,52 +4,21 @@ import { MdClose } from "react-icons/md";
 import { CiFilter } from "react-icons/ci";
 import { LiaAngleDownSolid, LiaAngleUpSolid } from 'react-icons/lia';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-
-const categoryData = [
-  {
-    id: 1,
-    name: 'Tops',
-  },
-  {
-    id: 2,
-    name: 'Bottoms',
-  },
-  {
-    id: 3,
-    name: 'Dresses',
-  },
-  {
-    id: 4,
-    name: 'Jackets',
-  },
-  {
-    id: 5,
-    name: 'Accessories',
-  },
-]
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const sizeData = [
   {
     id: 2,
-    size: 'S',
-    item: 20,
+    size: 'Small'
   },
   {
     id: 3,
-    size: 'M',
-    item: 30,
+    size: 'Medium'
   },
   {
     id: 4,
-    size: 'L',
-    item: 40,
-  },
-  {
-    id: 5,
-    size: 'XL',
-    item: 50,
-  },
+    size: 'Large'
+  }
 ]
 
 const availabilityData = [
@@ -98,9 +67,48 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
       color: "orange",
     },
   ]);
-  const { slug1, slug2, slug3 } = useParams();
+  const { topLevel, secondLevel, thirdLevel } = useParams();
+  const [categoryData, setCategoryData] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParams = searchParams.get("category");
 
-  console.log(slug1, slug2, slug3);
+
+  useEffect(() => {
+    if (topLevel && !secondLevel && !thirdLevel && categories.length > 0) {
+      const secondCat = categories.find((item) => item.topLevelCategory === topLevel).secondLevelCategories;
+      const result = secondCat.map((item) => ({ checked: false, id: item._id, name: item.secondLevelCategory }));
+
+      if (categoryParams) {
+        result.forEach(item => {
+          if (categoryParams.split(',').includes(item.name)) {
+            item.checked = true;
+          }
+        });
+      }
+
+      setCategoryData(result);
+    }
+
+    if (topLevel && secondLevel && !thirdLevel && categories.length > 0) {
+      const secondCat = categories.find((item) => item.topLevelCategory === topLevel).secondLevelCategories;
+      const thirdCat = (secondCat.find((item) => item.secondLevelCategory === secondLevel).thirdLevelCategories);
+      const result = thirdCat.map((item) => ({ checked: false, id: item._id, name: item.thirdLevelCategory }));
+
+      if (categoryParams) {
+        result.forEach(item => {
+          if (categoryParams.split(',').includes(item.name)) {
+            item.checked = true;
+          }
+        });
+      }
+
+      setCategoryData(result);
+    }
+  }, [
+    topLevel,
+    secondLevel,
+    thirdLevel
+  ])
 
 
   const handleSelect = (item) => {
@@ -114,6 +122,22 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
       })
     );
   };
+
+  useEffect(() => {
+    if (categoryData.length > 0) {
+      const category = categoryData.filter((item) => item.checked).map((val) => val.name);
+
+      if (category.length > 0) {
+        searchParams.set("category", category.join(","));
+
+      } else {
+        searchParams.delete("category");
+      }
+
+      setSearchParams(searchParams);
+    }
+
+  }, [categoryData])
 
   return (
     <>
@@ -135,15 +159,16 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
             {showCategoryMenu && (
               <ul>
                 {categoryData.map((item) => (
-                  <li>
+                  <li key={item.id}>
                     <div className="form-check">
                       <input
                         className="form-check-input"
                         type="checkbox"
-                        value=""
+                        checked={item.checked}
                         id={item.name}
+                        onChange={(e) => setCategoryData((prev) => prev.map((cat) => cat.id === item.id ? { ...cat, checked: e.target.checked } : cat))}
                       />
-                      <label className="form-check-label" for={item.name}>
+                      <label className="form-check-label" htmlFor={item.name}>
                         {item.name}
                       </label>
                     </div>
@@ -172,7 +197,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
                         value=""
                         id={item.product}
                       />
-                      <label className="form-check-label" for={item.product}>
+                      <label className="form-check-label" htmlFor={item.product}>
                         {item.product}
                       </label>
                     </div>
@@ -193,7 +218,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
 
             {showPriceMenu && (
               <>
-                <label for="customRange1" className="form-label">
+                <label htmlFor="customRange1" className="form-label">
                   Upto ₹{priceRange * 10}
                 </label>
                 <input
@@ -254,8 +279,8 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
                         value=""
                         id={item.size}
                       />
-                      <label className="form-check-label" for={item.size}>
-                        {item.size}  ({item.item})
+                      <label className="form-check-label" htmlFor={item.size}>
+                        {item.size}
                       </label>
                     </div>
                   </li>

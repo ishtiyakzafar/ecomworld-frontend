@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Dashboard.scss';
+import './ProductList.scss';
 import { toast } from 'react-toastify';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import productService from '../../../services/product';
@@ -7,9 +7,8 @@ import { calculateStock } from '../../../Helper';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineModeEdit } from 'react-icons/md';
 import Toast from '../../../components/Toast/Toast';
-import Loader from '../../../components/Loader/Loader';
 
-const Dashboard = () => {
+const ProductList = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -90,4 +89,4 @@ const Dashboard = () => {
   )
 };
 
-export default Dashboard;
+export default ProductList;

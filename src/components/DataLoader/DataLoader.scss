@@ -1,0 +1,17 @@
+.dataLoader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .spinner-border {
+    color: #eb3b5a;
+    border-right-color: #ddd;
+    --bs-spinner-border-width: 3px !important;
+  }
+}
