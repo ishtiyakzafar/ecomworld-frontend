@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AddressCard.scss";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -6,9 +6,9 @@ import addressService from "../../services/address";
 import { useDispatch } from "react-redux";
 import { actionDeleteAddress, actionSetShippingAddress } from "../../store/addressSlice";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import Toast from "../Toast/Toast";
 
 const AddressCard = ({
+  setLoading,
   setIsUpdate,
   setAddress,
   setShowAddresses,
@@ -21,17 +21,19 @@ const AddressCard = ({
 
   const handleDeleteAddress = async () => {
     try {
+      setLoading(true);
       const res = await addressService.deleteAddress(item._id);
       dispatch(actionDeleteAddress(item._id));
       toast.success(res.message);
     } catch (error) {
       toast.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="address_card">
-      <Toast />
       {!isAddList && <h5>Shipping address:</h5>}
 
       <div className="detail">

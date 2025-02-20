@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AddNewAddress.scss";
 import {
   actionAddAddress,
@@ -7,7 +7,6 @@ import {
 import { useDispatch } from "react-redux";
 import addressService from "../../services/address";
 import { toast } from "react-toastify";
-import Toast from "../Toast/Toast";
 
 const AddNewAddress = ({
   setShowAddresses,
@@ -17,6 +16,7 @@ const AddNewAddress = ({
   setAddress,
 }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -27,6 +27,7 @@ const AddNewAddress = ({
     e.preventDefault();
     try {
       let data;
+      setLoading(true);
 
       if (isUpdate) {
         data = await addressService.updateAddress(address);
@@ -38,14 +39,23 @@ const AddNewAddress = ({
       setShowAddAddress(false);
       setShowAddresses(true);
       toast.success(data.message);
+      setAddress({
+        fullName: "",
+        mobile: "",
+        streetAddress: "",
+        city: "",
+        state: "",
+        pinCode: "",
+      });
     } catch (error) {
       toast.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="addNewAddress">
-      <Toast />
       <form onSubmit={addAndUpdateAddress} className="row g-2 g-md-3">
         <div className="col-md-6">
           <label htmlFor="fullName" className="form-label">
@@ -139,7 +149,18 @@ const AddNewAddress = ({
           />
         </div>
         <div className="col-md-4 add_btn">
-          <button>{isUpdate ? "Update" : "Add"}</button>
+          <button
+            disabled={loading}
+          >
+            {
+              loading ?
+                <div class="spinner-border d-flex mx-auto" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                :
+                isUpdate ? "Update" : "Add"
+            }
+          </button>
         </div>
       </form>
     </div>

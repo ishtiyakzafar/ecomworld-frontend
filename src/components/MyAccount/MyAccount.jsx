@@ -2,24 +2,22 @@ import './MyAccount.scss';
 import React, { useState } from "react";
 import authService from "../../services/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { actionLogin, actionUpdateUser } from "../../store/authSlice";
-import { getCartItems } from "../../utils";
+import { actionUpdateUser } from "../../store/authSlice";
 import SectionHeading from '../SectionHeading/SectionHeading';
 import { toast } from 'react-toastify';
-import { isResetPassValidated, passwordRegex } from '../../Helper';
+import { emailRegex, isResetPassValidated, passwordRegex } from '../../Helper';
 import userService from '../../services/user';
 import Toast from '../Toast/Toast';
 
 
-
-
 const MyAccount = () => {
-  const { isLoggedIn, user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const dispatch = useDispatch();
   const [showInst, setShowInst] = useState(false);
   const [isPassMatch, setIsPassMatch] = useState(false);
+  const [errorMsg, setErrorMsg] = useState({ email: "", password: "" });
   const [resetPassword, setResetPassword] = useState({
     currentPassword: "",
     newPassword: "",
@@ -30,6 +28,8 @@ const MyAccount = () => {
     newPassword: false,
     confirmNewPassword: false
   });
+  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   const handleOnChange = (e) => {
@@ -55,11 +55,14 @@ const MyAccount = () => {
 
   const handleUpdateUser = async () => {
     try {
+      setLoading(true);
       const res = await userService.updateUser({ name, email });
       dispatch(actionUpdateUser(res.user))
       toast.success(res.message);
     } catch (error) {
       toast.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,11 +70,14 @@ const MyAccount = () => {
     if (!isResetPassValidated(resetPassword, showInst, isPassMatch)) return false;
 
     try {
+      setIsLoading(true);
       const { token } = await authService.getAccessToken();
       const res = await userService.resetPassword({ token, currentPassword: resetPassword.currentPassword, newPassword: resetPassword.newPassword });
       toast.success(res.message);
     } catch (error) {
       toast.error(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -79,7 +85,7 @@ const MyAccount = () => {
     <div className='myAccount'>
       <Toast />
       <SectionHeading title='My Account' />
-      <form className="row g-3">
+      <form className="row g-2 g-md-3">
         <div className="col-md-12">
           <div className='heading'>Contact Details</div>
         </div>
@@ -88,39 +94,63 @@ const MyAccount = () => {
             Name
           </label>
           <input
+            style={{ borderColor: errorMsg.name ? "#FF6666" : "" }}
             autoComplete="off"
             required
             type="text"
             className="form-control"
             id="name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setName(value);
+              setErrorMsg((prev) => ({ ...prev, name: !value ? "Please enter your name" : "" }));
+            }}
           />
+          {errorMsg.name && <small>{errorMsg.name}</small>}
         </div>
         <div className="col-md-6">
           <label htmlFor="email" className="form-label">
             Email
           </label>
           <input
+            style={{ borderColor: errorMsg.email ? "#FF6666" : "" }}
             autoComplete="off"
             required
             type="email"
             className="form-control"
             id="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setEmail(value);
+              setErrorMsg((prev) => ({ ...prev, email: !value ? "Please enter your email address" : !emailRegex.test(value) ? "Please enter your valid email address" : "" }));
+            }}
           />
+          {errorMsg.email && <small>{errorMsg.email}</small>}
         </div>
         <div className="col-md-6 mt-4">
-          <button onClick={handleUpdateUser} type="button">Update</button>
+          <button
+            onClick={handleUpdateUser}
+            disabled={!name || !email || !emailRegex.test(email) || loading}
+            type="button"
+          >
+            {
+              loading ?
+                <div class="spinner-border d-flex mx-auto" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                :
+                "Update"
+            }
+          </button>
         </div>
       </form>
 
-      <form className="row g-3 mt-4">
+      <form className="row g-2 g-md-3 mt-3">
         <div className="col-md-12">
           <div className='heading'>Reset Password</div>
         </div>
-
         <div className="col-md-12">
           <label htmlFor="currentPassword" className="form-label">
             Current Password
@@ -173,8 +203,17 @@ const MyAccount = () => {
         </div>
         <div className="col-md-6 mt-4">
           <button
-            disabled={!isResetPassValidated(resetPassword, showInst, isPassMatch)}
-            onClick={handleResetPassword} type="button">Update Password</button>
+            disabled={!isResetPassValidated(resetPassword, showInst, isPassMatch) || isLoading}
+            onClick={handleResetPassword} type="button">
+            {
+              isLoading ?
+                <div class="spinner-border d-flex mx-auto" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                :
+                "Update Password"
+            }
+          </button>
         </div>
       </form>
     </div>

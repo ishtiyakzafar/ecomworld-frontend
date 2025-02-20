@@ -7,8 +7,8 @@ import { getCartItems } from "../../utils";
 import { emailRegex } from "../../Helper";
 
 const Login = ({ setStep }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("anil@gmail.com");
+  const [password, setPassword] = useState("gsh2627SH@");
   const dispatch = useDispatch();
   const [errorMsg, setErrorMsg] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);

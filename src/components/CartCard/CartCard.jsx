@@ -9,10 +9,9 @@ import { LiaShippingFastSolid } from "react-icons/lia";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { formatNumbers } from '../../Helper';
-import Toast from '../Toast/Toast';
 
 
-const CartCard = ({ isConfrim, isOrderSummary, item }) => {
+const CartCard = ({ isOrderSummary, item }) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -45,7 +44,6 @@ const CartCard = ({ isConfrim, isOrderSummary, item }) => {
 
   return (
     <div className='cart_card'>
-      <Toast />
       <div className='image'>
         <Link to={`/product/${item.product._id}`}>
           <img src='https://ecomusnext-themesflat.vercel.app/images/products/orange-1.jpg' alt="img" />
@@ -63,7 +61,7 @@ const CartCard = ({ isConfrim, isOrderSummary, item }) => {
           </div>
         </div>
 
-        {!isConfrim &&
+        {!isOrderSummary &&
           <div className='quantity'>
             <BiMinus onClick={handleDecreaseQty} />
             <span>{item.quantity}</span>

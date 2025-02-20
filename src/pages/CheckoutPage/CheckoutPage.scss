@@ -6,7 +6,7 @@
   }
 
   @media (max-width: 768px) {
-    padding: 20px 0;
+    padding: 24px 0;
   }
 
   .checkout-step {
@@ -15,23 +15,32 @@
     margin-bottom: 50px;
     gap: 100px;
 
+    @media(max-width:768px) {
+      margin-bottom: 25px;
+      gap: 30px;
+    }
+
     .step {
       text-align: center;
       display: flex;
       align-items: center;
       gap: 10px;
-      background: #989898;
-      padding: 5px 15px;
+      background: #d5d5d5;
+      padding: 7px 15px;
       border-radius: 25px;
       position: relative;
       cursor: pointer;
+
+      @media(max-width:768px) {
+        padding: 5px 10px;
+      }
 
       &::after {
         content: "";
         position: absolute;
         left: 100%;
         width: 100%;
-        border: 1px dashed #989898;
+        border: 1px dashed #ddd;
       }
 
       &:last-child {
@@ -44,6 +53,11 @@
         font-size: 14px;
         font-weight: 500;
         color: #fff;
+
+        @media(max-width:768px) {
+          font-size: 12px;
+          font-weight: 400;
+        }
       }
 
       &:first-child {
@@ -126,7 +140,7 @@
     .address_list {
       overflow: auto;
       max-height: 300px;
-      padding: 25px;
+      padding: 24px;
 
       @media (max-width: 768px) {
         padding: 15px;
@@ -148,9 +162,14 @@
 
   .payment-option {
     box-shadow: 0px 3px 24px 0px #0000001f;
-    padding: 25px;
+    padding: 24px;
     border-radius: 12px;
     background: #fff;
+
+    @media (max-width: 768px) {
+      padding: 12px;
+      margin-bottom: 24px;
+    }
 
     h5 {
       color: #2e276f;
@@ -201,10 +220,15 @@
       border: 1px solid #d0baff;
       border-radius: 8px;
 
+
       p {
         font-size: 14px;
         font-weight: 500;
         color: #2e276f;
+
+        @media(max-width:768px) {
+          font-size: 12px;
+        }
       }
     }
 
@@ -217,7 +241,7 @@
   .shipping-address {
     box-shadow: 0px 3px 24px 0px #0000001f;
     margin-bottom: 25px;
-    padding: 25px;
+    padding: 24px;
     border-radius: 12px;
     background: #fff;
   }

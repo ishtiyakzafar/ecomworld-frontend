@@ -57,7 +57,7 @@ const ProductDetailSection = ({ details }) => {
         </h4>
       </div>
 
-      <div className={s.productRating}>
+      {/* <div className={s.productRating}>
         <StarRatings
           rating={2.3}
           starRatedColor="yellow"
@@ -69,11 +69,11 @@ const ProductDetailSection = ({ details }) => {
         <p>
           142536 Rating <a href="#">3625 review</a>
         </p>
-      </div>
+      </div> */}
 
       <div className={s.productSize}>
         <p>
-          Size:<span>{size}</span>
+          Size: <span>{size}</span>
         </p>
         <div className={s.sizeOption}>
           {details.size?.map((item) => (
@@ -106,9 +106,7 @@ const ProductDetailSection = ({ details }) => {
                 <span class="visually-hidden">Loading...</span>
               </div>
               :
-              <>
-                <GiShoppingBag /> Add to Cart
-              </>
+              <><GiShoppingBag /> Add to Cart</>
           }
         </button>
 

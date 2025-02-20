@@ -9,6 +9,7 @@ import Empty from '../../components/Empty/Empty';
 import { LiaShoppingBagSolid } from 'react-icons/lia';
 import { toast } from 'react-toastify';
 import Toast from '../../components/Toast/Toast';
+import Loader from '../../components/Loader/Loader';
 
 const tabsData = [
   {
@@ -26,6 +27,7 @@ const tabsData = [
 ]
 
 const OrderPage = () => {
+  const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
   const [tab, setTab] = useState(1);
 
@@ -35,6 +37,8 @@ const OrderPage = () => {
       setOrders(res);
     } catch (error) {
       toast.error(error)
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -45,12 +49,15 @@ const OrderPage = () => {
   return (
     <div className='order-page'>
       <Toast />
-      <div className='containerxx'>
-        <SectionHeading title='My Order' />
+      {loading ?
+        <Loader />
+        :
+        <div className='containerxx'>
+          <SectionHeading title='My Order' />
 
-        {orders.length > 0 ?
-          <>
-            {/* <div className='tabs'>
+          {orders.length > 0 ?
+            <>
+              {/* <div className='tabs'>
               {
                 tabsData.map((item) => (
                   <span
@@ -63,50 +70,51 @@ const OrderPage = () => {
                 ))
               }
             </div> */}
-            {orders.map((order) => (
-              <div key={order._id} className='orders'>
-                <div className='detail'>
-                  <div className='order-detail'>
-                    <p><span>Order Id</span> #{order._id}</p>
-                    <p><span>Order Date</span> {moment(order.orderDate).format("MMM Do YY")}</p>
+              {orders.map((order) => (
+                <div key={order._id} className='orders'>
+                  <div className='detail'>
+                    <div className='order-detail'>
+                      <p><span>Order Id</span> #{order._id}</p>
+                      <p><span>Order Date</span> {moment(order.orderDate).format("MMM Do YY")}</p>
+                    </div>
+                    <div className='order-detail'>
+                      <p><span>Payment Method</span> COD</p>
+                      <p><span>Order Total</span> ₹{formatNumbers(order.totalAmount)}</p>
+                    </div>
                   </div>
-                  <div className='order-detail'>
-                    <p><span>Payment Method</span> COD</p>
-                    <p><span>Order Total</span> ₹{formatNumbers(order.totalAmount)}</p>
+
+                  <div className="shippingAddress">
+                    <h5>Shipping address:</h5>
+                    <h6>
+                      {order.shippingAddress.fullName} <span>{order.shippingAddress.mobile}</span>
+                    </h6>
+                    <p>
+                      {order.shippingAddress.streetAddress} - <span>{order.shippingAddress.pinCode}</span>
+                    </p>
                   </div>
-                </div>
 
-                <div className="shippingAddress">
-                  <h5>Shipping address:</h5>
-                  <h6>
-                    {order.shippingAddress.fullName} <span>{order.shippingAddress.mobile}</span>
-                  </h6>
-                  <p>
-                    {order.shippingAddress.streetAddress} - <span>{order.shippingAddress.pinCode}</span>
-                  </p>
+                  {
+                    order.orderItem.map((item) => (
+                      <OrderCard
+                        fetchUserOrders={fetchUserOrders}
+                        orderId={order._id}
+                        key={item._id}
+                        item={item}
+                      />
+                    ))
+                  }
                 </div>
-
-                {
-                  order.orderItem.map((item) => (
-                    <OrderCard
-                      fetchUserOrders={fetchUserOrders}
-                      orderId={order._id}
-                      key={item._id}
-                      item={item}
-                    />
-                  ))
-                }
-              </div>
-            ))}
-          </>
-          :
-          <Empty
-            icon={<LiaShoppingBagSolid />}
-            heading='No orders found!'
-            title='Once you place an order, you’ll see it listed here.'
-          />
-        }
-      </div>
+              ))}
+            </>
+            :
+            <Empty
+              icon={<LiaShoppingBagSolid />}
+              heading='No orders found!'
+              title='Once you place an order, you’ll see it listed here.'
+            />
+          }
+        </div>
+      }
     </div>
   )
 };

@@ -8,7 +8,6 @@ import moment from 'moment';
 import orderService from '../../services/order';
 import TrackOrderDrawer from './TrackOrderDrawer/TrackOrderDrawer';
 import { FaAngleRight } from 'react-icons/fa6';
-import Toast from '../Toast/Toast';
 
 const OrderCard = ({ orderId, fetchUserOrders, item }) => {
 
@@ -44,7 +43,6 @@ const OrderCard = ({ orderId, fetchUserOrders, item }) => {
 
   return (
     <div className='order-card'>
-      <Toast />
       <div className='image'>
         <Link to={`/product/${item.productId._id}`}>
           <img src='https://ecomusnext-themesflat.vercel.app/images/products/orange-1.jpg' alt="img" />
