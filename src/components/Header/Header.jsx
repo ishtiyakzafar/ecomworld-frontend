@@ -116,7 +116,7 @@ const Header = () => {
 
       <div className='header_right'>
         <div className='headerIcon'>
-          <IoSearchOutline />
+          <IoSearchOutline className='searchIcon' />
           {!isLoggedIn && <Link to='/login'><FiUser /></Link>}
           {isLoggedIn &&
             <Link className='wishlistIcon' to='/wishlist'>
