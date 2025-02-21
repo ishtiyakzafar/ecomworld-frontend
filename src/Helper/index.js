@@ -232,4 +232,25 @@ export const validateSignup = (name, value, newErrors, user) => {
   }
 
   return newErrors;
-} 
+}
+
+export const filterByCategories = (categories, topLevel, secondLevel, thirdLevel, categoryParams) => {
+  let categoryData = [];
+
+  const secondCat = categories.find((item) => item.topLevelCategory === topLevel).secondLevelCategories;
+
+  if (topLevel && !secondLevel && !thirdLevel) {
+    const secondCatResult = secondCat.map((item) => ({ checked: false, id: item._id, name: item.secondLevelCategory }));
+    if (categoryParams) secondCatResult.forEach(item => (item.checked = categoryParams.split(',').includes(item.name)));
+    categoryData = secondCatResult;
+  }
+
+  if (topLevel && secondLevel && !thirdLevel) {
+    const thirdCat = secondCat.find((item) => item.secondLevelCategory === secondLevel).thirdLevelCategories;
+    const thirdCatResult = thirdCat.map((item) => ({ checked: false, id: item._id, name: item.thirdLevelCategory }));
+    if (categoryParams) thirdCatResult.forEach(item => (item.checked = categoryParams.split(',').includes(item.name)));
+    categoryData = thirdCatResult;
+  }
+
+  return categoryData;
+}

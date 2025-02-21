@@ -28,6 +28,7 @@ const Header = () => {
   const [updatedCategories, setUpdatedCategories] = useState([]);
   const { width } = useWindowDimensions();
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showMegaMenu, setShowMegaMenu] = useState(true);
 
 
   useEffect(() => {
@@ -57,8 +58,13 @@ const Header = () => {
         {
           updatedCategories.map((category) => (
             <li key={category._id}>
-              <div className={category.isShow ? 'topMenu down' : 'topMenu'}>
-                <Link onClick={() => setShowDrawer(false)} to={`/${category.topLevelCategory}`}>{category.topLevelCategory}</Link>
+              <div onMouseEnter={() => setShowMegaMenu(true)} className={category.isShow ? 'topMenu down' : 'topMenu'}>
+                <Link
+                  onClick={() => {
+                    setShowDrawer(false);
+                    setShowMegaMenu(false);
+                  }}
+                  to={`/${category.topLevelCategory}`}>{category.topLevelCategory}</Link>
                 <LiaAngleRightSolid
                   className=''
                   onClick={() => {
@@ -71,13 +77,17 @@ const Header = () => {
                 />
               </div>
 
+
               {category.isShow &&
-                <div className='megaMenu'>
+                <div className={showMegaMenu ? 'megaMenu' : 'megaMenu close'}>
                   {category.secondLevelCategories.map((subCat) => (
                     <ul key={subCat._id}>
 
                       <h6 className={subCat.isShow ? 'topMenu down' : 'topMenu'}>
-                        <Link onClick={() => setShowDrawer(false)} to={`/${category.topLevelCategory}/${subCat.secondLevelCategory}`}>{subCat.secondLevelCategory}</Link>
+                        <Link onClick={() => {
+                          setShowDrawer(false);
+                          setShowMegaMenu(false);
+                        }} to={`/${category.topLevelCategory}/${subCat.secondLevelCategory}`}>{subCat.secondLevelCategory}</Link>
                         <LiaAngleRightSolid
                           onClick={() => {
                             setUpdatedCategories((prev) =>
@@ -100,7 +110,10 @@ const Header = () => {
 
                       {
                         subCat.isShow && subCat.thirdLevelCategories.map((item) => (
-                          <li key={item._id}><Link onClick={() => setShowDrawer(false)} to={`/${category.topLevelCategory}/${subCat.secondLevelCategory}/${item.thirdLevelCategory}`}>{item.thirdLevelCategory}</Link></li>
+                          <li key={item._id}><Link onClick={() => {
+                            setShowDrawer(false);
+                            setShowMegaMenu(false);
+                          }} to={`/${category.topLevelCategory}/${subCat.secondLevelCategory}/${item.thirdLevelCategory}`}>{item.thirdLevelCategory}</Link></li>
                         ))
                       }
                     </ul>

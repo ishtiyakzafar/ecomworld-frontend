@@ -67,9 +67,7 @@ const ProductPage = () => {
           </div>
 
           <div className={s.productList}>
-            {
-              isLoading &&
-              <DataLoader />}
+            {isLoading && <DataLoader />}
 
             <>
               <div className={s.filterSorting}>

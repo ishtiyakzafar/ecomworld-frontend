@@ -5,6 +5,7 @@ import { CiFilter } from "react-icons/ci";
 import { LiaAngleDownSolid, LiaAngleUpSolid } from 'react-icons/lia';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
+import { filterByCategories } from '../../Helper';
 
 const sizeData = [
   {
@@ -33,6 +34,9 @@ const availabilityData = [
 ]
 
 const ProductFilter = ({ showDrawer, setShowDrawer }) => {
+  const { topLevel, secondLevel, thirdLevel } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParams = searchParams.get("category");
   const { categories } = useSelector((state) => state.app);
   const [showCategoryMenu, setShowCategoryMenu] = useState(false);
   const [showPriceMenu, setShowPriceMenu] = useState(false);
@@ -67,48 +71,12 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
       color: "orange",
     },
   ]);
-  const { topLevel, secondLevel, thirdLevel } = useParams();
   const [categoryData, setCategoryData] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const categoryParams = searchParams.get("category");
 
 
   useEffect(() => {
-    if (topLevel && !secondLevel && !thirdLevel && categories.length > 0) {
-      const secondCat = categories.find((item) => item.topLevelCategory === topLevel).secondLevelCategories;
-      const result = secondCat.map((item) => ({ checked: false, id: item._id, name: item.secondLevelCategory }));
-
-      if (categoryParams) {
-        result.forEach(item => {
-          if (categoryParams.split(',').includes(item.name)) {
-            item.checked = true;
-          }
-        });
-      }
-
-      setCategoryData(result);
-    }
-
-    if (topLevel && secondLevel && !thirdLevel && categories.length > 0) {
-      const secondCat = categories.find((item) => item.topLevelCategory === topLevel).secondLevelCategories;
-      const thirdCat = (secondCat.find((item) => item.secondLevelCategory === secondLevel).thirdLevelCategories);
-      const result = thirdCat.map((item) => ({ checked: false, id: item._id, name: item.thirdLevelCategory }));
-
-      if (categoryParams) {
-        result.forEach(item => {
-          if (categoryParams.split(',').includes(item.name)) {
-            item.checked = true;
-          }
-        });
-      }
-
-      setCategoryData(result);
-    }
-  }, [
-    topLevel,
-    secondLevel,
-    thirdLevel
-  ])
+    setCategoryData(filterByCategories(categories, topLevel, secondLevel, thirdLevel, categoryParams));
+  }, [topLevel, secondLevel, thirdLevel])
 
 
   const handleSelect = (item) => {
@@ -123,20 +91,19 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
     );
   };
 
+
   useEffect(() => {
     if (categoryData.length > 0) {
       const category = categoryData.filter((item) => item.checked).map((val) => val.name);
 
       if (category.length > 0) {
         searchParams.set("category", category.join(","));
-
       } else {
         searchParams.delete("category");
       }
 
       setSearchParams(searchParams);
     }
-
   }, [categoryData])
 
   return (
@@ -148,35 +115,37 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
         </div>
 
         <div className={s.filterContent}>
-          <div className={s.filterCategory}>
-            <div
-              onClick={() => setShowCategoryMenu(!showCategoryMenu)}
-              className={s.heading}
-            >
-              <h4>Category</h4>
-              {showCategoryMenu ? <LiaAngleUpSolid /> : <LiaAngleDownSolid />}
+          {categoryData.length > 0 &&
+            <div className={s.filterCategory}>
+              <div
+                onClick={() => setShowCategoryMenu(!showCategoryMenu)}
+                className={s.heading}
+              >
+                <h4>Category</h4>
+                {showCategoryMenu ? <LiaAngleUpSolid /> : <LiaAngleDownSolid />}
+              </div>
+              {showCategoryMenu && (
+                <ul>
+                  {categoryData.map((item) => (
+                    <li key={item.id}>
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={item.checked}
+                          id={item.name}
+                          onChange={(e) => setCategoryData((prev) => prev.map((cat) => cat.id === item.id ? { ...cat, checked: e.target.checked } : cat))}
+                        />
+                        <label className="form-check-label" htmlFor={item.name}>
+                          {item.name}
+                        </label>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-            {showCategoryMenu && (
-              <ul>
-                {categoryData.map((item) => (
-                  <li key={item.id}>
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        checked={item.checked}
-                        id={item.name}
-                        onChange={(e) => setCategoryData((prev) => prev.map((cat) => cat.id === item.id ? { ...cat, checked: e.target.checked } : cat))}
-                      />
-                      <label className="form-check-label" htmlFor={item.name}>
-                        {item.name}
-                      </label>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          }
 
           <div className={s.filterByAvailability}>
             <div

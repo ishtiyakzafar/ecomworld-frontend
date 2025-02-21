@@ -280,6 +280,11 @@ header {
           visibility: visible;
         }
       }
+
+      .megaMenu.close {
+        opacity: 0;
+        visibility: hidden;
+      }
     }
   }
 
