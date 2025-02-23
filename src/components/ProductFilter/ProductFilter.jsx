@@ -6,7 +6,9 @@ import { LiaAngleDownSolid, LiaAngleUpSolid } from 'react-icons/lia';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { getCategoryData } from '../../Helper';
-
+import { IoMdArrowBack } from "react-icons/io";
+import { MdOutlineFilterList } from "react-icons/md";
+import useWindowDimensions from '../../hooks/screenWidth';
 
 const ProductFilter = ({ showDrawer, setShowDrawer }) => {
   const { topLevel, secondLevel, thirdLevel } = useParams();
@@ -103,6 +105,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
   const priceParams = searchParams.get("price");
   const colorParams = searchParams.get("color");
   const sizeParams = searchParams.get("size");
+  const { width } = useWindowDimensions();
 
   // CLEAR FILTERS IF NO PARAMS IN URL 
   useEffect(() => {
@@ -167,9 +170,11 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
     <>
       <div className={showDrawer ? `${s.filterDrawer} ${s.show}` : `${s.filterDrawer}`}>
         <div className={s.header}>
-          <span><CiFilter /> FILTER</span>
-          <MdClose className={s.close} onClick={() => setShowDrawer(false)} />
-          <small onClick={handleClearFilter}>Clear All</small>
+          <span><MdOutlineFilterList /> FILTER</span>
+          <div className='d-flex align-items-center'>
+            <small onClick={handleClearFilter}>Clear Filter</small>
+            <MdClose className={s.close} onClick={() => setShowDrawer(false)} />
+          </div>
         </div>
 
         <div className={s.filterContent}>
