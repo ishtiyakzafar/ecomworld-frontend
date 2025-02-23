@@ -2,12 +2,13 @@ import http from "./http";
 
 
 const getProducts = (query) => {
-  const { categoryLevel, categoryParams, colorParams, priceParams, sizeParams } = query;
+  const { categoryLevel, categoryParams, brandParams, colorParams, priceParams, sizeParams } = query;
 
   let url = "products";
 
   if (categoryLevel) url += `?level=${categoryLevel}`;
   if (categoryParams) url += `&category=${categoryParams}`;
+  if (brandParams) url += `&brand=${brandParams}`;
   if (colorParams) url += `&color=${colorParams}`;
   if (priceParams) url += `&price=${priceParams}`;
   if (sizeParams) url += `&size=${sizeParams}`;
@@ -45,6 +46,12 @@ const deleteProduct = (id) => {
 const updateProduct = (data, id) => {
   return http.put(`products/${id}`, data);
 }
+const getBrands = () => {
+  return http.get('products/brands');
+}
+const getColors = () => {
+  return http.get('products/colors');
+}
 
 const productService = {
   getProducts,
@@ -56,6 +63,8 @@ const productService = {
   getProductsWithTags,
   deleteProduct,
   updateProduct,
+  getBrands,
+  getColors,
 };
 
 export default productService;

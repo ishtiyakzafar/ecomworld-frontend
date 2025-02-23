@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import s from "./ProductPage.module.scss";
 import ProductCard from "../../components/ProductCard/ProductCard";
-import { CiFilter } from "react-icons/ci";
 import { LiaAngleDownSolid } from "react-icons/lia";
 import ProductFilter from "../../components/ProductFilter/ProductFilter";
 import productService from "../../services/product";
@@ -10,6 +9,7 @@ import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 import DataLoader from "../../components/DataLoader/DataLoader";
 import { useSelector } from "react-redux";
+import { MdOutlineFilterList } from "react-icons/md";
 
 
 const ProductPage = () => {
@@ -19,10 +19,10 @@ const ProductPage = () => {
   const { topLevel, secondLevel, thirdLevel } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParams = searchParams.get("category");
+  const brandParams = searchParams.get("brand");
   const colorParams = searchParams.get("color");
   const priceParams = searchParams.get("price");
   const sizeParams = searchParams.get("size");
-
   const [isLoading, setIsLoading] = useState(false);
   const { categoriesLoading } = useSelector((state) => state.app);
 
@@ -39,11 +39,11 @@ const ProductPage = () => {
         categoryParams,
         colorParams,
         priceParams,
-        sizeParams
+        sizeParams,
+        brandParams
       }
 
       const res = await productService.getProducts(query);
-
       setProducts(res.products);
     } catch (error) {
       toast.error(error);
@@ -55,7 +55,6 @@ const ProductPage = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-
     fetchAllProducts();
   }, [
     topLevel,
@@ -64,7 +63,8 @@ const ProductPage = () => {
     categoryParams,
     colorParams,
     priceParams,
-    sizeParams
+    sizeParams,
+    brandParams
   ]);
 
 
@@ -90,7 +90,7 @@ const ProductPage = () => {
                 {thirdLevel && <li><span>/</span> <Link to={`/${topLevel}/${secondLevel}/${thirdLevel}`}>{thirdLevel}</Link></li>}
               </ul>
               <div onClick={() => setShowDrawer(true)} className={s.filter}>
-                <CiFilter />
+                <MdOutlineFilterList />
                 <span>FILTER</span>
               </div>
               <div className={s.sorting}>

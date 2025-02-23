@@ -11,7 +11,8 @@ import cartService from "./services/cart.js";
 import wishlistService from "./services/wishlist.js";
 import { CUSTOMER_ROLE } from "./Helper/constant.js";
 import categoryService from "./services/categories.js";
-import { actionCategoriesLoading, actionSetCategories } from "./store/appSlice.js";
+import { actionCategoriesLoading, actionSetBrands, actionSetCategories, actionSetColors } from "./store/appSlice.js";
+import productService from "./services/product.js";
 
 const ProfilePage = lazy(() => import("./pages/ProfilePage/ProfilePage.jsx"));
 const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation/OrderConfirmation.jsx"));
@@ -60,6 +61,13 @@ const App = () => {
       try {
         const categories = await categoryService.getCategories();
         dispatch(actionSetCategories(categories));
+
+        const brands = await productService.getBrands();
+        dispatch(actionSetBrands(brands));
+
+        const colors = await productService.getColors();
+        dispatch(actionSetColors(colors));
+
       } catch (error) {
         toast.error(error);
       } finally {

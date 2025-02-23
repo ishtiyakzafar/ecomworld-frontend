@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import s from "./ProductFilter.module.scss";
 import { MdClose } from "react-icons/md";
-import { CiFilter } from "react-icons/ci";
 import { LiaAngleDownSolid, LiaAngleUpSolid } from 'react-icons/lia';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { getCategoryData } from '../../Helper';
-import { IoMdArrowBack } from "react-icons/io";
 import { MdOutlineFilterList } from "react-icons/md";
 import useWindowDimensions from '../../hooks/screenWidth';
 
 const ProductFilter = ({ showDrawer, setShowDrawer }) => {
   const { topLevel, secondLevel, thirdLevel } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { categories } = useSelector((state) => state.app);
+  const { categories, brands, colors } = useSelector((state) => state.app);
   const [showCategoryMenu, setShowCategoryMenu] = useState(true);
+  const [showBrandMenu, setShowBrandMenu] = useState(true);
   const [showPriceMenu, setShowPriceMenu] = useState(true);
   const [showColorMenu, setShowColorMenu] = useState(true);
   const [showSizeMenu, setShowSizeMenu] = useState(true);
   const [showAvailabilityMenu, setShowAvailabilityMenu] = useState(true);
   const [categoryData, setCategoryData] = useState([]);
+  const [brandRange, setBrandRange] = useState(brands.map((item) => ({ ...item, checked: false })));
   const [availability, setAvailability] = useState([
     {
       id: 1,
@@ -66,23 +66,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
       checked: false,
     },
   ]);
-  const [colorRange, setColorRange] = useState([
-    {
-      id: 1,
-      checked: false,
-      color: 'red'
-    },
-    {
-      id: 2,
-      checked: false,
-      color: 'green'
-    },
-    {
-      id: 3,
-      checked: false,
-      color: 'blue'
-    }
-  ]);
+  const [colorRange, setColorRange] = useState(colors.map((item) => ({ ...item, checked: false })));
   const [sizeRange, setSizeRange] = useState([
     {
       id: 1,
@@ -101,6 +85,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
     }
   ]);
   const categoryParams = searchParams.get("category");
+  const brandParams = searchParams.get("brand");
   const avlParams = searchParams.get("avl");
   const priceParams = searchParams.get("price");
   const colorParams = searchParams.get("color");
@@ -111,6 +96,9 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
   useEffect(() => {
     if (!categoryParams) {
       setCategoryData((prev) => prev.map((item) => ({ ...item, checked: false })));
+    }
+    if (!brandParams) {
+      setBrandRange((prev) => prev.map((item) => ({ ...item, checked: false })));
     }
     if (!avlParams) {
       setAvailability((prev) => prev.map((item) => ({ ...item, checked: false })));
@@ -135,6 +123,9 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
 
 
   useEffect(() => {
+    if (brandParams) {
+      brandRange.forEach(item => item.checked = brandParams.split(',').includes(item.brand));
+    }
     if (avlParams) {
       availability.forEach(item => item.checked = avlParams.split(',').includes(item.avl));
     }
@@ -153,6 +144,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
   const handleClearFilter = () => {
     const newParams = new URLSearchParams(searchParams);
     newParams.delete("category");
+    newParams.delete("brand");
     newParams.delete("avl");
     newParams.delete("price");
     newParams.delete("color");
@@ -160,6 +152,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
     setSearchParams(newParams);
 
     setCategoryData((prev) => prev.map((item) => ({ ...item, checked: false })));
+    setBrandRange((prev) => prev.map((item) => ({ ...item, checked: false })));
     setAvailability((prev) => prev.map((item) => ({ ...item, checked: false })));
     setPriceRange((prev) => prev.map((item) => ({ ...item, checked: false })));
     setColorRange((prev) => prev.map((item) => ({ ...item, checked: false })));
@@ -219,6 +212,46 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
               )}
             </div>
           }
+
+          <div className={s.filterByBrand}>
+            <div
+              onClick={() => setShowBrandMenu(!showBrandMenu)}
+              className={s.heading}
+            >
+              <h4>Brand</h4>
+              {showBrandMenu ? <LiaAngleUpSolid /> : <LiaAngleDownSolid />}
+            </div>
+            {showBrandMenu &&
+              <ul>
+                {brandRange.map((item) => (
+                  <li key={item.id}>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id={`brand${item.id}`}
+                        checked={item.checked}
+                        onChange={(e) => {
+                          const { checked } = e.target;
+                          const updatedBrandRange = brandRange.map((brand) => brand.id === item.id ? { ...brand, checked } : brand);
+                          setBrandRange(updatedBrandRange);
+
+                          const newParams = new URLSearchParams(searchParams);
+                          const selectedBrand = updatedBrandRange.filter((brand) => brand.checked).map((val) => val.brand);
+
+                          selectedBrand.length > 0 ? newParams.set("brand", selectedBrand.join(",")) : newParams.delete("brand")
+                          setSearchParams(newParams);
+                        }}
+                      />
+                      <label className="form-check-label" htmlFor={`brand${item.id}`}>
+                        {item.brand}
+                      </label>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            }
+          </div>
 
           <div className={s.filterByAvailability}>
             <div
