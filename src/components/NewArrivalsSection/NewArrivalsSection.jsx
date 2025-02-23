@@ -9,7 +9,7 @@ const NewArrivalsSection = ({ products }) => {
     <div className={s.newArrivals}>
       <div className='container'>
         <SectionHeading title='New Arrivals' />
-        <div className='row gx-2 gy-3 g-md-4'>
+        <div className='row g-3 g-md-4'>
           {
             products.slice(0, 4).map((item) => (
               <div key={item._id} className='col-6 col-md-4 col-lg-3'>
