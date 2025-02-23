@@ -49,7 +49,7 @@ const Header = () => {
         <Link onClick={() => setShowDrawer(false)} to='/' className='logo'>Ecom<span>World</span></Link>
       </div>
 
-      {showDrawer && width > 576 && <div className='bg-overlay'></div>}
+      {showDrawer && <div className='bg-overlay'></div>}
       <ul className={showDrawer ? 'menu show' : 'menu'}>
         <div className='headerLeft mobile'>
           <Link onClick={() => setShowDrawer(false)} to='/' className='logo'>Ecom<span>World</span></Link>

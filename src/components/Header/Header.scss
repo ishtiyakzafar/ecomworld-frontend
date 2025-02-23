@@ -41,6 +41,7 @@ header {
       justify-content: space-between;
 
       svg {
+        font-size: 25px;
         margin-right: 0;
       }
     }
@@ -113,7 +114,7 @@ header {
 
         svg {
           display: block;
-          font-size: 14px;
+          font-size: 16px;
         }
       }
 
@@ -302,10 +303,6 @@ header {
 
   .menu.show {
     left: 0;
-
-    @media(max-width:576px) {
-      width: 100%;
-    }
   }
 
   .header_right {

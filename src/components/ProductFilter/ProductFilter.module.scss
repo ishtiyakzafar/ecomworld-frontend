@@ -17,10 +17,6 @@
     overflow: auto;
   }
 
-  @media (max-width: 576px) {
-    // width: 100%;
-  }
-
   .header {
     height: 50px;
     display: flex;
@@ -29,6 +25,7 @@
 
     @media (max-width: 1200px) {
       padding: 0 20px;
+      padding-right: 15px;
       height: 70px;
     }
 
@@ -118,6 +115,10 @@
           font-size: 12px;
         }
       }
+    }
+
+    .filterBySize {
+      padding-bottom: 50px;
     }
 
     .filterByColor {
