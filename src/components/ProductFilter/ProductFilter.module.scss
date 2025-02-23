@@ -6,11 +6,11 @@
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
     bottom: 0;
     background-color: #fff;
     width: 290px;
     z-index: 102;
+    height: 100%;
     transition: all 0.3s ease;
     left: -290px;
     transform-origin: left;
