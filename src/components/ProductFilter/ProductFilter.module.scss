@@ -74,7 +74,7 @@
     .filterBySize,
     .filterPrice,
     .filterByColor,
-    .filterByAvailability,
+    .filterByDiscount,
     .filterByBrand {
       border-top: 1px solid #ebebeb;
 
@@ -118,8 +118,12 @@
       }
     }
 
-    .filterBySize {
+    .filterByDiscount {
       padding-bottom: 50px;
+
+      label {
+        text-transform: lowercase;
+      }
     }
 
     .filterByColor {

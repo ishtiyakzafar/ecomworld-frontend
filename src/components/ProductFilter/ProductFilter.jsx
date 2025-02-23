@@ -17,22 +17,19 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
   const [showPriceMenu, setShowPriceMenu] = useState(true);
   const [showColorMenu, setShowColorMenu] = useState(true);
   const [showSizeMenu, setShowSizeMenu] = useState(true);
-  const [showAvailabilityMenu, setShowAvailabilityMenu] = useState(true);
+  const [showDiscountMenu, setShowDiscountMenu] = useState(true);
   const [categoryData, setCategoryData] = useState([]);
   const [brandRange, setBrandRange] = useState(brands.map((item) => ({ ...item, checked: false })));
-  const [availability, setAvailability] = useState([
-    {
-      id: 1,
-      checked: false,
-      avl: 'in',
-      name: 'In Stock',
-    },
-    {
-      id: 2,
-      checked: false,
-      avl: 'out',
-      name: 'Out of Stock',
-    },
+  const [discountRange, setDiscountRange] = useState([
+    { "id": 1, "checked": false, "discount": "10", "name": "10% and above" },
+    { "id": 2, "checked": false, "discount": "20", "name": "20% and above" },
+    { "id": 3, "checked": false, "discount": "30", "name": "30% and above" },
+    { "id": 4, "checked": false, "discount": "40", "name": "40% and above" },
+    { "id": 5, "checked": false, "discount": "50", "name": "50% and above" },
+    { "id": 6, "checked": false, "discount": "60", "name": "60% and above" },
+    { "id": 7, "checked": false, "discount": "70", "name": "70% and above" },
+    { "id": 8, "checked": false, "discount": "80", "name": "80% and above" },
+    { "id": 9, "checked": false, "discount": "90", "name": "90% and above" }
   ]);
   const [priceRange, setPriceRange] = useState([
     {
@@ -86,7 +83,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
   ]);
   const categoryParams = searchParams.get("category");
   const brandParams = searchParams.get("brand");
-  const avlParams = searchParams.get("avl");
+  const discountParams = searchParams.get("discount");
   const priceParams = searchParams.get("price");
   const colorParams = searchParams.get("color");
   const sizeParams = searchParams.get("size");
@@ -100,8 +97,8 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
     if (!brandParams) {
       setBrandRange((prev) => prev.map((item) => ({ ...item, checked: false })));
     }
-    if (!avlParams) {
-      setAvailability((prev) => prev.map((item) => ({ ...item, checked: false })));
+    if (!discountParams) {
+      setDiscountRange((prev) => prev.map((item) => ({ ...item, checked: false })));
     }
     if (!priceParams) {
       setPriceRange((prev) => prev.map((item) => ({ ...item, checked: false })));
@@ -126,8 +123,8 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
     if (brandParams) {
       brandRange.forEach(item => item.checked = brandParams.split(',').includes(item.brand));
     }
-    if (avlParams) {
-      availability.forEach(item => item.checked = avlParams.split(',').includes(item.avl));
+    if (discountParams) {
+      discountRange.forEach(item => item.checked = discountParams.split(',').includes(item.discount));
     }
     if (priceParams) {
       priceRange.forEach(item => item.checked = priceParams.split(',').includes(`${item.minPrice}-${item.maxPrice}`));
@@ -145,7 +142,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
     const newParams = new URLSearchParams(searchParams);
     newParams.delete("category");
     newParams.delete("brand");
-    newParams.delete("avl");
+    newParams.delete("discount");
     newParams.delete("price");
     newParams.delete("color");
     newParams.delete("size");
@@ -153,7 +150,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
 
     setCategoryData((prev) => prev.map((item) => ({ ...item, checked: false })));
     setBrandRange((prev) => prev.map((item) => ({ ...item, checked: false })));
-    setAvailability((prev) => prev.map((item) => ({ ...item, checked: false })));
+    setDiscountRange((prev) => prev.map((item) => ({ ...item, checked: false })));
     setPriceRange((prev) => prev.map((item) => ({ ...item, checked: false })));
     setColorRange((prev) => prev.map((item) => ({ ...item, checked: false })));
     setSizeRange((prev) => prev.map((item) => ({ ...item, checked: false })));
@@ -251,43 +248,6 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
                 ))}
               </ul>
             }
-          </div>
-
-          <div className={s.filterByAvailability}>
-            <div
-              onClick={() => setShowAvailabilityMenu(!showAvailabilityMenu)}
-              className={s.heading}
-            >
-              <h4>Availability</h4>
-              {showAvailabilityMenu ? <LiaAngleUpSolid /> : <LiaAngleDownSolid />}
-            </div>
-            {showAvailabilityMenu && (
-              <div className={s.menuList}>
-                {
-                  availability.map((item) => (
-                    <div key={item.id} className="form-check">
-                      <input className="form-check-input shadow-none" type="radio" name="availability"
-                        id={`availability${item.id}`}
-                        checked={item.checked}
-                        onChange={() => {
-                          const updatedAvl = availability.map((val) => ({ ...val, checked: val.id === item.id }));
-                          setAvailability(updatedAvl);
-
-                          const newParams = new URLSearchParams(searchParams);
-                          const selectedAvl = updatedAvl.filter((val) => val.checked).map((val) => val.avl);
-
-                          selectedAvl.length > 0 ? newParams.set("avl", selectedAvl.join(",")) : newParams.delete("avl")
-                          setSearchParams(newParams);
-                        }}
-                      />
-                      <label className="form-check-label" htmlFor={`availability${item.id}`}>
-                        {item.name}
-                      </label>
-                    </div>
-                  ))
-                }
-              </div>
-            )}
           </div>
 
           <div className={s.filterPrice}>
@@ -408,6 +368,43 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
                   </li>
                 ))}
               </ul>
+            )}
+          </div>
+
+          <div className={s.filterByDiscount}>
+            <div
+              onClick={() => setShowDiscountMenu(!showDiscountMenu)}
+              className={s.heading}
+            >
+              <h4>Discount</h4>
+              {showDiscountMenu ? <LiaAngleUpSolid /> : <LiaAngleDownSolid />}
+            </div>
+            {showDiscountMenu && (
+              <div className={s.menuList}>
+                {
+                  discountRange.map((item) => (
+                    <div key={item.id} className="form-check">
+                      <input className="form-check-input shadow-none" type="radio" name="discount"
+                        id={`discount${item.id}`}
+                        checked={item.checked}
+                        onChange={() => {
+                          const updatedDiscountRange = discountRange.map((val) => ({ ...val, checked: val.id === item.id }));
+                          setDiscountRange(updatedDiscountRange);
+
+                          const newParams = new URLSearchParams(searchParams);
+                          const selectedDiscount = updatedDiscountRange.filter((val) => val.checked).map((val) => val.discount);
+
+                          selectedDiscount.length > 0 ? newParams.set("discount", selectedDiscount.join(",")) : newParams.delete("discount")
+                          setSearchParams(newParams);
+                        }}
+                      />
+                      <label className="form-check-label" htmlFor={`discount${item.id}`}>
+                        {item.name}
+                      </label>
+                    </div>
+                  ))
+                }
+              </div>
             )}
           </div>
         </div>

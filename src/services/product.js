@@ -2,7 +2,7 @@ import http from "./http";
 
 
 const getProducts = (query) => {
-  const { categoryLevel, categoryParams, brandParams, colorParams, priceParams, sizeParams } = query;
+  const { categoryLevel, categoryParams, brandParams, colorParams, priceParams, sizeParams, discountParams } = query;
 
   let url = "products";
 
@@ -12,7 +12,7 @@ const getProducts = (query) => {
   if (colorParams) url += `&color=${colorParams}`;
   if (priceParams) url += `&price=${priceParams}`;
   if (sizeParams) url += `&size=${sizeParams}`;
-
+  if (discountParams) url += `&discount=${discountParams}`;
 
   return http.get(url);
 }

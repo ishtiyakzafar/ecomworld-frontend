@@ -23,6 +23,7 @@ const ProductPage = () => {
   const colorParams = searchParams.get("color");
   const priceParams = searchParams.get("price");
   const sizeParams = searchParams.get("size");
+  const discountParams = searchParams.get("discount");
   const [isLoading, setIsLoading] = useState(false);
   const { categoriesLoading } = useSelector((state) => state.app);
 
@@ -40,7 +41,8 @@ const ProductPage = () => {
         colorParams,
         priceParams,
         sizeParams,
-        brandParams
+        brandParams,
+        discountParams
       }
 
       const res = await productService.getProducts(query);
@@ -64,7 +66,8 @@ const ProductPage = () => {
     colorParams,
     priceParams,
     sizeParams,
-    brandParams
+    brandParams,
+    discountParams
   ]);
 
 
