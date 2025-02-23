@@ -95,7 +95,8 @@ header {
     }
 
     @media (max-width: 768px) {
-      // padding: 0 10px;
+      // left: 0px;
+      // width: 100%;
     }
 
     .topMenu {
@@ -306,6 +307,10 @@ header {
 
   .menu.show {
     left: 0;
+
+    @media(max-width:576px) {
+      width: 100%;
+    }
   }
 
   .header_right {
