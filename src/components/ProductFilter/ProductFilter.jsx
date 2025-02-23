@@ -379,7 +379,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
           </div>
         </div>
       </div>
-      <div className={showDrawer && width > 576 ? `${s.screenCover} ${s.show}` : `${s.screenCover}`}></div>
+      <div className={showDrawer ? `${s.screenCover} ${s.show}` : `${s.screenCover}`}></div>
     </>
   );
 };
