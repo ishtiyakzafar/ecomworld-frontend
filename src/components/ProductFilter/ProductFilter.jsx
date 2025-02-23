@@ -5,106 +5,163 @@ import { CiFilter } from "react-icons/ci";
 import { LiaAngleDownSolid, LiaAngleUpSolid } from 'react-icons/lia';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { filterByCategories } from '../../Helper';
+import { getCategoryData } from '../../Helper';
 
-const sizeData = [
-  {
-    id: 2,
-    size: 'Small'
-  },
-  {
-    id: 3,
-    size: 'Medium'
-  },
-  {
-    id: 4,
-    size: 'Large'
-  }
-]
-
-const availabilityData = [
-  {
-    id: 1,
-    product: 'In Stock',
-  },
-  {
-    id: 2,
-    product: 'Out of Stock',
-  },
-]
 
 const ProductFilter = ({ showDrawer, setShowDrawer }) => {
   const { topLevel, secondLevel, thirdLevel } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const categoryParams = searchParams.get("category");
   const { categories } = useSelector((state) => state.app);
-  const [showCategoryMenu, setShowCategoryMenu] = useState(false);
-  const [showPriceMenu, setShowPriceMenu] = useState(false);
-  const [priceRange, setPriceRange] = useState(0);
-  const [showColorMenu, setShowColorMenu] = useState(false);
-  const [showSizeMenu, setShowSizeMenu] = useState(false);
-  const [showAvailabilityMenu, setShowAvailabilityMenu] = useState(false);
-  const [colorData, setColorData] = useState([
+  const [showCategoryMenu, setShowCategoryMenu] = useState(true);
+  const [showPriceMenu, setShowPriceMenu] = useState(true);
+  const [showColorMenu, setShowColorMenu] = useState(true);
+  const [showSizeMenu, setShowSizeMenu] = useState(true);
+  const [showAvailabilityMenu, setShowAvailabilityMenu] = useState(true);
+  const [categoryData, setCategoryData] = useState([]);
+  const [availability, setAvailability] = useState([
     {
       id: 1,
-      isSelected: false,
-      color: "red",
+      checked: false,
+      avl: 'in',
+      name: 'In Stock',
     },
     {
       id: 2,
-      isSelected: false,
-      color: "green",
+      checked: false,
+      avl: 'out',
+      name: 'Out of Stock',
+    },
+  ]);
+  const [priceRange, setPriceRange] = useState([
+    {
+      id: 1,
+      minPrice: 100,
+      maxPrice: 500,
+      checked: false,
+    },
+    {
+      id: 2,
+      minPrice: 500,
+      maxPrice: 1000,
+      checked: false,
     },
     {
       id: 3,
-      isSelected: false,
-      color: "blue",
+      minPrice: 1000,
+      maxPrice: 1500,
+      checked: false,
     },
     {
       id: 4,
-      isSelected: false,
-      color: "yellow",
+      minPrice: 1500,
+      maxPrice: 2000,
+      checked: false,
     },
     {
       id: 5,
-      isSelected: false,
-      color: "orange",
+      minPrice: 2000,
+      maxPrice: 2500,
+      checked: false,
     },
   ]);
-  const [categoryData, setCategoryData] = useState([]);
-
-
-  useEffect(() => {
-    setCategoryData(filterByCategories(categories, topLevel, secondLevel, thirdLevel, categoryParams));
-  }, [topLevel, secondLevel, thirdLevel])
-
-
-  const handleSelect = (item) => {
-    setColorData(
-      colorData.map((color) => {
-        if (color.id === item.id) {
-          return { ...color, isSelected: !color.isSelected };
-        } else {
-          return color;
-        }
-      })
-    );
-  };
-
-
-  useEffect(() => {
-    if (categoryData.length > 0) {
-      const category = categoryData.filter((item) => item.checked).map((val) => val.name);
-
-      if (category.length > 0) {
-        searchParams.set("category", category.join(","));
-      } else {
-        searchParams.delete("category");
-      }
-
-      setSearchParams(searchParams);
+  const [colorRange, setColorRange] = useState([
+    {
+      id: 1,
+      checked: false,
+      color: 'red'
+    },
+    {
+      id: 2,
+      checked: false,
+      color: 'green'
+    },
+    {
+      id: 3,
+      checked: false,
+      color: 'blue'
     }
-  }, [categoryData])
+  ]);
+  const [sizeRange, setSizeRange] = useState([
+    {
+      id: 1,
+      checked: false,
+      size: 'small'
+    },
+    {
+      id: 2,
+      checked: false,
+      size: 'medium'
+    },
+    {
+      id: 3,
+      checked: false,
+      size: 'large'
+    }
+  ]);
+  const categoryParams = searchParams.get("category");
+  const avlParams = searchParams.get("avl");
+  const priceParams = searchParams.get("price");
+  const colorParams = searchParams.get("color");
+  const sizeParams = searchParams.get("size");
+
+  // CLEAR FILTERS IF NO PARAMS IN URL 
+  useEffect(() => {
+    if (!categoryParams) {
+      setCategoryData((prev) => prev.map((item) => ({ ...item, checked: false })));
+    }
+    if (!avlParams) {
+      setAvailability((prev) => prev.map((item) => ({ ...item, checked: false })));
+    }
+    if (!priceParams) {
+      setPriceRange((prev) => prev.map((item) => ({ ...item, checked: false })));
+    }
+    if (!colorParams) {
+      setColorRange((prev) => prev.map((item) => ({ ...item, checked: false })));
+    }
+    if (!sizeParams) {
+      setSizeRange((prev) => prev.map((item) => ({ ...item, checked: false })));
+    }
+  }, [searchParams])
+
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      setCategoryData(getCategoryData(categories, topLevel, secondLevel, thirdLevel, categoryParams));
+    }
+  }, [topLevel, secondLevel, thirdLevel, categories])
+
+
+  useEffect(() => {
+    if (avlParams) {
+      availability.forEach(item => item.checked = avlParams.split(',').includes(item.avl));
+    }
+    if (priceParams) {
+      priceRange.forEach(item => item.checked = priceParams.split(',').includes(`${item.minPrice}-${item.maxPrice}`));
+    }
+    if (colorParams) {
+      colorRange.forEach(item => item.checked = colorParams.split(',').includes(item.color));
+    }
+    if (sizeParams) {
+      sizeRange.forEach(item => item.checked = sizeParams.split(',').includes(item.size));
+    }
+  }, [])
+
+  // CLEAR ALL FILTER
+  const handleClearFilter = () => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.delete("category");
+    newParams.delete("avl");
+    newParams.delete("price");
+    newParams.delete("color");
+    newParams.delete("size");
+    setSearchParams(newParams);
+
+    setCategoryData((prev) => prev.map((item) => ({ ...item, checked: false })));
+    setAvailability((prev) => prev.map((item) => ({ ...item, checked: false })));
+    setPriceRange((prev) => prev.map((item) => ({ ...item, checked: false })));
+    setColorRange((prev) => prev.map((item) => ({ ...item, checked: false })));
+    setSizeRange((prev) => prev.map((item) => ({ ...item, checked: false })));
+  }
 
   return (
     <>
@@ -112,6 +169,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
         <div className={s.header}>
           <span><CiFilter /> FILTER</span>
           <MdClose className={s.close} onClick={() => setShowDrawer(false)} />
+          <small onClick={handleClearFilter}>Clear All</small>
         </div>
 
         <div className={s.filterContent}>
@@ -133,10 +191,20 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
                           className="form-check-input"
                           type="checkbox"
                           checked={item.checked}
-                          id={item.name}
-                          onChange={(e) => setCategoryData((prev) => prev.map((cat) => cat.id === item.id ? { ...cat, checked: e.target.checked } : cat))}
+                          id={`cat${item.id}`}
+                          onChange={(e) => {
+                            const { checked } = e.target;
+                            const updatedCategory = categoryData.map((cat) => cat.id === item.id ? { ...cat, checked } : cat);
+                            setCategoryData(updatedCategory);
+
+                            const newParams = new URLSearchParams(searchParams);
+                            const selectedCategory = updatedCategory.filter((cat) => cat.checked).map((val) => val.name);
+
+                            selectedCategory.length > 0 ? newParams.set("category", selectedCategory.join(",")) : newParams.delete("category")
+                            setSearchParams(newParams);
+                          }}
                         />
-                        <label className="form-check-label" htmlFor={item.name}>
+                        <label className="form-check-label" htmlFor={`cat${item.id}`}>
                           {item.name}
                         </label>
                       </div>
@@ -156,23 +224,31 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
               {showAvailabilityMenu ? <LiaAngleUpSolid /> : <LiaAngleDownSolid />}
             </div>
             {showAvailabilityMenu && (
-              <ul>
-                {availabilityData.map((item) => (
-                  <li>
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id={item.product}
+              <div className={s.menuList}>
+                {
+                  availability.map((item) => (
+                    <div key={item.id} className="form-check">
+                      <input className="form-check-input shadow-none" type="radio" name="availability"
+                        id={`availability${item.id}`}
+                        checked={item.checked}
+                        onChange={() => {
+                          const updatedAvl = availability.map((val) => ({ ...val, checked: val.id === item.id }));
+                          setAvailability(updatedAvl);
+
+                          const newParams = new URLSearchParams(searchParams);
+                          const selectedAvl = updatedAvl.filter((val) => val.checked).map((val) => val.avl);
+
+                          selectedAvl.length > 0 ? newParams.set("avl", selectedAvl.join(",")) : newParams.delete("avl")
+                          setSearchParams(newParams);
+                        }}
                       />
-                      <label className="form-check-label" htmlFor={item.product}>
-                        {item.product}
+                      <label className="form-check-label" htmlFor={`availability${item.id}`}>
+                        {item.name}
                       </label>
                     </div>
-                  </li>
-                ))}
-              </ul>
+                  ))
+                }
+              </div>
             )}
           </div>
 
@@ -186,22 +262,34 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
             </div>
 
             {showPriceMenu && (
-              <>
-                <label htmlFor="customRange1" className="form-label">
-                  Upto ₹{priceRange * 10}
-                </label>
-                <input
-                  onChange={(e) => setPriceRange(e.target.value)}
-                  value={priceRange}
-                  type="range"
-                  className="form-range"
-                  id="customRange1"
-                />
-                <div className={s.priceRangeValue}>
-                  <span>₹0</span>
-                  <span>₹1000</span>
-                </div>
-              </>
+              <ul>
+                {priceRange.map((item) => (
+                  <li key={item.id}>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        checked={item.checked}
+                        id={`price${item.id}`}
+                        onChange={(e) => {
+                          const { checked } = e.target;
+                          const updatedPriceRange = priceRange.map((price) => price.id === item.id ? { ...price, checked } : price);
+                          setPriceRange(updatedPriceRange);
+
+                          const newParams = new URLSearchParams(searchParams);
+                          const selectedPrice = updatedPriceRange.filter((price) => price.checked).map((val) => `${val.minPrice}-${val.maxPrice}`);
+
+                          selectedPrice.length > 0 ? newParams.set("price", selectedPrice.join(",")) : newParams.delete("price")
+                          setSearchParams(newParams);
+                        }}
+                      />
+                      <label className="form-check-label" htmlFor={`price${item.id}`}>
+                        ₹{item.minPrice} - ₹{item.maxPrice}
+                      </label>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
 
@@ -213,20 +301,36 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
               <h4>Color</h4>
               {showColorMenu ? <LiaAngleUpSolid /> : <LiaAngleDownSolid />}
             </div>
-            {showColorMenu && <div className={s.colorOption}>
-              {colorData.map((item) => (
-                <div style={{ border: item.isSelected ? "1px solid #ddd" : "", }} className={s.colorBorder}>
-                  <div
-                    style={{
-                      transform: item.isSelected ? "scale(0.9)" : "",
-                      background: item.color,
-                    }}
-                    onClick={() => handleSelect(item)}
-                    className={s.color}
-                  ></div>
-                </div>
-              ))}
-            </div>}
+            {showColorMenu &&
+              <ul>
+                {colorRange.map((item) => (
+                  <li key={item.id}>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id={`color${item.id}`}
+                        checked={item.checked}
+                        onChange={(e) => {
+                          const { checked } = e.target;
+                          const updatedColorRange = colorRange.map((color) => color.id === item.id ? { ...color, checked } : color);
+                          setColorRange(updatedColorRange);
+
+                          const newParams = new URLSearchParams(searchParams);
+                          const selectedColor = updatedColorRange.filter((color) => color.checked).map((val) => val.color);
+
+                          selectedColor.length > 0 ? newParams.set("color", selectedColor.join(",")) : newParams.delete("color")
+                          setSearchParams(newParams);
+                        }}
+                      />
+                      <label className="form-check-label" htmlFor={`color${item.id}`}>
+                        {item.color}
+                      </label>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            }
           </div>
 
           <div className={s.filterBySize}>
@@ -239,16 +343,27 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
             </div>
             {showSizeMenu && (
               <ul>
-                {sizeData.map((item) => (
-                  <li>
+                {sizeRange.map((item) => (
+                  <li key={item.id}>
                     <div className="form-check">
                       <input
                         className="form-check-input"
                         type="checkbox"
-                        value=""
-                        id={item.size}
+                        id={`size${item.id}`}
+                        checked={item.checked}
+                        onChange={(e) => {
+                          const { checked } = e.target;
+                          const updatedSizeRange = sizeRange.map((size) => size.id === item.id ? { ...size, checked } : size);
+                          setSizeRange(updatedSizeRange);
+
+                          const newParams = new URLSearchParams(searchParams);
+                          const selectedSize = updatedSizeRange.filter((size) => size.checked).map((val) => val.size);
+
+                          selectedSize.length > 0 ? newParams.set("size", selectedSize.join(",")) : newParams.delete("size")
+                          setSearchParams(newParams);
+                        }}
                       />
-                      <label className="form-check-label" htmlFor={item.size}>
+                      <label className="form-check-label" htmlFor={`size${item.id}`}>
                         {item.size}
                       </label>
                     </div>

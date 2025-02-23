@@ -206,7 +206,16 @@ const AddUpdateProduct = () => {
           </div>
           <div className='col-md-4'>
             <label htmlFor="color" className="form-label">Color</label>
-            <input
+            <select name='color' value={productDetails.color} onChange={handleOnChange} class="form-select" aria-label="Default select example">
+              <option value="">Select color</option>
+              <option value="red">Red</option>
+              <option value="green">Green</option>
+              <option value="blue">Blue</option>
+              <option value="white">White</option>
+              <option value="black">Black</option>
+            </select>
+
+            {/* <input
               autoComplete='off'
               required
               value={productDetails.color}
@@ -220,7 +229,7 @@ const AddUpdateProduct = () => {
               <option value="Blue" />
               <option value="White" />
               <option value="Black" />
-            </datalist>
+            </datalist> */}
           </div>
 
           <div className="col-md-4 tags">

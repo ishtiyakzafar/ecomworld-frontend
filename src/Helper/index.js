@@ -234,7 +234,7 @@ export const validateSignup = (name, value, newErrors, user) => {
   return newErrors;
 }
 
-export const filterByCategories = (categories, topLevel, secondLevel, thirdLevel, categoryParams) => {
+export const getCategoryData = (categories, topLevel, secondLevel, thirdLevel, categoryParams) => {
   let categoryData = [];
 
   const secondCat = categories.find((item) => item.topLevelCategory === topLevel).secondLevelCategories;

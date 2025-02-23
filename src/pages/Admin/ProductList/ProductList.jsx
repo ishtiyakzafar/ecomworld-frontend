@@ -15,7 +15,8 @@ const ProductList = () => {
 
   const fetchAllProducts = async () => {
     try {
-      const res = await productService.getAllProducts();
+      const query = {};
+      const res = await productService.getProducts(query);
       setProducts(res.products);
     } catch (error) {
       toast.error(error)

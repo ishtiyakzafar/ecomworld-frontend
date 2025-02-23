@@ -2,13 +2,15 @@ import http from "./http";
 
 
 const getProducts = (query) => {
-
-  const { categoryLevel, categoryParams } = query;
+  const { categoryLevel, categoryParams, colorParams, priceParams, sizeParams } = query;
 
   let url = "products";
 
   if (categoryLevel) url += `?level=${categoryLevel}`;
   if (categoryParams) url += `&category=${categoryParams}`;
+  if (colorParams) url += `&color=${colorParams}`;
+  if (priceParams) url += `&price=${priceParams}`;
+  if (sizeParams) url += `&size=${sizeParams}`;
 
 
   return http.get(url);

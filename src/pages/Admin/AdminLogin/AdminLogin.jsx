@@ -9,8 +9,8 @@ import Toast from "../../../components/Toast/Toast";
 import { emailRegex } from "../../../Helper";
 
 const AdminLogin = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@gmail.com");
+  const [password, setPassword] = useState("123456");
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState({ email: "", password: "" });

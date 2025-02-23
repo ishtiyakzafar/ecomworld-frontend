@@ -11,7 +11,7 @@ import cartService from "./services/cart.js";
 import wishlistService from "./services/wishlist.js";
 import { CUSTOMER_ROLE } from "./Helper/constant.js";
 import categoryService from "./services/categories.js";
-import { actionSetCategories } from "./store/appSlice.js";
+import { actionCategoriesLoading, actionSetCategories } from "./store/appSlice.js";
 
 const ProfilePage = lazy(() => import("./pages/ProfilePage/ProfilePage.jsx"));
 const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation/OrderConfirmation.jsx"));
@@ -62,6 +62,8 @@ const App = () => {
         dispatch(actionSetCategories(categories));
       } catch (error) {
         toast.error(error);
+      } finally {
+        dispatch(actionCategoriesLoading(false));
       }
     }
     fetchCategories();

@@ -9,6 +9,10 @@
   align-items: center;
   justify-content: center;
 
+  @media(max-width:1100px) {
+    top: 60px;
+  }
+
   .spinner-border {
     color: #eb3b5a;
     border-right-color: #ddd;

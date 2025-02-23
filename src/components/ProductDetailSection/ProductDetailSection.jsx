@@ -94,7 +94,7 @@ const ProductDetailSection = ({ details }) => {
       </div>
       <div className={s.productColor}>
         <p>
-          Color: <span>Red</span>
+          Color: <span>{details.color}</span>
         </p>
       </div>
 
