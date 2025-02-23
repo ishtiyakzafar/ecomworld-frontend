@@ -18,16 +18,18 @@
     overflow: auto;
   }
 
+  @media (max-width: 576px) {
+    width: 100%;
+  }
+
   .header {
-    background: #ebebeb;
     height: 50px;
-    padding: 0 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     @media (max-width: 1200px) {
-      padding: 0 12px;
+      padding: 0 20px;
       height: 70px;
     }
 
@@ -69,7 +71,7 @@
   .filterContent {
 
     @media (max-width: 1200px) {
-      padding: 0 12px
+      padding: 0 20px
     }
 
     .filterCategory,
@@ -77,6 +79,7 @@
     .filterPrice,
     .filterByColor,
     .filterByAvailability {
+      border-top: 1px solid #ebebeb;
 
       .menuList {
         margin-bottom: 20px;
@@ -118,13 +121,7 @@
       }
     }
 
-    .filterPrice {
-      border-top: 1px solid #ebebeb;
-    }
-
     .filterByColor {
-      border-top: 1px solid #ebebeb;
-
       .colorOption {
         display: flex;
         flex-wrap: wrap;
@@ -144,11 +141,6 @@
           cursor: pointer;
         }
       }
-    }
-
-    .filterBySize,
-    .filterByAvailability {
-      border-top: 1px solid #ebebeb;
     }
   }
 }

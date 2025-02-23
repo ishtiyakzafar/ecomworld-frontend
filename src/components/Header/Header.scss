@@ -13,7 +13,6 @@ header {
 
   @media (max-width: 1100px) {
     height: 60px;
-    // padding: 0 12px;
   }
 
   .headerLeft {
@@ -26,7 +25,7 @@ header {
       cursor: pointer;
       display: none;
 
-      @media (max-width: 1100px) {
+      @media (max-width: 1200px) {
         display: block;
       }
     }
@@ -35,9 +34,9 @@ header {
   .headerLeft.mobile {
     display: none;
     height: 60px;
-    border-bottom: 1px solid #f3f3f3;
+    border-bottom: 1px solid #ebebeb;
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1200px) {
       display: flex;
       justify-content: space-between;
 
@@ -80,7 +79,6 @@ header {
 
     @media (max-width: 1200px) {
       background: #fff;
-      border-top: 1px solid #f3f3f3;
       padding: 0 20px;
       display: block;
       position: absolute;
@@ -138,7 +136,7 @@ header {
       transition: all 0.2s ease;
 
       @media (max-width: 1200px) {
-        border-bottom: 1px solid #d1d1d1;
+        border-bottom: 1px solid #ebebeb;
         line-height: 50px;
         cursor: pointer;
 
@@ -186,7 +184,7 @@ header {
       }
 
       .megaMenu {
-        border-top: 1px solid #f3f3f3;
+        border-top: 1px solid #ebebeb;
         opacity: 0;
         visibility: hidden;
         position: fixed;
@@ -218,15 +216,17 @@ header {
         }
 
         ul {
-          h6 {
-            padding-bottom: 10px;
+
+          h6,
+          a {
+            margin-bottom: 10px;
             color: #2e276f;
             font-weight: 600;
             font-size: 14px;
             text-transform: uppercase;
 
             @media (max-width: 1200px) {
-              padding-bottom: 0;
+              margin-bottom: 0;
             }
 
             @media (max-width: 1200px) {
@@ -258,6 +258,7 @@ header {
               font-size: 14px;
               font-weight: 400;
               color: #989898;
+              text-transform: capitalize;
 
               @media (max-width: 1200px) {
                 line-height: 30px;

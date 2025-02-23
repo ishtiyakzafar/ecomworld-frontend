@@ -64,11 +64,13 @@ const Header = () => {
                 onClick={() => {
                   if (width < 1200) {
                     setUpdatedCategories((prev) => prev.map((val) => val._id === category._id ? { ...val, isShow: !val.isShow } : val))
+                  } else {
+                    setShowMegaMenu(false);
                   }
                 }}
                 className={category.isShow ? 'topMenu down' : 'topMenu'}
               >
-                <span>{category.topLevelCategory}</span>
+                {width > 1200 ? <Link to={`/${category.topLevelCategory}`}>{category.topLevelCategory}</Link> : <span>{category.topLevelCategory}</span>}
                 <LiaAngleDownSolid />
               </div>
 
@@ -95,10 +97,12 @@ const Header = () => {
                                   : item
                               )
                             );
+                          } else {
+                            setShowMegaMenu(false);
                           }
                         }}
                       >
-                        {subCat.secondLevelCategory}
+                        {width > 1200 ? <Link to={`/${category.topLevelCategory}/${subCat.secondLevelCategory}`}>{subCat.secondLevelCategory}</Link> : subCat.secondLevelCategory}
                         <LiaAngleDownSolid />
                       </h6>
 
