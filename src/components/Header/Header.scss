@@ -85,21 +85,30 @@ header {
       display: block;
       position: absolute;
       top: 0;
-      left: -250px;
-      width: 250px;
+      left: -290px;
+      width: 290px;
       height: 100vh;
       transform-origin: left;
       transition: all 0.2s ease;
       z-index: 102;
+      overflow: auto;
     }
 
     @media (max-width: 768px) {
-      padding: 0 10px;
+      // padding: 0 10px;
     }
 
     .topMenu {
+      span {
+        color: #1c1c1c;
+        font-size: 16px;
+        font-weight: 400;
+        transition: all 0.2s ease;
+        text-transform: capitalize;
+        cursor: pointer;
+      }
+
       svg {
-        transform: rotate(90deg);
         display: none;
       }
 
@@ -109,15 +118,20 @@ header {
         justify-content: space-between;
 
         svg {
-          transform: rotate(0deg);
           display: block;
         }
+      }
+
+      &:hover {
+        color: #eb3b5a;
       }
     }
 
     .topMenu.down {
+      // border-bottom: 1px solid red;
+
       svg {
-        transform: rotate(90deg);
+        transform: rotate(180deg);
       }
     }
 
@@ -130,10 +144,10 @@ header {
       @media (max-width: 1200px) {
         border-bottom: 1px solid #d1d1d1;
         line-height: 50px;
+        cursor: pointer;
 
         svg {
           font-size: 20px;
-          cursor: pointer;
         }
       }
 
@@ -204,30 +218,31 @@ header {
           min-height: 100%;
           box-shadow: none;
           transform: translateY(0);
+          padding-bottom: 10px;
         }
 
         ul {
           h6 {
             padding-bottom: 10px;
+            color: #2e276f;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
 
             @media (max-width: 1200px) {
               padding-bottom: 0;
             }
 
-            a {
+            @media (max-width: 1200px) {
+              line-height: 30px;
+            }
+
+            @media (max-width: 768px) {
+              font-size: 12px;
+            }
+
+            &:hover {
               color: #2e276f;
-              font-weight: 600;
-              font-size: 14px;
-              text-transform: uppercase;
-
-              @media (max-width: 1200px) {
-                line-height: 30px;
-                padding-left: 10px;
-              }
-
-              @media (max-width: 768px) {
-                font-size: 12px;
-              }
             }
           }
 
@@ -235,6 +250,7 @@ header {
             line-height: normal;
             width: fit-content;
             margin-bottom: 5px;
+
 
             @media (max-width: 1200px) {
               border: none;
@@ -249,7 +265,6 @@ header {
 
               @media (max-width: 1200px) {
                 line-height: 30px;
-                padding-left: 20px;
               }
 
               @media (max-width: 768px) {

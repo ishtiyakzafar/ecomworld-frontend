@@ -12,7 +12,7 @@ import { actionSetCart, actionSetCartCount, actionSetWishlist, actionSetWishlist
 import { CiLogout } from "react-icons/ci";
 import { FaAngleDown } from "react-icons/fa6";
 import { MdMenu } from "react-icons/md";
-import { LiaAngleRightSolid } from "react-icons/lia";
+import { LiaAngleDownSolid } from "react-icons/lia";
 import useWindowDimensions from '../../hooks/screenWidth';
 import { addIsShowToCategories } from '../../Helper';
 import { MdClose } from "react-icons/md";
@@ -41,6 +41,12 @@ const Header = () => {
     }
   }, [width, categories])
 
+  useEffect(() => {
+    const element = document.getElementById("scrollableDiv");
+    element.style.overflow = showDrawer ? "hidden" : "";
+    element.style.height = showDrawer ? "100vh" : "100%";
+  }, [showDrawer]);
+
   return (
     <header>
       <div className='headerLeft'>
@@ -58,23 +64,17 @@ const Header = () => {
         {
           updatedCategories.map((category) => (
             <li key={category._id}>
-              <div onMouseEnter={() => setShowMegaMenu(true)} className={category.isShow ? 'topMenu down' : 'topMenu'}>
-                <Link
-                  onClick={() => {
-                    setShowDrawer(false);
-                    setShowMegaMenu(false);
-                  }}
-                  to={`/${category.topLevelCategory}`}>{category.topLevelCategory}</Link>
-                <LiaAngleRightSolid
-                  className=''
-                  onClick={() => {
-                    setUpdatedCategories((prev) =>
-                      prev.map((val) =>
-                        val._id === category._id ? { ...val, isShow: !val.isShow } : val
-                      )
-                    );
-                  }}
-                />
+              <div
+                onMouseEnter={() => setShowMegaMenu(true)}
+                onClick={() => {
+                  if (width < 1200) {
+                    setUpdatedCategories((prev) => prev.map((val) => val._id === category._id ? { ...val, isShow: !val.isShow } : val))
+                  }
+                }}
+                className={category.isShow ? 'topMenu down' : 'topMenu'}
+              >
+                <span>{category.topLevelCategory}</span>
+                <LiaAngleDownSolid />
               </div>
 
 
@@ -82,14 +82,10 @@ const Header = () => {
                 <div className={showMegaMenu ? 'megaMenu' : 'megaMenu close'}>
                   {category.secondLevelCategories.map((subCat) => (
                     <ul key={subCat._id}>
-
-                      <h6 className={subCat.isShow ? 'topMenu down' : 'topMenu'}>
-                        <Link onClick={() => {
-                          setShowDrawer(false);
-                          setShowMegaMenu(false);
-                        }} to={`/${category.topLevelCategory}/${subCat.secondLevelCategory}`}>{subCat.secondLevelCategory}</Link>
-                        <LiaAngleRightSolid
-                          onClick={() => {
+                      <h6
+                        className={subCat.isShow ? 'topMenu down' : 'topMenu'}
+                        onClick={() => {
+                          if (width < 1200) {
                             setUpdatedCategories((prev) =>
                               prev.map((item) =>
                                 item._id === category._id
@@ -104,15 +100,20 @@ const Header = () => {
                                   : item
                               )
                             );
-                          }}
-                        />
+                          }
+                        }}
+                      >
+                        {subCat.secondLevelCategory}
+                        <LiaAngleDownSolid />
                       </h6>
 
                       {
                         subCat.isShow && subCat.thirdLevelCategories.map((item) => (
                           <li key={item._id}><Link onClick={() => {
                             setShowDrawer(false);
-                            setShowMegaMenu(false);
+                            if (width > 1200) {
+                              setShowMegaMenu(false);
+                            }
                           }} to={`/${category.topLevelCategory}/${subCat.secondLevelCategory}/${item.thirdLevelCategory}`}>{item.thirdLevelCategory}</Link></li>
                         ))
                       }

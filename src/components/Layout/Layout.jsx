@@ -6,13 +6,13 @@ import Header from "../Header/Header";
 
 const Layout = () => {
   return (
-    <>
+    <div id="scrollableDiv">
       <Header />
       <div className="mainContent">
         <Outlet />
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
