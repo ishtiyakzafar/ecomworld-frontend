@@ -62,6 +62,16 @@ header {
     }
   }
 
+  .bg-overlay {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.6);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 101;
+  }
+
   .menu {
     display: flex;
     align-items: center;
@@ -82,11 +92,6 @@ header {
       transition: all 0.2s ease;
       z-index: 102;
       overflow: auto;
-    }
-
-    @media (max-width: 768px) {
-      // left: 0px;
-      // width: 100%;
     }
 
     .topMenu {
@@ -120,7 +125,6 @@ header {
     }
 
     .topMenu.down {
-      // border-bottom: 1px solid red;
 
       svg {
         transform: rotate(180deg);
@@ -226,7 +230,7 @@ header {
             }
 
             @media (max-width: 1200px) {
-              line-height: 40px;
+              line-height: 30px;
             }
 
             @media (max-width: 768px) {
@@ -256,7 +260,7 @@ header {
               color: #989898;
 
               @media (max-width: 1200px) {
-                line-height: 40px;
+                line-height: 30px;
               }
 
               @media (max-width: 768px) {

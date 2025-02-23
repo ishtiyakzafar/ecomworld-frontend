@@ -94,11 +94,11 @@ const CategorySection = () => {
               updatedCategories.map((item) => (
                 <div key={item.id} className={s.categoryCard}>
                   <div className={s.categoryImg}>
-                    <Link to={`/products/${item.path}`}>
+                    <Link to={`/${item.path}`}>
                       <img src={'https://ecomusnext-themesflat.vercel.app/images/collections/collection-circle-1.jpg'} alt="img" />
                     </Link>
                   </div>
-                  <Link to={`/products/${item.path}`}><h6>{item.categoryName}</h6></Link>
+                  <Link to={`/${item.path}`}><h6>{item.categoryName}</h6></Link>
                   <p>{10} items</p>
                 </div>
               ))

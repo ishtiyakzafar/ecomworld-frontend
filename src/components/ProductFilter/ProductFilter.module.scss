@@ -10,7 +10,6 @@
     width: 320px;
     z-index: 102;
     height: 100%;
-    border-top: 1px solid #f3f3f3;
     transition: all 0.3s ease;
     left: -320px;
     transform-origin: left;
@@ -20,7 +19,7 @@
   }
 
   @media (max-width: 768px) {
-    width: 250px;
+    width: 100%;
   }
 
   .header {
