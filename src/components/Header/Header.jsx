@@ -41,11 +41,6 @@ const Header = () => {
     }
   }, [width, categories])
 
-  useEffect(() => {
-    const element = document.getElementById("scrollableDiv");
-    element.style.overflow = showDrawer ? "hidden" : "";
-    element.style.height = showDrawer ? "100vh" : "100%";
-  }, [showDrawer]);
 
   return (
     <header>
@@ -54,7 +49,6 @@ const Header = () => {
         <Link onClick={() => setShowDrawer(false)} to='/' className='logo'>Ecom<span>World</span></Link>
       </div>
 
-      {showDrawer && <div className='bg-overlay'></div>}
       <ul className={showDrawer ? 'menu show' : 'menu'}>
         <div className='headerLeft mobile'>
           <Link onClick={() => setShowDrawer(false)} to='/' className='logo'>Ecom<span>World</span></Link>
