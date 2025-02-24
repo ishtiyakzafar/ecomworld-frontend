@@ -10,6 +10,7 @@ import Loader from "../../components/Loader/Loader";
 import DataLoader from "../../components/DataLoader/DataLoader";
 import { useSelector } from "react-redux";
 import { MdOutlineFilterList } from "react-icons/md";
+import NoDataFound from "../../components/NoDataFound/NoDataFound";
 
 
 const ProductPage = () => {
@@ -81,48 +82,57 @@ const ProductPage = () => {
             <ProductFilter showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
           </div>
 
-          <div className={s.productList}>
-            {isLoading && <DataLoader />}
 
-
-            <div className={s.filterSorting}>
-              <ul className={s.breadCum}>
-                <li><Link to='/'>Home</Link></li>
-                {topLevel && <li><span>/</span> <Link to={`/${topLevel}`}>{topLevel}</Link></li>}
-                {secondLevel && <li><span>/</span> <Link to={`/${topLevel}/${secondLevel}`}>{secondLevel}</Link></li>}
-                {thirdLevel && <li><span>/</span> <Link to={`/${topLevel}/${secondLevel}/${thirdLevel}`}>{thirdLevel}</Link></li>}
-              </ul>
-              <div onClick={() => setShowDrawer(true)} className={s.filter}>
-                <MdOutlineFilterList />
-                <span>FILTER</span>
-              </div>
-              <div className={s.sorting}>
-                <div className="dropdown">
-                  <div
-                    className={s.selectDropdown}
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <span>Sort</span> <LiaAngleDownSolid />
+          {isLoading ?
+            <DataLoader />
+            :
+            <div className={s.productList}>
+              <div className={s.filterSorting}>
+                <ul className={s.breadCum}>
+                  <li><Link to='/'>Home</Link></li>
+                  {topLevel && <li><span>/</span> <Link to={`/${topLevel}`}>{topLevel}</Link></li>}
+                  {secondLevel && <li><span>/</span> <Link to={`/${topLevel}/${secondLevel}`}>{secondLevel}</Link></li>}
+                  {thirdLevel && <li><span>/</span> <Link to={`/${topLevel}/${secondLevel}/${thirdLevel}`}>{thirdLevel}</Link></li>}
+                </ul>
+                <div onClick={() => setShowDrawer(true)} className={s.filter}>
+                  <MdOutlineFilterList />
+                  <span>FILTER</span>
+                </div>
+                <div className={s.sorting}>
+                  <div className="dropdown">
+                    <div
+                      className={s.selectDropdown}
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <span>Sort</span> <LiaAngleDownSolid />
+                    </div>
+                    <ul className="dropdown-menu">
+                      <li className="dropdown-item">Alphabetically A-Z</li>
+                      <li className="dropdown-item">Alphabetically Z-A</li>
+                      <li className="dropdown-item">Price, low to high</li>
+                      <li className="dropdown-item">Price, high to low</li>
+                    </ul>
                   </div>
-                  <ul className="dropdown-menu">
-                    <li className="dropdown-item">Alphabetically A-Z</li>
-                    <li className="dropdown-item">Alphabetically Z-A</li>
-                    <li className="dropdown-item">Price, low to high</li>
-                    <li className="dropdown-item">Price, high to low</li>
-                  </ul>
                 </div>
               </div>
-            </div>
 
-            <div className='row g-3 g-md-4'>
-              {products.map((item) => (
-                <div key={item._id} className="col-6 col-md-4 col-lg-3 col-xl-4 col-xxl-3">
-                  <ProductCard item={item} />
-                </div>
-              ))}
+              {
+                products.length > 0 ?
+                  <>
+                    <div className='row g-3 g-md-4'>
+                      {products.map((item) => (
+                        <div key={item._id} className="col-6 col-md-4 col-lg-3 col-xl-4 col-xxl-3">
+                          <ProductCard item={item} />
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                  :
+                  <NoDataFound />
+              }
             </div>
-          </div>
+          }
         </div>
       }
     </div>

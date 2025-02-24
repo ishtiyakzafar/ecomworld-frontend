@@ -1,0 +1,116 @@
+.searchProduct {
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.6);
+  padding-top: 70px;
+
+  @media(max-width:768px) {
+    padding-top: 60px;
+  }
+
+  .searchProductModal {
+    position: relative;
+    width: 600px;
+    background: #fff;
+    padding: 50px 20px;
+    border-radius: 12px;
+    height: 500px;
+    overflow: hidden;
+
+    @media(max-width:768px) {
+      width: 90%;
+      padding: 50px 12px;
+    }
+
+    .closeModal {
+      svg {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 25px;
+      }
+    }
+
+    .searchInput {
+      position: relative;
+
+      input {
+        background: #ebebeb;
+        border: none;
+        padding: 0 40px;
+      }
+
+      .search {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        font-size: 25px;
+        color: #54575a;
+      }
+
+      .close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 20px;
+        color: #54575a;
+        cursor: pointer;
+      }
+
+    }
+
+
+    .suggestion {
+      background: #fff;
+      height: 100%;
+      margin-top: 10px;
+      overflow: auto;
+      padding-bottom: 50px;
+
+      @media(max-width:768px) {
+        padding-bottom: 25px;
+      }
+
+      .noResult {
+        line-height: 40px;
+        padding-left: 10px;
+        font-size: 14px;
+        color: #1c1c1c;
+      }
+
+      ul {
+        li {
+          list-style: none;
+
+          a {
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            color: #1c1c1c;
+            font-size: 14px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            @media(max-width:768px) {
+              font-size: 12px;
+            }
+
+            &:hover {
+              background: #f3f3f3;
+            }
+          }
+        }
+      }
+    }
+  }
+}
