@@ -12,12 +12,12 @@ const ProductFilter = ({ setSorting, showDrawer, setShowDrawer }) => {
   const { topLevel, secondLevel, thirdLevel } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const { categories, brands, colors } = useSelector((state) => state.app);
-  const [showCategoryMenu, setShowCategoryMenu] = useState(true);
-  const [showBrandMenu, setShowBrandMenu] = useState(true);
-  const [showPriceMenu, setShowPriceMenu] = useState(true);
-  const [showColorMenu, setShowColorMenu] = useState(true);
-  const [showSizeMenu, setShowSizeMenu] = useState(true);
-  const [showDiscountMenu, setShowDiscountMenu] = useState(true);
+  const [showCategoryMenu, setShowCategoryMenu] = useState(false);
+  const [showBrandMenu, setShowBrandMenu] = useState(false);
+  const [showPriceMenu, setShowPriceMenu] = useState(false);
+  const [showColorMenu, setShowColorMenu] = useState(false);
+  const [showSizeMenu, setShowSizeMenu] = useState(false);
+  const [showDiscountMenu, setShowDiscountMenu] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
   const [brandRange, setBrandRange] = useState(brands.map((item) => ({ ...item, checked: false })));
   const [discountRange, setDiscountRange] = useState([

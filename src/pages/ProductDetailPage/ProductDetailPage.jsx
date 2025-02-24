@@ -8,16 +8,23 @@ import ProductDetailsTags from '../../components/ProductDetailsTags/ProductDetai
 import productService from '../../services/product';
 import ProductImageSection from '../../components/ProductImageSection/ProductImageSection';
 import Loader from '../../components/Loader/Loader';
+import { toast } from 'react-toastify';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const [details, setDetails] = useState({});
   const { pathname } = useLocation();
   const [loading, setLoading] = useState(true);
+  const [similarProducts, setSimilarProducts] = useState([]);
+
 
   const fetchProductDetails = async () => {
     try {
+      setLoading(true);
       const res = await productService.productDetails(id);
+      const data = await productService.getSimilarProduct(res.thirdLevelCategory);
+
+      setSimilarProducts(data.filter((item) => item._id !== id));
       setDetails(res);
     } catch (error) {
       toast.error(error);
@@ -28,7 +35,7 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     fetchProductDetails();
-  }, [])
+  }, [id])
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -48,19 +55,23 @@ const ProductDetailPage = () => {
 
           <div className={s.productDescription}>
             <SectionHeading title='Description' />
-            <p>{details.description}</p>
+            <p>
+              {details.description}
+            </p>
           </div>
 
-          <div className={s.similarProduct}>
-            <SectionHeading title='Similar Products' />
-            {/* <div className={s.products}>
-            {
-              similarProducts.slice(0, 4).map((item) => (
-                <ProductCard key={item._id} item={item} />
-              ))
-            }
-          </div> */}
-          </div>
+          {similarProducts.length > 0 &&
+            <div className={s.similarProduct}>
+              <SectionHeading title='Similar Products' />
+              <div className={s.products}>
+                {
+                  similarProducts.slice(0, 4).map((item) => (
+                    <ProductCard key={item._id} item={item} />
+                  ))
+                }
+              </div>
+            </div>
+          }
         </div>
       }
     </div>

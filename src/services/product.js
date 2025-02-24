@@ -54,6 +54,9 @@ const getBrands = () => {
 const getColors = () => {
   return http.get('products/colors');
 }
+const getSimilarProduct = (category) => {
+  return http.get(`products/similar/${category}`);
+}
 
 const productService = {
   getProducts,
@@ -67,6 +70,7 @@ const productService = {
   updateProduct,
   getBrands,
   getColors,
+  getSimilarProduct,
 };
 
 export default productService;

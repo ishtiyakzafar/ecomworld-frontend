@@ -109,12 +109,9 @@ const ProductDetailSection = ({ details }) => {
               <><GiShoppingBag /> Add to Cart</>
           }
         </button>
-
-
         <button onClick={handleAddToWishlist} className={s.addToWishlist}>
           <FaRegHeart /> Wishlist
         </button>
-
       </div>
 
       <div className={s.extraInfo}>
