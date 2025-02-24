@@ -78,7 +78,7 @@ const SearchProducts = ({ setShowSearchModal }) => {
                   products.map((item) => (
                     <li key={item._id}>
                       <Link
-                        to={`/${item.topLevelCategory}/${item.secondLevelCategory}/${item.thirdLevelCategory}`}
+                        to={`/product/${item._id}`}
                         onClick={() => setShowSearchModal(false)}
                       >
                         <span>#</span>{item.title}
