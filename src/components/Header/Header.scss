@@ -233,11 +233,11 @@ header {
             }
 
             @media (max-width: 1200px) {
-              line-height: 30px;
+              line-height: 40px;
             }
 
             @media (max-width: 768px) {
-              font-size: 12px;
+              // font-size: 12px;
             }
 
             &:hover {
@@ -264,11 +264,11 @@ header {
               text-transform: capitalize;
 
               @media (max-width: 1200px) {
-                line-height: 30px;
+                line-height: 40px;
               }
 
               @media (max-width: 768px) {
-                font-size: 12px;
+                // font-size: 12px;
               }
 
               &:hover {
