@@ -12,6 +12,33 @@ import { useSelector } from "react-redux";
 import { MdOutlineFilterList } from "react-icons/md";
 import NoDataFound from "../../components/NoDataFound/NoDataFound";
 
+const sortingData = [
+  {
+    id: 1,
+    value: "asc",
+    checked: false,
+    name: "Alphabetically A-Z"
+  },
+  {
+    id: 2,
+    value: "desc",
+    checked: false,
+    name: "Alphabetically Z-A"
+  },
+  {
+    id: 3,
+    value: "price_high",
+    checked: false,
+    name: "Price, high to low"
+  },
+  {
+    id: 4,
+    value: "price_low",
+    checked: false,
+    name: "Price, low to high"
+  }
+];
+
 
 const ProductPage = () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -24,9 +51,12 @@ const ProductPage = () => {
   const colorParams = searchParams.get("color");
   const priceParams = searchParams.get("price");
   const sizeParams = searchParams.get("size");
+  const sortingParams = searchParams.get("sort");
   const discountParams = searchParams.get("discount");
   const [isLoading, setIsLoading] = useState(false);
   const { categoriesLoading } = useSelector((state) => state.app);
+  const [sorting, setSorting] = useState(sortingParams);
+
 
   const fetchAllProducts = async () => {
     try {
@@ -43,7 +73,8 @@ const ProductPage = () => {
         priceParams,
         sizeParams,
         brandParams,
-        discountParams
+        discountParams,
+        sortingParams
       }
 
       const res = await productService.getProducts(query);
@@ -68,7 +99,8 @@ const ProductPage = () => {
     priceParams,
     sizeParams,
     brandParams,
-    discountParams
+    discountParams,
+    sortingParams
   ]);
 
 
@@ -79,60 +111,69 @@ const ProductPage = () => {
         :
         <div className={s.productPage}>
           <div className={s.filterWrap}>
-            <ProductFilter showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
+            <ProductFilter setSorting={setSorting} showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
           </div>
 
-
-          {isLoading ?
-            <DataLoader />
-            :
-            <div className={s.productList}>
-              <div className={s.filterSorting}>
-                <ul className={s.breadCum}>
-                  <li><Link to='/'>Home</Link></li>
-                  {topLevel && <li><span>/</span> <Link to={`/${topLevel}`}>{topLevel}</Link></li>}
-                  {secondLevel && <li><span>/</span> <Link to={`/${topLevel}/${secondLevel}`}>{secondLevel}</Link></li>}
-                  {thirdLevel && <li><span>/</span> <Link to={`/${topLevel}/${secondLevel}/${thirdLevel}`}>{thirdLevel}</Link></li>}
-                </ul>
-                <div onClick={() => setShowDrawer(true)} className={s.filter}>
-                  <MdOutlineFilterList />
-                  <span>FILTER</span>
-                </div>
-                <div className={s.sorting}>
-                  <div className="dropdown">
-                    <div
-                      className={s.selectDropdown}
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <span>Sort</span> <LiaAngleDownSolid />
+          <div className={s.productList}>
+            {isLoading ?
+              <DataLoader />
+              :
+              <>
+                <div className={s.filterSorting}>
+                  <ul className={s.breadCum}>
+                    <li><Link to='/'>Home</Link></li>
+                    {topLevel && <li><span>/</span> <Link to={`/${topLevel}`}>{topLevel}</Link></li>}
+                    {secondLevel && <li><span>/</span> <Link to={`/${topLevel}/${secondLevel}`}>{secondLevel}</Link></li>}
+                    {thirdLevel && <li><span>/</span> <Link to={`/${topLevel}/${secondLevel}/${thirdLevel}`}>{thirdLevel}</Link></li>}
+                  </ul>
+                  <div onClick={() => setShowDrawer(true)} className={s.filter}>
+                    <MdOutlineFilterList />
+                    <span>FILTER</span>
+                  </div>
+                  <div className={s.sorting}>
+                    <div className="dropdown">
+                      <div
+                        className={s.selectDropdown}
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <span>Sort</span> <LiaAngleDownSolid />
+                      </div>
+                      <ul className="dropdown-menu">
+                        {
+                          sortingData.map((item) => (
+                            <li
+                              className={item.value === sorting ? s.active : ''}
+                              key={item.id}
+                              onClick={() => {
+                                setSorting(item.value);
+                                const newParams = new URLSearchParams(searchParams);
+                                newParams.set("sort", item.value);
+                                setSearchParams(newParams);
+                              }}
+                            >
+                              {item.name}
+                            </li>
+                          ))
+                        }
+                      </ul>
                     </div>
-                    <ul className="dropdown-menu">
-                      <li className="dropdown-item">Alphabetically A-Z</li>
-                      <li className="dropdown-item">Alphabetically Z-A</li>
-                      <li className="dropdown-item">Price, low to high</li>
-                      <li className="dropdown-item">Price, high to low</li>
-                    </ul>
                   </div>
                 </div>
-              </div>
 
-              {
-                products.length > 0 ?
-                  <>
-                    <div className='row g-3 g-md-4'>
-                      {products.map((item) => (
-                        <div key={item._id} className="col-6 col-md-4 col-lg-3 col-xl-4 col-xxl-3">
-                          <ProductCard item={item} />
-                        </div>
-                      ))}
-                    </div>
-                  </>
+                {products.length > 0 ?
+                  <div className='row g-3 g-md-4'>
+                    {products.map((item) => (
+                      <div key={item._id} className="col-6 col-md-4 col-lg-3 col-xl-4 col-xxl-3">
+                        <ProductCard item={item} />
+                      </div>
+                    ))}
+                  </div>
                   :
                   <NoDataFound />
-              }
-            </div>
-          }
+                }
+              </>}
+          </div>
         </div>
       }
     </div>

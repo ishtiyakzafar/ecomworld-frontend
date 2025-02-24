@@ -8,7 +8,7 @@ import { getCategoryData } from '../../Helper';
 import { MdOutlineFilterList } from "react-icons/md";
 import useWindowDimensions from '../../hooks/screenWidth';
 
-const ProductFilter = ({ showDrawer, setShowDrawer }) => {
+const ProductFilter = ({ setSorting, showDrawer, setShowDrawer }) => {
   const { topLevel, secondLevel, thirdLevel } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const { categories, brands, colors } = useSelector((state) => state.app);
@@ -146,6 +146,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
     newParams.delete("price");
     newParams.delete("color");
     newParams.delete("size");
+    newParams.delete("sort");
     setSearchParams(newParams);
 
     setCategoryData((prev) => prev.map((item) => ({ ...item, checked: false })));
@@ -154,6 +155,7 @@ const ProductFilter = ({ showDrawer, setShowDrawer }) => {
     setPriceRange((prev) => prev.map((item) => ({ ...item, checked: false })));
     setColorRange((prev) => prev.map((item) => ({ ...item, checked: false })));
     setSizeRange((prev) => prev.map((item) => ({ ...item, checked: false })));
+    setSorting("");
   }
 
   return (

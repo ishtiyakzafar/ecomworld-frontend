@@ -27,8 +27,6 @@
       padding-top: 12px;
     }
 
-
-
     .filterSorting {
       display: flex;
       justify-content: space-between;
@@ -83,7 +81,6 @@
         }
       }
 
-
       .filter {
         border: 1px solid #ebebeb;
         width: 80px;
@@ -131,7 +128,7 @@
 
         .selectDropdown {
           border: 1px solid #ebebeb;
-          width: 150px;
+          width: 214px;
           height: 45px;
           line-height: 45px;
           cursor: pointer;
@@ -157,10 +154,32 @@
           }
         }
 
-        li {
-          font-size: 16px;
-          color: #1c1c1c;
-          cursor: pointer;
+        ul {
+          box-shadow: 0px 7px 20px 0px #6135351a;
+          width: 214px;
+          border: 1px solid #f3f3f3;
+
+          @media(max-width:768px) {
+            right: 12px !important;
+          }
+
+
+          li {
+            font-size: 14px;
+            color: #1c1c1c;
+            cursor: pointer;
+            line-height: 35px;
+            padding-left: 15px;
+
+            &:hover {
+              background: #f3f3f3;
+            }
+          }
+
+          li.active {
+            font-weight: 500;
+            color: #000;
+          }
         }
       }
     }
