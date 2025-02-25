@@ -1,5 +1,5 @@
 .productDetailBox {
-  padding-top: 20px;
+  padding-top: 24px;
 
   .productDetail {
     display: grid;
@@ -17,14 +17,14 @@
   }
 
   .productDescription {
-    padding-top: 80px;
+    padding: 80px 0;
 
     @media(max-width: 996px) {
-      padding-top: 60px;
+      padding: 60px 0;
     }
 
     @media(max-width: 768px) {
-      padding-top: 40px;
+      padding: 40px 0;
     }
 
 
@@ -35,14 +35,14 @@
   }
 
   .similarProduct {
-    padding: 80px 0;
+    padding-bottom: 80px;
 
     @media(max-width: 996px) {
-      padding: 60px 0;
+      padding-bottom: 60px;
     }
 
     @media(max-width: 768px) {
-      padding: 40px 0;
+      padding-bottom: 40px;
     }
 
     .products {

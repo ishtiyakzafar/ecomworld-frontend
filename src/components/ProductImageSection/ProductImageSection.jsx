@@ -38,7 +38,7 @@ const images = [
 const ProductImageSection = ({ details }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [width, setWidth] = useState(window.innerWidth);
-  const [imageUrl, setImageUrl] = useState(product2);
+  const [image, setImage] = useState(images[0]);
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
@@ -48,57 +48,21 @@ const ProductImageSection = ({ details }) => {
 
   return (
     <div className="productImageSection">
-      {/* <div className="row g-4">
-        <div className="col-xl-2 col-12 order-xl-0 order-1">
-          <Swiper
-            onSwiper={setThumbsSwiper}
-            loop={true}
-            direction={width > 1200 ? "vertical" : "horizontal"}
-            spaceBetween={10}
-            slidesPerView={6}
-            freeMode={true}
-            watchSlidesProgress={true}
-            modules={[FreeMode, Navigation, Thumbs]}
-            className="mySwiper"
-          >
-            {images.map((item) => (
-              <SwiperSlide key={item._id}>
-                <img src={item.img} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-        <div className="col-xl-10 col-12">
-          <Swiper
-            style={{
-              "--swiper-navigation-color": "#fff",
-              "--swiper-pagination-color": "#fff",
-            }}
-            loop={true}
-            spaceBetween={10}
-            navigation={true}
-            thumbs={{ swiper: thumbsSwiper }}
-            modules={[FreeMode, Navigation, Thumbs]}
-            className="mySwiper2"
-          >
-            {images.map((item) => (
-              <SwiperSlide key={item._id}>
-                <img src={item.img} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-      </div> */}
-
       <div className="image_preview">
         {
           images.map((item) => (
-            <img onMouseEnter={() => setImageUrl(item.img)} key={item._id} className="img-fluid" src={item.img} alt="img" />
+            <img
+              onMouseEnter={() => setImage(item)}
+              key={item._id}
+              className={`img-fluid ${item._id === image._id && 'active'}`}
+              src={item.img}
+              alt="img"
+            />
           ))
         }
       </div>
       <div className="image_view">
-        <img className="img-fluid" src={imageUrl} alt="img" />
+        <img className='img-fluid' src={image.img} alt="img" />
       </div>
     </div>
   );

@@ -23,10 +23,6 @@
     padding: 24px 0;
     min-height: calc(100vh - 70px);
 
-    @media (max-width: 768px) {
-      padding-top: 12px;
-    }
-
     .filterSorting {
       display: flex;
       justify-content: space-between;

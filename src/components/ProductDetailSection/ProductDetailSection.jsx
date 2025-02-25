@@ -72,9 +72,7 @@ const ProductDetailSection = ({ details }) => {
       </div> */}
 
       <div className={s.productSize}>
-        <p>
-          Size: <span>{size}</span>
-        </p>
+        <p>Size: <span>{size}</span></p>
         <div className={s.sizeOption}>
           {details.size?.map((item) => (
             <div
@@ -84,7 +82,6 @@ const ProductDetailSection = ({ details }) => {
                 }
               }}
               key={item._id}
-
               className={`${s.size} ${item.name === size && s.active} ${item.quantity === 0 && s.nosize}`}
             >
               {item.name}
