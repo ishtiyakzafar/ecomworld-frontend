@@ -9,6 +9,8 @@ import { LiaShippingFastSolid } from "react-icons/lia";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { formatNumbers } from '../../Helper';
+import smallImg from '../../assets/images/small_img.jpg';
+
 
 
 const CartCard = ({ isOrderSummary, item }) => {
@@ -46,7 +48,7 @@ const CartCard = ({ isOrderSummary, item }) => {
     <div className='cart_card'>
       <div className='image'>
         <Link to={`/product/${item.product._id}`}>
-          <img src='https://ecomusnext-themesflat.vercel.app/images/products/orange-1.jpg' alt="img" />
+          <img src={smallImg} alt="img" />
         </Link>
       </div>
 

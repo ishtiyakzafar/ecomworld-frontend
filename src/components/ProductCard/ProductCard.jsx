@@ -9,6 +9,8 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import MoveToCartModal from "../MoveToCartModal/MoveToCartModal";
 import Toast from "../Toast/Toast";
+import prodCardImg from '../../assets/images/prodCard.jpg';
+
 
 
 const ProductCard = ({ isWishlist, item }) => {
@@ -49,7 +51,7 @@ const ProductCard = ({ isWishlist, item }) => {
         <Link to={`/product/${item._id}`}>
           <img
             // src={item.imageUrl[0]}
-            src='https://ecomusnext-themesflat.vercel.app/images/products/white-4.jpg'
+            src={prodCardImg}
             alt="img"
           />
         </Link>

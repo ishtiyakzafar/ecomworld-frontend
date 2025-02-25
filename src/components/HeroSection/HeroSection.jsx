@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import "./HeroSection.scss";
-import hero1 from '../../assets/images/image-960x862 (1).jpg';
-import hero2 from '../../assets/images/image-960x862 (2).jpg';
-import hero3 from '../../assets/images/image-960x862 (3).jpg';
-import hero4 from '../../assets/images/hero_img3.jpg';
-import hero5 from '../../assets/images/hero_img4.jpg';
-import hero6 from '../../assets/images/hero_img5.jpg';
+import hero1 from '../../assets/images/hero1.jpg';
+import hero2 from '../../assets/images/hero2.jpg';
+import hero3 from '../../assets/images/hero3.jpg';
 
 
 import { FaArrowRightLong } from "react-icons/fa6";

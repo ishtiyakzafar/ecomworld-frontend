@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { actionAddToCart, actionRemoveFromWishlist } from '../../store/productSlice';
 import Toast from '../Toast/Toast';
+import smallImg from '../../assets/images/small_img.jpg';
 
 const MoveToCartModal = ({ item }) => {
   const [size, setSize] = useState("");
@@ -50,7 +51,7 @@ const MoveToCartModal = ({ item }) => {
             </div>
             <div className="modal-body">
               <div className='product'>
-                <img src='https://ecomusnext-themesflat.vercel.app/images/products/orange-1.jpg' alt="img" />
+                <img src={smallImg} alt="img" />
                 <div className='product_info'>
                   <h6>{item.title}</h6>
                   <p>

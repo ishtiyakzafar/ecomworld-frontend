@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Autoplay } from 'swiper/modules';
+import categoryImg from '../../assets/images/category.jpg';
 
 
 const CategorySection = () => {
@@ -66,11 +67,11 @@ const CategorySection = () => {
           >
             {
               updatedCategories.map((item) => (
-                <SwiperSlide>
-                  <div key={item.id} className='categoryCard'>
+                <SwiperSlide key={item.id}>
+                  <div className='categoryCard'>
                     <div className='categoryImg'>
                       <Link to={`/${item.path}`}>
-                        <img src={'https://ecomusnext-themesflat.vercel.app/images/collections/collection-circle-1.jpg'} alt="img" />
+                        <img src={categoryImg} alt="img" />
                       </Link>
                     </div>
                     <Link to={`/${item.path}`}><h6>{item.categoryName}</h6></Link>

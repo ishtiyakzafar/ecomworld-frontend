@@ -2,26 +2,30 @@ import React from 'react';
 import s from "./SavingZoneSection.module.scss";
 import { FaArrowRightLong } from "react-icons/fa6";
 import Slider from 'react-slick';
+import advImg1 from '../../assets/images/adv1.jpg';
+import advImg2 from '../../assets/images/adv2.jpg';
+import advImg3 from '../../assets/images/adv3.jpg';
+
 
 const products = [
   {
     id: 1,
     title: 'Urban Shirts',
-    img: 'https://ecomusnext-themesflat.vercel.app/images/collections/collection-39.jpg',
+    img: advImg1,
     discount: 'UPTO 20% OFF',
     description: 'Live in Confort'
   },
   {
     id: 2,
     title: 'Urban Shirts',
-    img: 'https://ecomusnext-themesflat.vercel.app/images/collections/collection-40.jpg',
+    img: advImg2,
     discount: 'UPTO 20% OFF',
     description: 'Live in Confort'
   },
   {
     id: 3,
     title: 'Urban Shirts',
-    img: 'https://ecomusnext-themesflat.vercel.app/images/collections/collection-41.jpg',
+    img: advImg3,
     discount: 'UPTO 20% OFF',
     description: 'Live in Confort'
   },
