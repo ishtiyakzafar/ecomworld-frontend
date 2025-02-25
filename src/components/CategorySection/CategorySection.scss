@@ -13,7 +13,6 @@
 
   .categoryCard {
     text-align: center;
-    padding-right: 20px;
 
     .categoryImg {
       width: 100%;
@@ -39,10 +38,15 @@
 
       h6 {
         color: #1c1c1c;
-        font-size: 18px;
         margin-top: 30px;
         margin-bottom: 5px;
         text-transform: capitalize;
+        transition: all 0.3s ease;
+
+        @media(max-width:768px) {
+          margin-top: 20px;
+          font-size: 15px;
+        }
 
         &:hover {
           color: #eb3b5a;
@@ -52,8 +56,11 @@
 
     p {
       color: #989898;
-      font-size: 16px;
+      font-size: 14px;
+
+      @media(max-width:768px) {
+        font-size: 12px;
+      }
     }
   }
-
 }
