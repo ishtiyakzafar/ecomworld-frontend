@@ -5,23 +5,33 @@ import ThirdLevelCategory from './ThirdLevelCategory';
 import categoryService from '../../../services/categories';
 import { toast } from 'react-toastify';
 import UpdateCategory from './UpdateCategory';
+import Swal from 'sweetalert2';
 
-const SecondLevelCategory = ({ setLoading, setCategories, secondCat, cat, fetchCategories }) => {
+const SecondLevelCategory = ({ setCategories, secondCat, cat, fetchCategories }) => {
 
-  const deleteSecondLevelCategory = async () => {
-    setLoading(true);
-    try {
-      const res = await categoryService.deleteSecondLevelCategory({
-        topCategoryId: cat._id,
-        secondCategoryId: secondCat._id,
-      });
-      fetchCategories();
-      toast.error(res.message)
-    } catch (error) {
-      toast.error(error)
-    } finally {
-      setLoading(false);
-    }
+  const deleteSecondLevelCategory = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this category!",
+      showCancelButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      preConfirm: async () => {
+        try {
+          await categoryService.deleteSecondLevelCategory({
+            topCategoryId: cat._id,
+            secondCategoryId: secondCat._id,
+          });
+          fetchCategories();
+        } catch (error) {
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
   }
 
 
@@ -58,7 +68,6 @@ const SecondLevelCategory = ({ setLoading, setCategories, secondCat, cat, fetchC
       {secondCat.isShow &&
         secondCat.thirdLevelCategories.map((thirdCat) => (
           <ThirdLevelCategory
-            setLoading={setLoading}
             key={thirdCat._id}
             thirdCat={thirdCat}
             topCategoryId={cat._id}

@@ -29,7 +29,7 @@ const AddTopCategory = ({ fetchCategories }) => {
         Add Top Category
       </button>
 
-      <div className="modal fade" id='exampleModaltop' tabIndex="-1" aria-labelledby='exampleModaltopLabel' aria-hidden="true">
+      <div className="modal fade" id='exampleModaltop' data-bs-backdrop="static" tabIndex="-1" aria-labelledby='exampleModaltopLabel' aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">

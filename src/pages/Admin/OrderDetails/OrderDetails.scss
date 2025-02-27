@@ -1,19 +1,10 @@
 .orderDetails {
+  box-shadow: 0px 3px 24px 0px #0000001F;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+
   .content {
-    height: 100%;
-    background: #fff;
-
-    h5 {
-      color: #2e276f;
-      font-size: 16px;
-      font-weight: 700;
-      padding-bottom: 20px;
-
-      @media (max-width: 768px) {
-        font-size: 14px;
-        padding-bottom: 10px;
-      }
-    }
 
     .orderDetailTable {
       .orderDetailInfo {
@@ -103,6 +94,8 @@
     }
 
     .customerDetails {
+      padding-top: 10px;
+
       .basicDetail {
         padding-bottom: 20px;
 
@@ -119,9 +112,8 @@
         }
 
         .detail {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+          display: grid;
+          grid-template-columns: 100px auto;
           padding-bottom: 10px;
 
           &:last-child {
@@ -130,12 +122,12 @@
 
           p {
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 400;
             color: #989898;
           }
 
           span {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
             color: #1c1c1c;
           }
@@ -144,7 +136,7 @@
 
       .shippingAddress {
         border-top: 1px dashed #c5c8dd;
-        padding-top: 20px;
+        padding-top: 30px;
 
         h5 {
           color: #2e276f;
@@ -168,6 +160,9 @@
           h6 {
             padding-bottom: 5px;
             color: #1c1c1c;
+            text-transform: capitalize;
+            font-weight: 600;
+            font-size: 16px;
 
             @media (max-width: 768px) {
               font-size: 14px;
@@ -179,7 +174,8 @@
           }
 
           p {
-            color: #1c1c1c;
+            color: #333;
+            font-size: 15px;
 
             @media (max-width: 768px) {
               font-size: 12px;

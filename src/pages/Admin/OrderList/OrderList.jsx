@@ -8,6 +8,7 @@ import { formatNumbers } from '../../../Helper';
 import Toast from '../../../components/Toast/Toast';
 import { useNavigate } from 'react-router-dom';
 import { FaAngleRight } from "react-icons/fa6";
+import Swal from 'sweetalert2';
 
 const OrderList = () => {
   const [orderList, setOrderList] = useState([]);
@@ -29,13 +30,26 @@ const OrderList = () => {
     fetchAllOrders()
   }, [])
 
-  const handleDeleteOrder = async (id) => {
-    try {
-      const res = await orderService.deleteOrder(id);
-      fetchAllOrders();
-    } catch (error) {
-      toast.error(error)
-    }
+  const handleDeleteOrder = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this order!",
+      showCancelButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      preConfirm: async () => {
+        try {
+          await orderService.deleteOrder(id);
+          fetchAllOrders();
+        } catch (error) {
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
   }
 
   return (
@@ -69,7 +83,7 @@ const OrderList = () => {
                       <td>₹{formatNumbers(order.totalAmount)}</td>
                       <td className='action'>
                         <div className='act_btn' onClick={() => handleDeleteOrder(order._id)}>Delete <RiDeleteBin6Line /></div>
-                        <div className='act_btn' onClick={() => navigate(`/admin/orders/${order._id}`)}>View Details <FaAngleRight /></div>
+                        <div className='act_btn' onClick={() => navigate(`/admin/orders/${order._id}`)}>Details <FaAngleRight /></div>
                       </td>
                     </tr>
                   ))

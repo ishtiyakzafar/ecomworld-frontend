@@ -15,15 +15,8 @@
     align-items: center;
     gap: 20px;
 
-    .dropdown ul li {
-      cursor: pointer;
-    }
-
-    .user_img img {
-      min-width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      cursor: pointer;
+    h6 {
+      text-transform: capitalize;
     }
   }
 }

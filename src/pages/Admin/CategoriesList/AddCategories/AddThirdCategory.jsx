@@ -44,7 +44,7 @@ const AddThirdCategory = ({ categories, topCategories, fetchCategories }) => {
         Add Third Category
       </button>
 
-      <div className="modal fade" id='exampleModalthird' tabIndex="-1" aria-labelledby='exampleModalthirdLabel' aria-hidden="true">
+      <div className="modal fade" id='exampleModalthird' data-bs-backdrop="static" tabIndex="-1" aria-labelledby='exampleModalthirdLabel' aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">

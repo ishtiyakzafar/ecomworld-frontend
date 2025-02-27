@@ -84,14 +84,14 @@ const OrderDetails = () => {
         :
         <div className='orderDetails'>
           <div className='content'>
-            <h5>Order Details:</h5>
             <table className="orderDetailTable table align-middle">
               <thead>
                 <tr>
                   <th>Image</th>
-                  <th>Title</th>
-                  <th>Price</th>
+                  <th>Product Name</th>
+                  <th>Unit Price</th>
                   <th>Qty</th>
+                  <th>Total Price</th>
                   <th>Size</th>
                   <th>Status</th>
                   <th>Payment</th>
@@ -107,6 +107,7 @@ const OrderDetails = () => {
                       <td>{item.productId.title}</td>
                       <td>₹{formatNumbers(item.productId.discountedPrice)}</td>
                       <td>{item.quantity}</td>
+                      <td>₹{formatNumbers(item.productId.discountedPrice * item.quantity)}</td>
                       <td>{item.size}</td>
                       <td>
                         <div className="dropdown orderStatusDropdown">
@@ -178,7 +179,7 @@ const OrderDetails = () => {
               <div className='basicDetail'>
                 <h5>Customer Details:</h5>
                 <div className='detail'>
-                  <p>Full Name</p>
+                  <p>Name</p>
                   <span>{order.shippingAddress?.userId.name}</span>
                 </div>
                 <div className='detail'>

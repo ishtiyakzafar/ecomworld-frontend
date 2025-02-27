@@ -39,7 +39,7 @@ const AddSecondCategory = ({ topCategories, fetchCategories }) => {
         Add Second Category
       </button>
 
-      <div className="modal fade" id='exampleModalsec' tabIndex="-1" aria-labelledby='exampleModalsecLabel' aria-hidden="true">
+      <div className="modal fade" id='exampleModalsec' data-bs-backdrop="static" tabIndex="-1" aria-labelledby='exampleModalsecLabel' aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">

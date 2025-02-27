@@ -11,6 +11,7 @@ import AddSecondCategory from './AddCategories/AddSecondCategory';
 import AddThirdCategory from './AddCategories/AddThirdCategory';
 import { addIsShowToCategories } from '../../../Helper';
 import Toast from '../../../components/Toast/Toast';
+import Swal from 'sweetalert2';
 
 const CategoriesList = () => {
   const [categories, setCategories] = useState([]);
@@ -33,19 +34,26 @@ const CategoriesList = () => {
     fetchCategories();
   }, [])
 
-  const deleteTopLevelCategory = async (id) => {
-    setLoading(true);
-    try {
-      const res = await categoryService.deleteTopLevelCategory({
-        topCategoryId: id,
-      });
-      fetchCategories();
-      toast.error(res.message)
-    } catch (error) {
-      toast.error(error)
-    } finally {
-      setLoading(false);
-    }
+  const deleteTopLevelCategory = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this category!",
+      showCancelButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      preConfirm: async () => {
+        try {
+          await categoryService.deleteTopLevelCategory({ topCategoryId: id });
+          fetchCategories();
+        } catch (error) {
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
   }
 
   return (
@@ -96,7 +104,6 @@ const CategoriesList = () => {
                 {cat.isShow &&
                   cat.secondLevelCategories.map((secondCat) => (
                     <SecondLevelCategory
-                      setLoading={setLoading}
                       key={secondCat._id}
                       setCategories={setCategories}
                       secondCat={secondCat}

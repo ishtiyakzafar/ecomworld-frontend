@@ -28,10 +28,19 @@
           font-size: 14px;
 
           &:hover {
-            background: #3742fa20;
-            color: #3742fa;
+            background: #f3f3f3;
+            color: #eb3b5a;
             padding-left: 15px;
           }
+        }
+
+
+      }
+
+      li.active {
+        a {
+          background: #f3f3f3;
+          color: #eb3b5a;
         }
       }
     }
