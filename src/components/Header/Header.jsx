@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "./Header.scss";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LiaShoppingBagSolid } from "react-icons/lia";
-import { IoSearchOutline } from "react-icons/io5";
+import { IoLocationOutline, IoSearchOutline } from "react-icons/io5";
 import { FiUser } from "react-icons/fi";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
@@ -160,7 +160,7 @@ const Header = () => {
                 <li>{user.name}</li>
                 <li onClick={() => navigate('/profile/account')}><FiUser /> Profile</li>
                 <li onClick={() => navigate('/profile/orders')}><LiaShoppingBagSolid /> Order</li>
-                <li onClick={() => navigate('/profile/address')}><LiaShoppingBagSolid /> Addresses</li>
+                <li onClick={() => navigate('/profile/address')}><IoLocationOutline /> Addresses</li>
                 <li onClick={() => navigate('/wishlist')}><IoMdHeartEmpty /> Wishlist</li>
                 <li onClick={() => navigate('/cart')}><LiaShoppingBagSolid /> Cart</li>
                 <li
