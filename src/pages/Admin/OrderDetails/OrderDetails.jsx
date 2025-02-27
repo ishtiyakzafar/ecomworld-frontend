@@ -109,7 +109,7 @@ const OrderDetails = () => {
                       <td>{item.quantity}</td>
                       <td>{item.size}</td>
                       <td>
-                        <div class="dropdown orderStatusDropdown">
+                        <div className="dropdown orderStatusDropdown">
                           {item.orderCancelled.status ?
                             <span className='orderStatus CANCELLED'>
                               CANCELLED
@@ -124,7 +124,7 @@ const OrderDetails = () => {
                                 <span className={`orderStatus ${item.orderStatus} dropdown-toggle`} data-bs-toggle="dropdown" aria-expanded="false">
                                   {item.orderStatus}
                                 </span>
-                                <ul class="dropdown-menu">
+                                <ul className="dropdown-menu">
                                   {
                                     getOrderStatus(item).map((status) => (
                                       <li
@@ -150,11 +150,11 @@ const OrderDetails = () => {
                         </div>
                       </td>
                       <td>
-                        <div class="dropdown paymentStatusDropdown">
+                        <div className="dropdown paymentStatusDropdown">
                           <span className={`paymentStatus ${item.paymentStatus} dropdown-toggle`} data-bs-toggle="dropdown" aria-expanded="false">
                             {item.paymentStatus}
                           </span>
-                          <ul class="dropdown-menu">
+                          <ul className="dropdown-menu">
                             {
                               paymentStatus.map((status) => (
                                 <li

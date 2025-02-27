@@ -8,6 +8,7 @@ import { formatEnum } from '../../../Helper';
 import { tagsData } from '../../../Helper/data';
 import { useParams } from "react-router-dom";
 import Toast from '../../../components/Toast/Toast';
+import ButtonLoader from '../../../components/ButtonLoader/ButtonLoader';
 
 
 const AddUpdateProduct = () => {
@@ -206,7 +207,7 @@ const AddUpdateProduct = () => {
           </div>
           <div className='col-md-4'>
             <label htmlFor="color" className="form-label">Color</label>
-            <select name='color' value={productDetails.color} onChange={handleOnChange} class="form-select" aria-label="Default select example">
+            <select name='color' value={productDetails.color} onChange={handleOnChange} className="form-select" aria-label="Default select example">
               <option value="">Select color</option>
               <option value="red">Red</option>
               <option value="green">Green</option>
@@ -517,14 +518,7 @@ const AddUpdateProduct = () => {
 
           <div className="text-center">
             <button disabled={loading} type="submit">
-              {
-                loading ?
-                  <div class="spinner-border d-flex mx-auto" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  :
-                  id ? "Update" : "Add"
-              }
+              {loading ? <ButtonLoader /> : id ? "Update" : "Add"}
             </button>
           </div>
         </form>

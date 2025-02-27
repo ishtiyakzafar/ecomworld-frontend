@@ -31,6 +31,7 @@
     "sass": "^1.70.0",
     "short-unique-id": "^4.4.4",
     "slick-carousel": "^1.8.1",
+    "sweetalert2": "^11.17.2",
     "swiper": "^11.1.15"
   },
   "devDependencies": {

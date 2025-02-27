@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import categoryService from '../../../../services/categories';
+import ButtonLoader from '../../../../components/ButtonLoader/ButtonLoader';
 
 
 const AddTopCategory = ({ fetchCategories }) => {
@@ -53,14 +54,7 @@ const AddTopCategory = ({ fetchCategories }) => {
                 <button
                   disabled={loading}
                   onClick={handleAddTopCategory}>
-                  {
-                    loading ?
-                      <div class="spinner-border d-flex mx-auto" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                      </div>
-                      :
-                      "Add"
-                  }
+                  {loading ? <ButtonLoader /> : "Add"}
                 </button>
               </div>
             </div>

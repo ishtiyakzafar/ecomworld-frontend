@@ -1,36 +1,44 @@
-import React, { useState } from "react";
+import React from "react";
 import "./AddressCard.scss";
 import { MdOutlineModeEdit } from "react-icons/md";
-import { toast } from "react-toastify";
 import addressService from "../../services/address";
 import { useDispatch } from "react-redux";
 import { actionDeleteAddress, actionSetShippingAddress } from "../../store/addressSlice";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import Swal from 'sweetalert2';
 
 const AddressCard = ({
-  setLoading,
   setIsUpdate,
   setAddress,
-  setShowAddresses,
-  setShowAddAddress,
   item,
   isAddList,
   setStep,
+  setAddressCount,
+  myAddress,
 }) => {
   const dispatch = useDispatch();
 
-  const handleDeleteAddress = async () => {
-    try {
-      setLoading(true);
-      const res = await addressService.deleteAddress(item._id);
-      dispatch(actionDeleteAddress(item._id));
-      toast.success(res.message);
-    } catch (error) {
-      toast.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const handleDeleteAddress = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this address!",
+      showCancelButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      preConfirm: async () => {
+        try {
+          await addressService.deleteAddress(item._id);
+          dispatch(actionDeleteAddress(item._id));
+        } catch (error) {
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
+  }
 
   return (
     <div className="address_card">
@@ -49,33 +57,33 @@ const AddressCard = ({
           <div className="action">
             <RiDeleteBin6Line onClick={handleDeleteAddress} />
             <MdOutlineModeEdit
+              data-bs-toggle="modal" data-bs-target="#addNewAddress"
               onClick={() => {
-                window.scrollTo({
-                  top: 140,
-                  behavior: "smooth",
-                });
-                setShowAddAddress(true);
-                setShowAddresses(false);
-                setAddress(item);
                 setIsUpdate(true);
+                console.log(item)
+                setAddress(item);
+
               }}
             />
           </div>
         }
       </div>
-      <button
-        onClick={() => {
-          if (isAddList) {
-            dispatch(actionSetShippingAddress(item));
-            setStep(2);
-          } else {
-            setStep(1);
-          }
-        }}
-        className="deliver_btn"
-      >
-        {isAddList ? "Deliver here" : "Change"}
-      </button>
+      {!myAddress &&
+        <button
+          className="deliver_btn"
+          onClick={() => {
+            if (isAddList) {
+              dispatch(actionSetShippingAddress(item));
+              setStep(2);
+              setAddressCount(1);
+            } else {
+              setStep(1);
+            }
+          }}
+        >
+          {isAddList ? "Deliver here" : "Change"}
+        </button>
+      }
     </div>
   );
 };

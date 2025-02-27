@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./CheckoutPage.scss";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
-import { LiaShippingFastSolid } from "react-icons/lia";
+import { LiaAngleUpSolid, LiaShippingFastSolid } from "react-icons/lia";
 import { toast } from "react-toastify";
 import addressService from "../../services/address";
 import AddressCard from "../../components/AddressCard/AddressCard";
 import { actionSetAddress } from "../../store/addressSlice";
 import { useDispatch, useSelector } from "react-redux";
+import AddNewAddress from "../../components/AddNewAddress/AddNewAddress";
+import { MdAdd } from "react-icons/md";
+import { LiaAngleDownSolid } from "react-icons/lia";
 import CartCard from "../../components/CartCard/CartCard";
 import { actionSetCart, actionSetCartCount } from "../../store/productSlice";
 import cartService from "../../services/cart";
@@ -16,14 +19,14 @@ import orderService from "../../services/order";
 import Toast from "../../components/Toast/Toast";
 import Loader from "../../components/Loader/Loader";
 import useWindowDimensions from "../../hooks/screenWidth";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
-import AddNewAddressModal from "../../components/AddNewAddressModal/AddNewAddressModal";
-import { MdAdd } from "react-icons/md";
 import ButtonLoader from "../../components/ButtonLoader/ButtonLoader";
+
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const { addresses, shippingAddress } = useSelector((state) => state.address);
+  const [showAddAddress, setShowAddAddress] = useState(false);
+  const [showAddresses, setShowAddresses] = useState(true);
   const [address, setAddress] = useState({
     fullName: "",
     mobile: "",
@@ -48,7 +51,13 @@ const CheckoutPage = () => {
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const { width } = useWindowDimensions();
-  const [addressCount, setAddressCount] = useState(1);
+
+
+  useEffect(() => {
+    if (addresses.length === 0 && !loading) {
+      setShowAddAddress(true);
+    }
+  }, [loading])
 
 
 
@@ -99,14 +108,6 @@ const CheckoutPage = () => {
   return (
     <div className="checkoutPage">
       <Toast />
-      <AddNewAddressModal
-        errorMsg={errorMsg}
-        setErrorMsg={setErrorMsg}
-        address={address}
-        setAddress={setAddress}
-        isUpdate={isUpdate}
-      />
-
       {loading ?
         <Loader />
         :
@@ -127,34 +128,78 @@ const CheckoutPage = () => {
             <div className="col-lg-8">
               {step === 1 &&
                 <div className="billingDetails">
-
-                  <div className="shipping-address">
-                    <div className="add_title">
-                      <LiaShippingFastSolid /> Select your delivery address
-                    </div>
-
-                    {addresses.slice(0, addressCount).map((item) => (
-                      <AddressCard
-                        setLoading={setLoading}
-                        key={item._id}
-                        item={item}
-                        setAddress={setAddress}
-                        setIsUpdate={setIsUpdate}
-                        isAddList={true}
-                        setStep={setStep}
-                        setAddressCount={setAddressCount}
-                      />
-                    ))}
-
-                    {addresses.length > 0 &&
-                      <div onClick={() => setAddressCount(addressCount === 1 ? addresses.length : 1)} className="viewMore">
-                        {addressCount === 1 ? <>View more address <FaAngleDown /></> : <>View less address <FaAngleUp /></>}
+                  {addresses.length > 0 &&
+                    <div className="data_collapse">
+                      <div
+                        onClick={() => {
+                          setShowAddresses(!showAddresses);
+                          setShowAddAddress(false);
+                        }}
+                        className="add_title"
+                      >
+                        <span>
+                          <LiaShippingFastSolid /> Select your delivery address
+                        </span>
+                        {showAddresses ? (
+                          <LiaAngleUpSolid />
+                        ) : (
+                          <LiaAngleDownSolid />
+                        )}
                       </div>
-                    }
-                  </div>
 
-                  <div onClick={() => setIsUpdate(false)} className="add_new_add" data-bs-toggle="modal" data-bs-target="#addNewAddress">
-                    <MdAdd /> Add a new address
+                      {showAddresses && (
+                        <div className="address_list">
+                          {addresses.map((item) => (
+                            <AddressCard
+                              setLoading={setLoading}
+                              key={item._id}
+                              item={item}
+                              setShowAddresses={setShowAddresses}
+                              setShowAddAddress={setShowAddAddress}
+                              setAddress={setAddress}
+                              setIsUpdate={setIsUpdate}
+                              isAddList={true}
+                              setStep={setStep}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  }
+
+                  <div className="data_collapse">
+                    <div
+                      onClick={() => {
+                        setShowAddAddress(!showAddAddress);
+                        setShowAddresses(false);
+                        setIsUpdate(false);
+                        setAddress({
+                          fullName: "",
+                          mobile: "",
+                          streetAddress: "",
+                          city: "",
+                          state: "",
+                          pinCode: "",
+                        });
+                      }}
+                      className="add_title"
+                    >
+                      <span>
+                        <MdAdd /> Add new address
+                      </span>
+                      {showAddAddress ? <LiaAngleUpSolid /> : <LiaAngleDownSolid />}
+                    </div>
+                    {showAddAddress && (
+                      <AddNewAddress
+                        errorMsg={errorMsg}
+                        setErrorMsg={setErrorMsg}
+                        setAddress={setAddress}
+                        address={address}
+                        isUpdate={isUpdate}
+                        setShowAddAddress={setShowAddAddress}
+                        setShowAddresses={setShowAddresses}
+                      />
+                    )}
                   </div>
                 </div>
               }

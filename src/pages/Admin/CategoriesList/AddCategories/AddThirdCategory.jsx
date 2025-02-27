@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import categoryService from '../../../../services/categories';
+import ButtonLoader from '../../../../components/ButtonLoader/ButtonLoader';
 
 
 const AddThirdCategory = ({ categories, topCategories, fetchCategories }) => {
@@ -104,14 +105,7 @@ const AddThirdCategory = ({ categories, topCategories, fetchCategories }) => {
             <div className="modal-footer">
               <div className='mx-auto'>
                 <button disabled={loading} onClick={handleAddThirdCategory}>
-                  {
-                    loading ?
-                      <div class="spinner-border d-flex mx-auto" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                      </div>
-                      :
-                      "Add"
-                  }
+                  {loading ? <ButtonLoader /> : "Add"}
                 </button>
               </div>
             </div>

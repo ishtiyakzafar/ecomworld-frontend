@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MdOutlineEdit } from 'react-icons/md';
 import categoryService from '../../../services/categories';
 import { toast } from 'react-toastify';
+import ButtonLoader from '../../../components/ButtonLoader/ButtonLoader';
 
 const UpdateCategory = ({ topCategoryId, secondCategoryId, id, categoryName, title, fetchCategories }) => {
   const [category, setCategory] = useState(categoryName);
@@ -71,17 +72,10 @@ const UpdateCategory = ({ topCategoryId, secondCategoryId, id, categoryName, tit
                 onChange={(e) => setCategory(e.target.value)}
               />
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <div className='mx-auto'>
                 <button disabled={loading} onClick={handleUpdateCategory}>
-                  {
-                    loading ?
-                      <div class="spinner-border d-flex mx-auto" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                      </div>
-                      :
-                      "Update"
-                  }
+                  {loading ? <ButtonLoader /> : "Update"}
                 </button>
               </div>
             </div>

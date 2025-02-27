@@ -1,10 +1,10 @@
 import React from 'react';
-import s from "./SectionHeading.module.scss";
+import "./SectionHeading.scss";
 
 
 const SectionHeading = ({ title }) => {
   return (
-    <div className={s.sectionHeading}>
+    <div className='sectionHeading'>
       {title}
     </div>
   )

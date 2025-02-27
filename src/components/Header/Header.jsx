@@ -156,7 +156,7 @@ const Header = () => {
                 <p>{user.name}</p>
                 <img src={userIcon} alt="userIcon" /> <FaAngleDown />
               </div>
-              <ul class="dropdown-menu">
+              <ul className="dropdown-menu">
                 <li>{user.name}</li>
                 <li onClick={() => navigate('/profile/account')}><FiUser /> Profile</li>
                 <li onClick={() => navigate('/profile/orders')}><LiaShoppingBagSolid /> Order</li>

@@ -7,6 +7,7 @@ import './AdminLogin.scss';
 import { getCartItems } from "../../../utils";
 import Toast from "../../../components/Toast/Toast";
 import { emailRegex } from "../../../Helper";
+import ButtonLoader from "../../../components/ButtonLoader/ButtonLoader";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("admin@gmail.com");
@@ -89,14 +90,7 @@ const AdminLogin = () => {
               disabled={loading}
               type="button"
             >
-              {
-                loading ?
-                  <div class="spinner-border d-flex mx-auto" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  :
-                  "Sign in"
-              }
+              {loading ? <ButtonLoader /> : "Sign in"}
             </button>
           </div>
         </form>

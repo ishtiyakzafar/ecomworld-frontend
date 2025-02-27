@@ -88,11 +88,10 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/admin" element={<AdminLogin />} />
-            <Route path="/:topLevel?/:secondLevel?/:thirdLevel?" element={<ProductPage />} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/about-us" element={<AboutUs />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/:topLevel?/:secondLevel?/:thirdLevel?" element={<ProductPage />} />
           </Route>
         </Route>
 
@@ -100,7 +99,7 @@ const App = () => {
           <Route element={<Layout />}>
             <Route path="/wishlist" element={<WishListPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/order-confirmation" element={<OrderConfirmation />} />
+            <Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
             <Route path="/profile/:slug" element={<ProfilePage />} />
           </Route>
         </Route>

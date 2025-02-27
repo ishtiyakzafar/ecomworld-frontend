@@ -1,6 +1,5 @@
 import React from 'react';
 import './OrderCard.scss';
-import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { formatNumbers } from '../../Helper';
 import checkedIcon from '../../assets/icons/checked.svg';
@@ -9,43 +8,42 @@ import orderService from '../../services/order';
 import TrackOrderDrawer from './TrackOrderDrawer/TrackOrderDrawer';
 import { FaAngleRight } from 'react-icons/fa6';
 import smallImg from '../../assets/images/small_img.jpg';
+import Swal from 'sweetalert2';
 
 const OrderCard = ({ orderId, fetchUserOrders, item }) => {
 
-  const handleCancelOrder = async () => {
-    try {
-      await orderService.cancelOrder({ orderId, productId: item.productId._id });
-      toast.success('Order cancelled succussfully');
-      fetchUserOrders();
-    } catch (error) {
-      toast.error(error);
-    }
-  };
-
-  const handleReturnOrder = async () => {
-    try {
-      await orderService.returnOrder({ orderId, productId: item.productId._id });
-      toast.success('Return request submitted successfully');
-      fetchUserOrders();
-    } catch (error) {
-      toast.error(error);
-    }
-  };
-
-  const handleCancelReturn = async () => {
-    try {
-      await orderService.cancelReturn({ orderId, productId: item.productId._id });
-      toast.success('Return request cancelled successfully');
-      fetchUserOrders();
-    } catch (error) {
-      toast.error(error);
-    }
-  };
+  const handleOrderStatus = (status) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You want to ${status === 1 ? 'cancel' : status === 2 ? 'return' : 'cancel return'} this order!`,
+      showCancelButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      preConfirm: async () => {
+        try {
+          if (status === 1) {
+            await orderService.cancelOrder({ orderId, productId: item.productId._id });
+          } else if (status === 2) {
+            await orderService.returnOrder({ orderId, productId: item.productId._id });
+          } else {
+            await orderService.cancelReturn({ orderId, productId: item.productId._id });
+          }
+          fetchUserOrders();
+        } catch (error) {
+          Swal.showValidationMessage(`Request failed: ${error} `);
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
+  }
 
   return (
     <div className='order-card'>
       <div className='image'>
-        <Link to={`/product/${item.productId._id}`}>
+        <Link to={`/ product / ${item.productId._id} `}>
           <img src={smallImg} alt="img" />
         </Link>
       </div>
@@ -72,15 +70,15 @@ const OrderCard = ({ orderId, fetchUserOrders, item }) => {
         </div>
         <div className='action'>
           {(!item.orderCancelled.status && item.orderStatus !== 'DELIVERED') &&
-            <div className='cancel' onClick={handleCancelOrder}>Cancel <FaAngleRight /></div>
+            <div className='cancel' onClick={() => handleOrderStatus(1)}>Cancel <FaAngleRight /></div>
           }
 
           {(!item.orderReturned.status && item.orderStatus === 'DELIVERED') &&
-            <div className='cancel' onClick={handleReturnOrder}>Return <FaAngleRight /></div>
+            <div className='cancel' onClick={() => handleOrderStatus(2)}>Return <FaAngleRight /></div>
           }
 
           {(!item.orderRefund.status && item.orderReturned.status) &&
-            <div className='cancel' onClick={handleCancelReturn}>Cancel Return <FaAngleRight /></div>
+            <div className='cancel' onClick={() => handleOrderStatus(3)}>Cancel Return <FaAngleRight /></div>
           }
 
           <TrackOrderDrawer item={item} />

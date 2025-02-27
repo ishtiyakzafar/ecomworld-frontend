@@ -43,7 +43,7 @@ const productSlice = createSlice({
       const user = JSON.parse(localStorage.getItem('user'));
       state.cart = state.cart.filter((item) => item._id !== action.payload);
       state.cartCount = state.cartCount - 1;
-      toast.error('Product remove from your cart');
+      // toast.error('Product remove from your cart');
       if (!user) localStorage.setItem('cart', JSON.stringify(state.cart));
     },
 

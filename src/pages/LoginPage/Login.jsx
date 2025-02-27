@@ -5,10 +5,11 @@ import authService from "../../services/auth";
 import { toast } from "react-toastify";
 import { getCartItems } from "../../utils";
 import { emailRegex } from "../../Helper";
+import ButtonLoader from "../../components/ButtonLoader/ButtonLoader";
 
 const Login = ({ setStep }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("anil@gmail.com");
+  const [password, setPassword] = useState("gsh2627SH@");
   const dispatch = useDispatch();
   const [errorMsg, setErrorMsg] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -95,14 +96,7 @@ const Login = ({ setStep }) => {
           disabled={loading}
           type="button"
         >
-          {
-            loading ?
-              <div class="spinner-border d-flex mx-auto" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              :
-              "Sign in"
-          }
+          {loading ? <ButtonLoader /> : "Sign in"}
         </button>
       </div>
     </form>

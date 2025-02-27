@@ -254,3 +254,55 @@ export const getCategoryData = (categories, topLevel, secondLevel, thirdLevel, c
 
   return categoryData;
 }
+
+export const validateAddress = (prev, name, value) => {
+  const newError = { ...prev };
+
+  if (name === 'fullName') {
+    if (!value) {
+      newError.fullName = 'Please enter your full name';
+    } else if (!/^[a-zA-Z ]{3,}$/.test(value)) {
+      newError.fullName = 'Name must be at least 3 characters long, Eg: John Doe';
+    } else {
+      newError.fullName = ''
+    }
+  } else if (name === 'mobile') {
+    if (!value) {
+      newError.mobile = 'Please enter your mobile number';
+    } else if (!/^\d{10}$/.test(value)) {
+      newError.mobile = 'Mobile No. must be ten digits';
+    } else {
+      newError.mobile = ''
+    }
+  } else if (name === 'streetAddress') {
+    if (!value) {
+      newError.streetAddress = 'Please enter your full address';
+    } else {
+      newError.streetAddress = ''
+    }
+  } else if (name === 'city') {
+    if (!value) {
+      newError.city = 'Please enter your City/District';
+    } else if (!/^[a-zA-Z ]{3,}$/.test(value)) {
+      newError.city = 'City/District must be at least 3 characters long, Eg: Ranchi';
+    } else {
+      newError.city = ''
+    }
+  } else if (name === 'state') {
+    if (!value) {
+      newError.state = 'Please select your state';
+    } else {
+      newError.state = ''
+    }
+  } else if (name === 'pinCode') {
+    if (!value) {
+      newError.pinCode = 'Please enter your 6 digit Pin Code';
+    } else if (!/^\d{6}$/.test(value)) {
+      newError.pinCode = 'Please enter your 6 digit Pin Code';
+    } else {
+      newError.pinCode = ''
+    }
+  }
+
+  return newError;
+}

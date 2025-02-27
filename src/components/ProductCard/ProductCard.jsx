@@ -8,9 +8,8 @@ import { actionAddToWishlist, actionRemoveFromWishlist } from "../../store/produ
 import { IoMdHeartEmpty } from "react-icons/io";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import MoveToCartModal from "../MoveToCartModal/MoveToCartModal";
-import Toast from "../Toast/Toast";
 import prodCardImg from '../../assets/images/prodCard.jpg';
-
+import Toast from "../Toast/Toast";
 
 
 const ProductCard = ({ isWishlist, item }) => {
@@ -30,11 +29,10 @@ const ProductCard = ({ isWishlist, item }) => {
 
   const deleteItemFromWishlist = async () => {
     try {
-      const res = await wishlistService.deleteItemFromWishlist(item._id);
+      await wishlistService.deleteItemFromWishlist(item._id);
       dispatch(actionRemoveFromWishlist(item._id));
-      toast.error('Product remove from your wishlist');
     } catch (error) {
-      toast.error(res.message);
+      console.log(res.message);
     }
   }
 
@@ -48,13 +46,7 @@ const ProductCard = ({ isWishlist, item }) => {
             {isWishlist ? <RiDeleteBin6Line /> : <IoMdHeartEmpty />}
           </div>
         }
-        <Link to={`/product/${item._id}`}>
-          <img
-            // src={item.imageUrl[0]}
-            src={prodCardImg}
-            alt="img"
-          />
-        </Link>
+        <Link to={`/product/${item._id}`}><img src={prodCardImg} alt="img" /></Link>
       </div>
       <div className='productInfo'>
         <span>{item.brand}</span>

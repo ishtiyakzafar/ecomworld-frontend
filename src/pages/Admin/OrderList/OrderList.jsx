@@ -63,7 +63,7 @@ const OrderList = () => {
                   orderList.map((order) => (
                     <tr key={order._id}>
                       <td>{order._id}</td>
-                      <td>{moment(order.createdAt).format("MMM Do 'YY")}</td>
+                      <td>{moment(order.orderDate).format("D MMM YYYY")}</td>
                       <td>{order.paymentDetails.paymentMethod}</td>
                       <td>{order.totalItem}</td>
                       <td>₹{formatNumbers(order.totalAmount)}</td>

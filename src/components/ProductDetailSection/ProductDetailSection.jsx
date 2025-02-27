@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import cartService from "../../services/cart";
 import wishlistService from "../../services/wishlist";
 import Toast from "../Toast/Toast";
+import ButtonLoader from "../ButtonLoader/ButtonLoader";
 
 const ProductDetailSection = ({ details }) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -97,14 +98,7 @@ const ProductDetailSection = ({ details }) => {
 
       <div className={s.productBtn}>
         <button disabled={loading} onClick={handleAddTocart} className={s.addToCart}>
-          {
-            loading ?
-              <div class="spinner-border d-flex mx-auto" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              :
-              <><GiShoppingBag /> Add to Cart</>
-          }
+          {loading ? <ButtonLoader /> : <><GiShoppingBag /> Add to Cart</>}
         </button>
         <button onClick={handleAddToWishlist} className={s.addToWishlist}>
           <FaRegHeart /> Wishlist

@@ -7,28 +7,34 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { actionAddToCart, actionRemoveFromWishlist } from '../../store/productSlice';
-import Toast from '../Toast/Toast';
 import smallImg from '../../assets/images/small_img.jpg';
+import ButtonLoader from '../ButtonLoader/ButtonLoader';
 
 const MoveToCartModal = ({ item }) => {
   const [size, setSize] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
 
   const handleMoveToCart = async () => {
     if (size) {
       try {
+        setLoading(true);
+
         await cartService.addToCart({ productId: item._id, size });
         dispatch(actionAddToCart({ product: item, size }));
 
         await wishlistService.deleteItemFromWishlist(item._id);
         dispatch(actionRemoveFromWishlist(item._id));
 
-        document.getElementById(`asdasd${item._id}`).click();
+        document.getElementById(`movToCart${item._id}`).click();
+
         navigate('/cart')
       } catch (error) {
         toast.error(error);
+      } finally {
+        setLoading(false);
       }
     } else {
       toast.error('Please select a size');
@@ -38,15 +44,14 @@ const MoveToCartModal = ({ item }) => {
 
   return (
     <div className='moveToCart'>
-      <Toast />
-      <button className='outline' type="button" data-bs-toggle="modal" data-bs-target={`#exampleModal${item._id}`} >
+      <button className='outline' type="button" data-bs-toggle="modal" data-bs-target={`#movToCartModal${item._id}`} >
         Move to cart
       </button>
 
-      <div className="modal fade" id={`exampleModal${item._id}`} data-bs-backdrop="static" tabIndex="-1" aria-labelledby={`exampleModalLabel${item._id}`} aria-hidden="true">
+      <div className="modal fade" id={`movToCartModal${item._id}`} data-bs-backdrop="static" tabIndex="-1" aria-labelledby={`movToCartModalLabel${item._id}`} aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content py-3 rounded-1">
-            <div onClick={() => setSize("")} data-bs-dismiss="modal" id={`asdasd${item._id}`} className='close_icon'>
+            <div onClick={() => setSize("")} data-bs-dismiss="modal" id={`movToCart${item._id}`} className='close_icon'>
               <MdClose />
             </div>
             <div className="modal-body">
@@ -75,7 +80,13 @@ const MoveToCartModal = ({ item }) => {
               </div>
             </div>
             <div className='p-3 doneBtn'>
-              <button onClick={handleMoveToCart} type="button">Done</button>
+              <button
+                onClick={handleMoveToCart}
+                disabled={loading}
+                type="button"
+              >
+                {loading ? <ButtonLoader /> : "Done"}
+              </button>
             </div>
           </div>
         </div>

@@ -15,7 +15,7 @@
     margin-bottom: 50px;
     gap: 100px;
 
-    @media(max-width:768px) {
+    @media (max-width: 768px) {
       margin-bottom: 25px;
       gap: 30px;
     }
@@ -31,7 +31,7 @@
       position: relative;
       cursor: pointer;
 
-      @media(max-width:768px) {
+      @media (max-width: 768px) {
         padding: 5px 10px;
       }
 
@@ -54,7 +54,7 @@
         font-weight: 500;
         color: #fff;
 
-        @media(max-width:768px) {
+        @media (max-width: 768px) {
           font-size: 12px;
           font-weight: 400;
         }
@@ -107,36 +107,6 @@
       }
     }
 
-    .add_title {
-      padding: 20px 25px;
-      color: #2e276f;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 16px;
-      transition: all 0.3s ease;
-      box-shadow: 0px 5px 20px 0px #494e620d;
-
-      @media (max-width: 768px) {
-        font-size: 14px;
-        font-weight: 600;
-        padding: 15px;
-      }
-
-      svg {
-        font-size: 18px;
-        margin-top: -5px;
-        margin-right: 10px;
-
-        @media (max-width: 768px) {
-          font-size: 14px;
-          margin-right: 5px;
-        }
-      }
-    }
-
     .address_list {
       overflow: auto;
       max-height: 300px;
@@ -151,12 +121,30 @@
       height: 100px;
     }
 
-    .add_btn {
-      padding-top: 10px;
+    .add_new_add {
+      padding: 15px;
+      color: #2e276f;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 16px;
+      border: 1px dashed #eb3b5a;
+      border-radius: 12px;
 
-      button {
-        width: 100%;
+      @media (max-width: 992px) {
+        font-size: 14px;
+        font-weight: 600;
       }
+
+      svg {
+        font-size: 18px;
+        margin-top: -2px;
+
+        @media (max-width: 992px) {
+          font-size: 14px;
+          margin-right: 5px;
+        }
+      }
+
     }
   }
 
@@ -220,13 +208,12 @@
       border: 1px solid #d0baff;
       border-radius: 8px;
 
-
       p {
         font-size: 14px;
         font-weight: 500;
         color: #2e276f;
 
-        @media(max-width:768px) {
+        @media (max-width: 768px) {
           font-size: 12px;
         }
       }
@@ -244,5 +231,40 @@
     padding: 24px;
     border-radius: 12px;
     background: #fff;
+
+
+    .add_title {
+      color: #2e276f;
+      font-weight: 700;
+      cursor: pointer;
+      align-items: center;
+      font-size: 16px;
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+        font-weight: 600;
+        padding: 15px;
+      }
+
+      svg {
+        font-size: 18px;
+        margin-top: -2px;
+        margin-right: 10px;
+
+        @media (max-width: 768px) {
+          font-size: 14px;
+          margin-right: 5px;
+        }
+      }
+    }
+
+    .viewMore {
+      color: #2e276f;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 20px;
+      font-weight: 500;
+    }
   }
 }

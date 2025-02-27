@@ -1,0 +1,23 @@
+.addNewAddressModal {
+  .modal-content {
+    border: none;
+    border-radius: 12px;
+  }
+
+  form {
+    small {
+      color: #fd1021;
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+
+  .add_btn {
+    width: 100%;
+    text-align: center;
+
+    button {
+      width: 200px;
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { actionLogin } from "../../store/authSlice";
 import { getCartItems } from "../../utils";
 import { emailRegex, passwordRegex, validateSignup } from "../../Helper";
 import { toast } from "react-toastify";
+import ButtonLoader from "../../components/ButtonLoader/ButtonLoader";
 
 const Register = ({ setStep }) => {
   const [loading, setLoading] = useState(false);
@@ -157,14 +158,7 @@ const Register = ({ setStep }) => {
           disabled={loading}
           type="button"
         >
-          {
-            loading ?
-              <div class="spinner-border d-flex mx-auto" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              :
-              "Register"
-          }
+          {loading ? <ButtonLoader /> : "Register"}
         </button>
       </div>
     </form>

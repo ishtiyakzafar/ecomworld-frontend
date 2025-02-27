@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { emailRegex, isResetPassValidated, passwordRegex } from '../../Helper';
 import userService from '../../services/user';
 import Toast from '../Toast/Toast';
+import ButtonLoader from '../ButtonLoader/ButtonLoader';
 
 
 const MyAccount = () => {
@@ -135,14 +136,7 @@ const MyAccount = () => {
             disabled={!name || !email || !emailRegex.test(email) || loading}
             type="button"
           >
-            {
-              loading ?
-                <div class="spinner-border d-flex mx-auto" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                :
-                "Update"
-            }
+            {loading ? <ButtonLoader /> : "Update"}
           </button>
         </div>
       </form>
@@ -205,14 +199,7 @@ const MyAccount = () => {
           <button
             disabled={!isResetPassValidated(resetPassword, showInst, isPassMatch) || isLoading}
             onClick={handleResetPassword} type="button">
-            {
-              isLoading ?
-                <div class="spinner-border d-flex mx-auto" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                :
-                "Update Password"
-            }
+            {isLoading ? <ButtonLoader /> : "Update Password"}
           </button>
         </div>
       </form>

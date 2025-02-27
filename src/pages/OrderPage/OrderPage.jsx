@@ -9,7 +9,7 @@ import Empty from '../../components/Empty/Empty';
 import { LiaShoppingBagSolid } from 'react-icons/lia';
 import { toast } from 'react-toastify';
 import Toast from '../../components/Toast/Toast';
-import Loader from '../../components/Loader/Loader';
+import Spinner from '../../components/Spinner/Spinner';
 
 const tabsData = [
   {
@@ -47,12 +47,11 @@ const OrderPage = () => {
   }, [])
 
   return (
-    <div className='order-page'>
+    <>
       <Toast />
-      {loading ?
-        <Loader />
+      {loading ? <Spinner />
         :
-        <div className='containerxx'>
+        <div className='order-page'>
           <SectionHeading title='My Order' />
 
           {orders.length > 0 ?
@@ -115,7 +114,7 @@ const OrderPage = () => {
           }
         </div>
       }
-    </div>
+    </>
   )
 };
 
