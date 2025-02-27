@@ -1,9 +1,8 @@
 .cartPageBox {
   padding: 50px 0;
+  min-height: calc(100vh - 70px);
 
   @media (max-width: 768px) {
     padding: 20px 0;
   }
-
-
 }
