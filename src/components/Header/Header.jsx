@@ -160,6 +160,7 @@ const Header = () => {
                 <li>{user.name}</li>
                 <li onClick={() => navigate('/profile/account')}><FiUser /> Profile</li>
                 <li onClick={() => navigate('/profile/orders')}><LiaShoppingBagSolid /> Order</li>
+                <li onClick={() => navigate('/profile/address')}><LiaShoppingBagSolid /> Addresses</li>
                 <li onClick={() => navigate('/wishlist')}><IoMdHeartEmpty /> Wishlist</li>
                 <li onClick={() => navigate('/cart')}><LiaShoppingBagSolid /> Cart</li>
                 <li
